@@ -3,7 +3,8 @@ import Contract from "../contracts/SimpleStorage.json";
 import getWeb3 from "../getWeb3";
 import "../App.css";
 import Header from "./HeaderComponent";
-
+import Home from './HomeComponent';
+import Login from "./LoginComponent";
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import Footer from './FooterComponent';
 
@@ -52,8 +53,11 @@ class Main extends Component {
     return (
       <div className="App">
         <Header />
-
-      
+        <Switch>
+            <Route exact path="/" component={() => <Home/>}/>
+            <Route exact path="/shared" component={() => <Login/>}/>
+            <Redirect to="/"/>
+        </Switch>
         <Footer/>
       </div>
     )
