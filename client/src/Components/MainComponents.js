@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Contract from "../contracts/SimpleStorage.json";
+import BNContract from "../contracts/BrimNet.json";
 import getWeb3 from "../getWeb3";
 import "../App.css";
 import Header from "./HeaderComponent";
@@ -27,9 +27,9 @@ class Main extends Component {
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
-      const deployedNetwork = Contract.networks[networkId];
+      const deployedNetwork = BNContract.networks[networkId];
       const instance = new web3.eth.Contract(
-        Contract.abi,
+        BNContract.abi,
         deployedNetwork && deployedNetwork.address,
       );
      
@@ -54,9 +54,9 @@ class Main extends Component {
       <div className="App">
         <Header />
         <Switch>
-            <Route exact path="/" component={() => <Home/>}/>
-            <Route exact path="/shared" component={() => <Login/>}/>
-            <Redirect to="/"/>
+            <Route exact path="/home" component={() => <Home/>}/>
+            <Route path="/shared" component={() => <Login/>}/>
+            <Redirect to="/home"/>
         </Switch>
         <Footer/>
       </div>
