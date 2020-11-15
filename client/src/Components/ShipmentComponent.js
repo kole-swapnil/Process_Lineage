@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, Col, FormFeedback ,Card, CardImg,CardImgOverlay, CardTitle, CardBody, CardText} from 'reactstrap';
 import { BrowserRouter, NavLink } from 'react-router-dom';
 import StepProgressBar from 'react-step-progress';
-// import the stylesheet
+
 import 'react-step-progress/dist/index.css';
 
 const step1Content = <h1 style={{width: 1000, height: 200}}>Step 1 </h1>;

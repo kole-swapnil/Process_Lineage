@@ -4,7 +4,7 @@ import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, Col,
 import { BrowserRouter, NavLink } from 'react-router-dom';
 
 import { render } from 'react-dom';
-var mst;
+var vx;
 var alldocs = [];
 function Allpatrender({dish}){
     // var day = moment.unix(dish.dateofComp); 
@@ -12,12 +12,13 @@ function Allpatrender({dish}){
     // var date = new Date(xy*1000);
     // var time = day.format('dddd MMMM Do YYYY, h:mm:ss a');
     // var yz = xy != 0?"bg-success text-white":""; 
+    var cl = dish.itemtype == 0? "fa fa-laptop fa-5x" :((dish.itemtype ==1)?"fa fa-mobile fa-5x" :"fa fa-desktop fa-5x" )
     return(
         <Card >
-        <i className="fa fa-laptop fa-5x"></i>
+        <i className={cl}></i>
         <CardBody>
         <CardTitle>Item ID : {dish.itemid}</CardTitle>
-        <CardText><small>Item Type : {dish.itemtype}</small></CardText>
+        <CardText><small>Item Type : {category(parseInt(dish.itemtype))}</small></CardText>
         <CardText><small>Item Price : {dish.price}</small></CardText>
         <CardText><small>GST : {dish.gst}</small></CardText>
         <CardText><small>Model : {dish.model}</small></CardText>
@@ -27,7 +28,21 @@ function Allpatrender({dish}){
       </Card>
     )
     }
+    function category(i) {
 
+        switch(i) {
+            case 0:
+                vx = 'laptop';
+                break;
+            case 1:
+                vx = 'mobile';
+                break;
+            case 2:
+                vx = 'Desktop';
+                break;
+        }
+        return vx;
+    }
 class AllItemComponent extends Component{
     constructor(props){
         super(props);

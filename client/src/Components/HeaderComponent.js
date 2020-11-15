@@ -21,11 +21,14 @@ class Header extends Component{
         return(
             <React.Fragment>
                 <Navbar dark expand="md">
-                    <div className="container">
+                    <div className="container justify-center">
+                    
                         <NavbarToggler onClick={this.togglenav}/>
                         <NavbarBrand className="mr-auto" >BrimNet</NavbarBrand>
                         <Collapse isOpen = {this.state.isNavOpen} navbar>
-                            <Nav navbar>
+                        
+                            <Nav navbar className="m-auto" >
+                            
                             <NavItem>
                                 <NavLink className="nav-link" to="/home">Home</NavLink>
                             </NavItem>
@@ -36,11 +39,17 @@ class Header extends Component{
                                 <NavLink className="nav-link" to="/shipment">Shipments</NavLink>
                             </NavItem>
                             <NavItem>
+                                <NavLink className="nav-link" to="/register">Register</NavLink>
+                            </NavItem>
+                            <NavItem>
                                 <NavLink className="nav-link" to="/login">Login</NavLink>
                             </NavItem>
+                            
                             </Nav>
+                            
                         </Collapse>
                     </div>
+        
                 </Navbar>
             
             </React.Fragment>
