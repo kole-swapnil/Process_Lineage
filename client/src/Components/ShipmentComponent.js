@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 //import moment from 'moment';
 import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, Col, FormFeedback ,Card, CardImg,CardImgOverlay, CardTitle, CardBody, CardText} from 'reactstrap';
 import { BrowserRouter, NavLink } from 'react-router-dom';
-import $ from 'jquery';
+
 
 let value;
 let value1;
