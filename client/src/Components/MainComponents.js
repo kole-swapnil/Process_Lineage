@@ -5,7 +5,7 @@ import "../App.css";
 import Header from "./HeaderComponent";
 import Home from './HomeComponent';
 import Login from "./LoginComponent";
-import  Item  from "./ItemComponent";
+import  AllItemComponent  from "./ItemComponent";
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import Footer from './FooterComponent';
 
@@ -56,8 +56,8 @@ class Main extends Component {
         <Header />
         <Switch>
             <Route exact path="/home" component={() => <Home/>}/>
-            <Route path="/items" component={() => <Item/>}/>
             <Route path="/shared" component={() => <Login/>}/>
+            <Route path='/items' component={() => <AllItemComponent contract={this.state.contract} accounts={this.state.accounts}/>}/>
             <Redirect to="/home"/>
         </Switch>
         <Footer/>
