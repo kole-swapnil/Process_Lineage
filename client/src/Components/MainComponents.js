@@ -65,9 +65,6 @@ class Main extends Component {
         <Footer/>
       </div>
     )
-
-
-
   }
 }
 

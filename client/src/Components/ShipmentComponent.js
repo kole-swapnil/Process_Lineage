@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 //import moment from 'moment';
 import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, Col, FormFeedback ,Card, CardImg,CardImgOverlay, CardTitle, CardBody, CardText} from 'reactstrap';
 import { BrowserRouter, NavLink } from 'react-router-dom';
+import $ from 'jquery';
 
 let value;
 let value1;
@@ -98,6 +99,7 @@ class Shipments extends Component{
          
     }
 
+    
      render(){
   
         const Menu = this.state.dish.map((x) => {
@@ -121,6 +123,22 @@ class Shipments extends Component{
             <br/>
             <br/>
             <br/>
+        
+
+            <div id="example-basic">
+                <h3>Keyboard</h3>
+                <section>
+                    <p>Try the keyboard navigation by clicking arrow left or right!</p>
+                </section>
+                <h3>Effects</h3>
+                <section>
+                    <p>Wonderful transition effects.</p>
+                </section>
+                <h3>Pager</h3>
+                <section>
+                    <p>The next and previous buttons help you to navigate through your content.</p>
+                </section>
+            </div>
         </div>
         
         )
@@ -129,7 +147,11 @@ class Shipments extends Component{
 
 }
 
-
-
+// $("#example-basic").steps({
+//     headerTag: "h3",
+//     bodyTag: "section",
+//     transitionEffect: "slideLeft",
+//     autoFocus: true
+// });
 
 export default Shipments;

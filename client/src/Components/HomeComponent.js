@@ -14,7 +14,7 @@ class Home extends Component{
       
         return(
             <React.Fragment>
-                <div classname="container">
+                <div className="container">
 
                     <h1>Hello There</h1>
                 </div>

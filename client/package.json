@@ -6,6 +6,8 @@
     "bootstrap": "^4.5.2",
     "bootstrap-social": "^5.1.1",
     "core-js": "3",
+    "jquery": "^3.5.1",
+    "jquery-steps": "^1.1.0",
     "react": "16.11.0",
     "react-dom": "16.11.0",
     "react-frame-component": "^4.1.3",
