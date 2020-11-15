@@ -14,10 +14,76 @@ class Login extends Component{
       
         return(
             <React.Fragment>
-                <div class="container">
+                <h1>Login Page</h1>
+                <div className="container">
+                    <div className="row justify-content-center pt-3">             
+                        <div className="col-3 mr-5">
+                            <h6 className="pl-5"> User SignIn</h6>
+                            <div className="part pt-5">
+                                <i class="fa fa-user-circle-o fa-4x" aria-hidden="true"></i>
+                                <br/><br/>
 
-                    <h1>Login Page</h1>
+                                <div className="p-2">
+                                    <label>Email address</label><br/>
+                                    <input type="text" placeholder="Enter your email..."/>
+                                </div> 
+
+                                <div className="p-2">
+                                    <label> Password </label><br/>
+                                    <input type="text" placeholder="Enter your password..."/>
+                                </div> 
+                                <br/>
+                                
+                                <button class="btn btn-sm btn-primary text-uppercase pl-3 pr-3" type="submit">Sign in</button>
+                                
+                            </div>
+                        </div>
+                        <div className="col-3 mr-5">
+                            <h6 className="pl-5"> Manufacturer SignIn</h6>
+                            <div className="part pt-5">
+                                <i class="fa fa-users fa-4x" aria-hidden="true"></i>
+
+                                <br/><br/>
+
+                                <div className="p-2">
+                                    <label>Email address</label><br/>
+                                    <input type="text" placeholder="Enter your email..."/>
+                                </div> 
+
+                                <div className="p-2">
+                                    <label> Password </label><br/>
+                                    <input type="text" placeholder="Enter your password..."/>
+                                </div> 
+                                <br/>
+                                
+                                <button class="btn btn-sm btn-primary text-uppercase pl-3 pr-3" type="submit">Sign in</button>
+                                
+                            </div>
+                        </div>
+                        <div className="col-3 mr-5">
+                            <h6 className="pl-5"> Goverment Official SignIn</h6>
+                            <div className="part pt-5">
+                                <i class="fa fa-id-card fa-4x" aria-hidden="true"></i>
+                                <br/><br/>
+
+                                <div className="p-2">
+                                    <label>Email address</label><br/>
+                                    <input type="text" placeholder="Enter your email..."/>
+                                </div> 
+
+                                <div className="p-2">
+                                    <label> Password </label><br/>
+                                    <input type="text" placeholder="Enter your password..."/>
+                                </div> 
+                                <br/>
+                                
+                                <button class="btn btn-sm btn-primary text-uppercase pl-3 pr-3" type="submit">Sign in</button>
+                                
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                
             
             </React.Fragment>
         )

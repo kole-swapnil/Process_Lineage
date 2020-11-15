@@ -59,3 +59,9 @@ address{
   background-color: #000000;
 }
 
+.part{
+  width: 23vw;
+  height: 60vh;
+  border: 1px solid #000000;
+  border-radius: 10px;
+}
