@@ -95,6 +95,12 @@ function Allpatrender({dish}){
         <CardText><small>Totalamt : {dish.totalamt}</small></CardText>
         <CardText><small>Payment Status :{val1}</small></CardText>
         
+        <Col md={{size:10, offset:1}}>
+            <Button type="submit" color="primary" >
+                Add Doctor
+            </Button>
+        </Col>
+
         </CardBody>
       </Card>
     )
