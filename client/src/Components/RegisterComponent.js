@@ -32,7 +32,23 @@ class RegisterComp extends Component{
     func(){
     reg = this.props.registered;
     console.log(reg);
-    ele = reg == 0?"REGISTER":"UPDATE";
+    switch(reg) {
+        case 3:
+            ele = 'Register Manufacturer';
+            break;
+        case 1:
+            ele = 'Update Manufacturer';
+            break;
+        case 4:
+            ele = 'Register Customer';
+            break;
+        case 2:
+            ele = 'Update Customer';
+            break;
+        default : 
+            ele = "Register";
+    }
+    
     }
 
     render(){
@@ -62,7 +78,7 @@ class RegisterComp extends Component{
                         <FormGroup row>
                             <Col md={{size:10, offset:2}}>
                                 <Button type="submit" color="primary" >
-                                    Add Manufacturer
+                                    {ele}
                                 </Button>
                             </Col>
                             

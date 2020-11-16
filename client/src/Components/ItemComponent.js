@@ -13,12 +13,14 @@ var allcus = [];
 var allmanu = [];
 var customer;
 
-let conver = async (x) => {
+let conver =  (x) => {
 
     util =  (Web3.utils.toWei(x, 'milli'));
+    return util;
 }
-let converb = async (x) => {
+let converb =(x) => {
     util1 = (Web3.utils.fromWei(x, 'milli'));
+    return util1;
 }
 
 let buyitem = async(typeitem) => {
@@ -44,6 +46,11 @@ let buyitem = async(typeitem) => {
         }
     }
 }
+
+// Create Item
+
+
+
 function Allpatrender({dish}){
     // var day = moment.unix(dish.dateofComp); 
     // var xy = dish.dateofComp;
@@ -116,6 +123,11 @@ function subtract(a, b){
         return b-a;
     }
 }
+var itemtype;
+var itemprice;
+var itemgst;
+var itemdesc;
+
 
 class AllItemComponent extends Component{
     constructor(props){
@@ -124,12 +136,29 @@ class AllItemComponent extends Component{
         this.toggleModal = this.toggleModal.bind(this);
         //this.com = this.com.bind(this);
     }
-    
+ 
     toggleModal() {
         this.setState({
             isModalOpen: !this.state.isModalOpen
         });
     }
+    createItem = async(itemtype,itemdesc,itemprice,itemgst) => {
+        const res = await this.props.contract.methods.createItems(itemtype,itemdesc,itemprice,itemgst).send({from: this.props.accounts,gas : 1000000});
+        console.log(res);
+    }
+    creatingItems = () => {
+        itemtype = this.type.value;
+        itemprice = (conver(this.price.value));
+        
+        itemgst = this.gst.value;
+        itemdesc = this.desc.value;
+        console.log(itemtype);
+        this.createItem(itemtype,itemdesc,itemprice,itemgst);
+        this.toggleModal();
+
+    }
+    
+    
     
     async componentDidMount(){
         var res = await this.props.contract?.methods.itemcount().call();
@@ -138,6 +167,7 @@ class AllItemComponent extends Component{
             console.log(cus);
         var manu= await this.props.contract?.methods.manufacturercount().call();
             console.log(manu);
+    
                
                 var response= [];
                 for(var i=1;i<=res;i++){
@@ -151,25 +181,7 @@ class AllItemComponent extends Component{
 
                 
                 customer = await this.props.contract?.methods.Customers(this.props.accounts).call();
-                // for(var i=1;i<=cus;i++){
-                //     var cuscall = await this.props.contract?.methods.Customers(i).call();
-                //     customer.push(cuscall);
-                // }
-                // allcus = [];
-                // allcus = customer;
-                // console.log(customer);
-                // this.setState({ cust : allcus});
-
-                // // Manufacturer Array
-                // var manufacturer= [];
-                // for(var i=1;i<=manu;i++){
-                //     var manucall = await this.props.contract?.methods.Manufacturer(i).call();
-                //     manufacturer.push(manucall);
-                // }
-                // allmanu = [];
-                // allmanu = manufacturer;
-                // console.log(manufacturer);
-                // this.setState({ manuf : allmanu});
+              
          
     }
 
@@ -189,6 +201,7 @@ class AllItemComponent extends Component{
             <Button color="success" onClick={this.toggleModal}>
                 Add Item
             </Button>
+            
             <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} className="modal-xl">
                 <ModalHeader toggle={this.toggleModal}>
                     <h3>Add Item</h3>
@@ -198,20 +211,10 @@ class AllItemComponent extends Component{
                         <div className="row pl-5 pr-5">
                             <div className="col-6">
                                 <FormGroup>
-                                    <Label htmlFor="id" className="ml-3">Item ID</Label>
-                                    <Input type="text" id="id" name="id"
-                                        innerRef={(input) => this.id = input} />
-                                </FormGroup>
-                            </div>
-                            <div className="col-6">
-                                <FormGroup>
                                     <Label htmlFor="type" className="ml-3">Item Type</Label>
-                                    <Input type="text" id="type" name="type"
-                                        innerRef={(input) => this.type = input}  />
+                                    <Input type="text" id="type" name="type" innerRef={(input) => this.type = input}/>
                                 </FormGroup>
                             </div>
-                        </div>
-                        <div className="row pl-5 pr-5">
                             <div className="col-6">
                                 <FormGroup>
                                     <Label htmlFor="price" className="ml-3">Item Price</Label>
@@ -219,22 +222,15 @@ class AllItemComponent extends Component{
                                         innerRef={(input) => this.price = input}  />
                                 </FormGroup>
                             </div>
-                            <div className="col-6">
+                        </div>
+                        <div className="row pl-5 pr-5">
+                            
+                            <div className="col-12">
                                 <FormGroup>
                                     <Label htmlFor="gst" className="ml-3">Item GST</Label>
                                     <Input type="text" id="gst" name="gst"
                                         innerRef={(input) => this.gst = input}  />
                                 </FormGroup>    
-                            </div>
-                        </div>
-                        
-                        <div className="row pl-5 pr-5">
-                            <div className="col-12">
-                                <FormGroup>
-                                    <Label htmlFor="model" className="ml-3">Item Model</Label>
-                                    <Input type="text" id="model" name="model"
-                                        innerRef={(input) => this.model = input}  />
-                                </FormGroup>
                             </div>
                         </div>
                         
@@ -250,7 +246,7 @@ class AllItemComponent extends Component{
                         <br/>
                         <div className="row pl-5">
                             <div className="col-6">    
-                                <Button type="submit" color="primary">Add Item</Button>
+                                <Button color="primary" onClick={this.creatingItems}>Add Item</Button>
                             </div>
                         </div>
                         <br/>
@@ -270,9 +266,7 @@ class AllItemComponent extends Component{
         </div>
         
         )
-    }
-
-
+    };
 }
 
 export default AllItemComponent;

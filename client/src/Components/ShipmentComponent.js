@@ -14,7 +14,8 @@ const step4Content = <h1 style={{width: 1000, height: 200, marginLeft: "300px"}}
 
 var util;
 var util1;
-
+var val;
+var val1;
 function step2Validator() {
   // return a boolean
 }
@@ -85,23 +86,37 @@ function status(s) {
     return value1; 
 }
 var alldocs = [];
-function Allpatrender({dish}){
+class Allpatrender extends Component{
+    constructor(props){
+        super(props);
+        this.state = { docCount : 0, dish: [] , isModalOpen: false};
+        this.toggleModal = this.toggleModal.bind(this);
+        //this.converb = this.converb.bind(this);
+    }  
+    toggleModal() {
+        this.setState({
+            isModalOpen: !this.state.isModalOpen
+        });
+    }
+    converb = async (x) => {
+        util1 = (Web3.utils.fromWei(x, 'milli'));
+    }
     // var day = moment.unix(dish.dateofComp); 
     // var xy = dish.dateofComp;
     // var date = new Date(xy*1000);
     // var time = day.format('dddd MMMM Do YYYY, h:mm:ss a');
     // var yz = xy != 0?"bg-success text-white":""; 
-    converb(dish.totalamt.toString());
-    var val = shipstate(parseInt(dish.shipstate));
-    var val1 = status(parseInt(dish.payment));
-   
+    //converb(this.props.dish.totalamt.toString());
+     val = shipstate(parseInt(this.props.dish.shipstate));
+     val1 = status(parseInt(this.props.dish.payment));
+   render(){
     return(
         <Card >
         <i className="fa fa-envelope fa-5x"></i>
         <CardBody>
-        <CardTitle>Shipment ID : {dish.itemcat}</CardTitle>
-        <CardText><small>Item Cat : {dish.itemcat}</small></CardText>
-        <CardText><small>Item qty : {dish.qty}</small></CardText>
+        <CardTitle>Shipment ID : {this.props.dish.itemcat}</CardTitle>
+        <CardText><small>Item Cat : {this.props.dish.itemcat}</small></CardText>
+        <CardText><small>Item qty : {this.props.dish.qty}</small></CardText>
         <CardText><small>Shipment Status : {val}</small></CardText>
         <CardText><small>Totalamt : {util1}</small></CardText>
         <CardText><small>Payment Status :{val1}</small></CardText>
@@ -114,6 +129,7 @@ function Allpatrender({dish}){
         </CardBody>
       </Card>
     )
+        }
 }
 
 class Shipment extends Component{
