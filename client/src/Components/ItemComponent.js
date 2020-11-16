@@ -235,7 +235,7 @@ class AllItemComponent extends Component{
                                     <Label htmlFor="type" className="ml-3">Item Type</Label>
                                     <Input type="select" id="type" name="type" innerRef={(input) => this.type = input}>
                                         <option>Select Item Type</option>
-                                        <option>{}</option>
+                                        <option>Mobile</option>
                                         <option>Labtop</option>
                                         <option>Desktop</option>
                                     </Input>
