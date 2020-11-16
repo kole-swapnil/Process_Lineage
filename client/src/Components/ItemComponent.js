@@ -86,10 +86,10 @@ function category(i) {
 
         switch(i) {
             case 0:
-                vx = 'laptop';
+                vx = 'Laptop';
                 break;
             case 1:
-                vx = 'mobile';
+                vx = 'Mobile';
                 break;
             case 2:
                 vx = 'Desktop';
@@ -152,7 +152,9 @@ class AllItemComponent extends Component{
         
         itemgst = this.gst.value;
         itemdesc = this.desc.value;
-        console.log(itemtype, itemprice);
+        console.log(itemtype);
+        this.createItem(itemtype,itemdesc,itemprice,itemgst);
+        this.toggleModal();
     }
     
     
@@ -209,7 +211,12 @@ class AllItemComponent extends Component{
                             <div className="col-6">
                                 <FormGroup>
                                     <Label htmlFor="type" className="ml-3">Item Type</Label>
-                                    <Input type="text" id="type" name="type" innerRef={(input) => this.type = input}/>
+                                    <Input type="select" id="type" name="type" innerRef={(input) => this.type = input}>
+                                        <option>Select Item Type</option>
+                                        <option>{}</option>
+                                        <option>Labtop</option>
+                                        <option>Desktop</option>
+                                    </Input>
                                 </FormGroup>
                             </div>
                             <div className="col-6">

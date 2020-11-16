@@ -7,6 +7,7 @@ import '../App.css'
 class Login extends Component{
     constructor(props){
         super(props);
+        this.state = { registered : 0};
     }
 
    
@@ -69,7 +70,7 @@ class Login extends Component{
                             </div>
                         </div>
                         <div className="col-4">
-                            <h6 className="pl-5"> Goverment Official SignIn</h6>
+                            <h6 className="pl-5"> Goverment SignIn</h6>
                             <div className="part pt-5">
                                 <i class="fa fa-id-card fa-4x" aria-hidden="true"></i>
                                 <br/><br/>
