@@ -97,7 +97,7 @@ function Allpatrender({dish}){
         
         <Col md={{size:10, offset:1}}>
             <Button type="submit" color="primary" >
-                Add Doctor
+                Shipment
             </Button>
         </Col>
 
@@ -106,7 +106,7 @@ function Allpatrender({dish}){
     )
     }
 
-class Shipments extends Component{
+class Shipment extends Component{
     constructor(props){
         super(props);
         this.state = { docCount : 0, dish: [] }
@@ -191,4 +191,4 @@ class Shipments extends Component{
 
 
 
-export default Shipments;
+export default Shipment;
