@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem } from 'reactstrap';
 import { BrowserRouter, NavLink } from 'react-router-dom';
-import AliceCarousel from 'react-alice-carousel';
-import "react-alice-carousel/lib/alice-carousel.css";
+//import AliceCarousel from 'react-alice-carousel';
+//import "react-alice-carousel/lib/alice-carousel.css";
 import '../App.css'
 
 class Home extends Component{

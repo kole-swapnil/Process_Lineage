@@ -13,12 +13,14 @@ var allcus = [];
 var allmanu = [];
 var customer;
 
-let conver = async (x) => {
+let conver =  (x) => {
 
     util =  (Web3.utils.toWei(x, 'milli'));
+    return util;
 }
-let converb = async (x) => {
+let converb =(x) => {
     util1 = (Web3.utils.fromWei(x, 'milli'));
+    return util1;
 }
 
 let buyitem = async(typeitem) => {
@@ -140,10 +142,14 @@ class AllItemComponent extends Component{
             isModalOpen: !this.state.isModalOpen
         });
     }
-
+    createItem = async(itemtype,itemdesc,itemprice,itemgst) => {
+        const res = await this.props.contract.methods.createItems(itemtype,itemdesc,itemprice,itemgst).send({from: this.props.accounts,gas : 1000000});
+        console.log(res);
+    }
     creatingItems = () => {
         itemtype = this.type.value;
-        itemprice = this.price.value;
+        itemprice = (conver(this.price.value));
+        
         itemgst = this.gst.value;
         itemdesc = this.desc.value;
         console.log(itemtype, itemprice);
@@ -171,26 +177,8 @@ class AllItemComponent extends Component{
                 this.setState({ dish : alldocs});
 
                 
-                customer = await this.props.contract?.methods.Customers(this.props.accounts[0]).call();
-                // for(var i=1;i<=cus;i++){
-                //     var cuscall = await this.props.contract?.methods.Customers(i).call();
-                //     customer.push(cuscall);
-                // }
-                // allcus = [];
-                // allcus = customer;
-                // console.log(customer);
-                // this.setState({ cust : allcus});
-
-                // // Manufacturer Array
-                // var manufacturer= [];
-                // for(var i=1;i<=manu;i++){
-                //     var manucall = await this.props.contract?.methods.Manufacturer(i).call();
-                //     manufacturer.push(manucall);
-                // }
-                // allmanu = [];
-                // allmanu = manufacturer;
-                // console.log(manufacturer);
-                // this.setState({ manuf : allmanu});
+                customer = await this.props.contract?.methods.Customers(this.props.accounts).call();
+              
          
     }
 

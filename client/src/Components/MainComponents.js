@@ -39,12 +39,13 @@ class Main extends Component {
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
       console.log(instance)
-      this.setState({ web3, accounts, contract: instance,balance });
+      this.setState({ web3, accounts : accounts[0] , contract: instance,balance });
       var res = await this.state.contract.methods.manufacturercount().call();
          
       for(var i=1;i<=res;i++){
           var rex = await this.state.contract?.methods.Manu_ids(i).call();
-          if(rex == accounts[0]){
+          console.log(rex);
+          if(rex == this.state.accounts){
             this.setState({registered : 1});
             console.log(1);
             break;
@@ -57,10 +58,11 @@ class Main extends Component {
       
       var res1 = await this.props.contract?.methods.customercount().call();
       
-      for(var i=1;i<=res;i++){
+      for(var i=1;i<=res1;i++){
           var rex1 = await this.props.contract?.methods.cust_ids(i).call();
-          if(rex1 == accounts[0]){
+          if(rex1 == accounts){
             this.setState({registered : 2});
+            console.log(2);
             break;
           }
           
