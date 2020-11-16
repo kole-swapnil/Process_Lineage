@@ -23,8 +23,14 @@ function Allpatrender({dish}){
         <CardText><small>GST : {dish.gst}</small></CardText>
         <CardText><small>Model : {dish.model}</small></CardText>
         <CardText><small>Description : {dish.description}</small></CardText>
-        
+
+        <Col md={{size:10, offset:1}}>
+            <Button type="submit" color="primary" >
+                Add Doctor
+            </Button>
+        </Col>
         </CardBody>
+        
       </Card>
     )
     }

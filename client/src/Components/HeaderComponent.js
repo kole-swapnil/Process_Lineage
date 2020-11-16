@@ -36,22 +36,22 @@ class Header extends Component{
                         <NavbarBrand className="mr-auto" >BrimNet</NavbarBrand>
                         <Collapse isOpen = {this.state.isNavOpen} navbar>
                         
-                            <Nav navbar className="m-auto" >
+                            <Nav navbar className="m-auto">
                             
                             <NavItem>
-                                <NavLink className="nav-link" to="/home">Home</NavLink>
+                                <NavLink className="nav-link pl-5 pr-5" to="/home">Home</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="nav-link" to="/items">Items</NavLink>
+                                <NavLink className="nav-link pl-5 pr-5" to="/items">Items</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="nav-link" to="/shipment">Shipments</NavLink>
+                                <NavLink className="nav-link pl-5 pr-5" to="/shipment">Shipments</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="nav-link" to="/register">Register</NavLink>
+                                <NavLink className="nav-link pl-5 pr-5" to="/register">Register</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="nav-link" to="/login">Login</NavLink>
+                                <NavLink className="nav-link pl-5 pr-5" to="/login">Login</NavLink>
                             </NavItem>
                             
                             </Nav>
