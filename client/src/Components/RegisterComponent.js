@@ -36,7 +36,7 @@ class RegisterComp extends Component{
     func(){
     reg = this.props.registered;
     console.log(reg);
-    ele = reg == 0?"Register":"Update";
+    ele = reg == 0?"REGISTER":"UPDATE";
     }
 
     render(){
@@ -52,27 +52,27 @@ class RegisterComp extends Component{
                 
             <Form onSubmit={this.handleSubmit}>
                         <FormGroup row>
-                            <Label htmlFor="name" md={2}>Doctor Name</Label>
+                            <Label htmlFor="name" md={2}>Manufacturer Name</Label>
                             <Col md={10}>
                                 <Input type="text" id="name" name="name" placeholder="Name" value={this.state.name} onChange={this.handleInputChange}/>
                             </Col>
                         </FormGroup>
                         <FormGroup row>
-                            <Label htmlFor="age" md={2}>Age</Label>
+                            <Label htmlFor="phonenumber" md={2}>Phone Number</Label>
                             <Col md={10}>
-                                <Input type="tel" id="age" name="age" placeholder="Age" value={this.state.age} onChange={this.handleInputChange}/>
+                                <Input type="tel" id="phonenumber" name="phonenumber" placeholder="Phone Number" value={this.state.phonenumber} onChange={this.handleInputChange}/>
                             </Col>
                         </FormGroup>
                         <FormGroup row>
-                            <Label htmlFor="speciality" md={2}>Specilaity</Label>
+                            <Label htmlFor="pincode" md={2}>Pincode</Label>
                             <Col md={10}>
-                                <Input type="text" id="speciality" name="speciality" placeholder="Speciality" value={this.state.speciality} onChange={this.handleInputChange} />    
+                                <Input type="tel" id="pincode" name="pincode" placeholder="Pincode" value={this.state.pincode} onChange={this.handleInputChange} />    
                             </Col>
                         </FormGroup>
                         <FormGroup row>
                             <Col md={{size:10, offset:2}}>
                                 <Button type="submit" color="primary" >
-                                    Add Doctor
+                                    Add Manufacturer
                                 </Button>
                             </Col>
                             

@@ -14,7 +14,7 @@ class Login extends Component{
       
         return(
             <React.Fragment>
-                <h1>Login Page</h1>
+                <h1><b>Login Page</b></h1>
                 <div className="container">
                     <div className="row justify-content-center pt-3">             
                         <div className="col-4">
@@ -25,17 +25,17 @@ class Login extends Component{
 
                                 <div className="p-2">
                                     <label> Name </label><br/>
-                                    <input type="text" placeholder="Enter name..."/>
+                                    <input type="text" placeholder="Enter name"/>
                                 </div> 
 
                                 <div className="p-2">
                                     <label> Aadhar Number </label><br/>
-                                    <input type="text" placeholder="Enter Aadhar Number..."/>
+                                    <input type="text" placeholder="Enter Aadhar Number"/>
                                 </div>
 
                                 <div className="p-2">
                                     <label> Address </label><br/>
-                                    <input type="text" placeholder="Enter Address..."/>
+                                    <input type="text" placeholder="Enter Address"/>
                                 </div>
                                 
                                 <button class="btn btn-sm btn-primary text-uppercase pl-3 pr-3" type="submit">Sign in</button>
@@ -51,17 +51,17 @@ class Login extends Component{
 
                                 <div className="p-2">
                                     <label> Name </label><br/>
-                                    <input type="text" placeholder="Enter name..."/>
+                                    <input type="text" placeholder="Enter name"/>
                                 </div> 
 
                                 <div className="p-2">
                                     <label> Aadhar Number </label><br/>
-                                    <input type="text" placeholder="Enter Aadhar Number..."/>
+                                    <input type="text" placeholder="Enter Aadhar Number"/>
                                 </div>
 
                                 <div className="p-2">
                                     <label> Address </label><br/>
-                                    <input type="text" placeholder="Enter Address..."/>
+                                    <input type="text" placeholder="Enter Address"/>
                                 </div>
                                 
                                 <button class="btn btn-sm btn-primary text-uppercase pl-3 pr-3" type="submit">Sign in</button>
@@ -76,17 +76,17 @@ class Login extends Component{
 
                                 <div className="p-2">
                                     <label> Name </label><br/>
-                                    <input type="text" placeholder="Enter name..."/>
+                                    <input type="text" placeholder="Enter name"/>
                                 </div> 
 
                                 <div className="p-2">
                                     <label> Aadhar Number </label><br/>
-                                    <input type="text" placeholder="Enter Aadhar Number..."/>
+                                    <input type="text" placeholder="Enter Aadhar Number"/>
                                 </div> 
 
                                 <div className="p-2">
                                     <label> Address </label><br/>
-                                    <input type="text" placeholder="Enter Address..."/>
+                                    <input type="text" placeholder="Enter Address"/>
                                 </div>
                                 
                                 <button class="btn btn-sm btn-primary text-uppercase pl-3 pr-3" type="submit">Sign in</button>
