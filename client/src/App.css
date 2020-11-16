@@ -67,8 +67,12 @@ address{
 .part{
   width: 27vw;
   height: 65vh;
-  border: 1px solid #000000;
+  border: 1px solid lightgray;
   border-radius: 10px;
   width:100%;
   justify-content: space-around;
+}
+
+StepProgressBar{
+  color: #9575CD;
 }

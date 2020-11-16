@@ -2,8 +2,38 @@ import React, { Component } from 'react';
 //import moment from 'moment';
 import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, Col, FormFeedback ,Card, CardImg,CardImgOverlay, CardTitle, CardBody, CardText} from 'reactstrap';
 import { BrowserRouter, NavLink } from 'react-router-dom';
+import StepProgressBar from 'react-step-progress';
+import Web3 from "web3";
+import 'react-step-progress/dist/index.css';
+var util;
+var util1;
+const step1Content = <h1 style={{width: 1000, height: 200}}>Step 1 </h1>;
+const step2Content = <h1 style={{width: 1000, height: 200}}>Step 2 </h1>;
+const step3Content = <h1 style={{width: 1000, height: 200}}>Step 3 </h1>;
+const step4Content = <h1 style={{width: 1000, height: 200}}>Step 4 </h1>;
 
+function step2Validator() {
+  // return a boolean
+}
+ 
+function step3Validator() {
+  // return a boolean
+}
 
+function step4Validator() {
+    // return a boolean
+}
+ 
+function onFormSubmit() {
+  
+}
+let conver = async (x) => {
+
+    util =  (Web3.utils.toWei(x, 'milli'));
+}
+let converb = async (x) => {
+    util1 = (Web3.utils.fromWei(x, 'milli'));
+}
 let value;
 let value1;
 function shipstate(s) {
@@ -58,6 +88,7 @@ function Allpatrender({dish}){
     // var date = new Date(xy*1000);
     // var time = day.format('dddd MMMM Do YYYY, h:mm:ss a');
     // var yz = xy != 0?"bg-success text-white":""; 
+    converb(dish.totalamt.toString());
     var val = shipstate(parseInt(dish.shipstate));
     var val1 = status(parseInt(dish.payment));
    
@@ -69,15 +100,21 @@ function Allpatrender({dish}){
         <CardText><small>Item Cat : {dish.itemcat}</small></CardText>
         <CardText><small>Item qty : {dish.qty}</small></CardText>
         <CardText><small>Shipment Status : {val}</small></CardText>
-        <CardText><small>Totalamt : {dish.totalamt}</small></CardText>
+        <CardText><small>Totalamt : {util1}</small></CardText>
         <CardText><small>Payment Status :{val1}</small></CardText>
         
+        <Col md={{size:10, offset:1}}>
+            <Button type="submit" color="primary" >
+                Shipment
+            </Button>
+        </Col>
+
         </CardBody>
       </Card>
     )
     }
 
-class Shipments extends Component{
+class Shipment extends Component{
     constructor(props){
         super(props);
         this.state = { docCount : 0, dish: [] }
@@ -117,41 +154,49 @@ class Shipments extends Component{
             <br/>
             <div className="row">
                 {Menu}
+                <StepProgressBar
+                startingStep={0}
+                onSubmit={onFormSubmit}
+                steps={[
+                    {
+                    label: 'Step 1',
+                    name: 'step 1',
+                    content: step1Content
+                    },
+                    {
+                    label: 'Step 2',
+                    name: 'step 2',
+                    content: step2Content,
+                    validator: step2Validator
+                    },
+                    {
+                    label: 'Step 3',
+                    name: 'step 3',
+                    content: step3Content,
+                    validator: step3Validator
+                    },
+                    {
+                        label: 'Step 4',
+                        name: 'step 4',
+                        content: step4Content,
+                        validator: step4Validator
+                        }
+                ]}
+                />
             </div>
             <br/>
             <br/>
             <br/>
             <br/>
             <br/>
-        
-
-            <div id="example-basic">
-                <h3>Keyboard</h3>
-                <section>
-                    <p>Try the keyboard navigation by clicking arrow left or right!</p>
-                </section>
-                <h3>Effects</h3>
-                <section>
-                    <p>Wonderful transition effects.</p>
-                </section>
-                <h3>Pager</h3>
-                <section>
-                    <p>The next and previous buttons help you to navigate through your content.</p>
-                </section>
-            </div>
         </div>
         
+            
         )
     }
 
-
 }
 
-// $("#example-basic").steps({
-//     headerTag: "h3",
-//     bodyTag: "section",
-//     transitionEffect: "slideLeft",
-//     autoFocus: true
-// });
 
-export default Shipments;
+
+export default Shipment;
