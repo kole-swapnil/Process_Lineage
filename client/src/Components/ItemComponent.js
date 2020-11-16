@@ -146,7 +146,7 @@ class AllItemComponent extends Component{
         itemprice = this.price.value;
         itemgst = this.gst.value;
         itemdesc = this.desc.value;
-        console.log(itemtype);
+        console.log(itemtype, itemprice);
     }
     
     
