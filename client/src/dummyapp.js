@@ -70,5 +70,5 @@ converb = async (x) => {
     console.log(Web3.utils.fromWei(x, 'milli'));
 }
 
-conver('1');
-converb('1000000000000000');
+conver('1000');
+converb('1000000000000000000');

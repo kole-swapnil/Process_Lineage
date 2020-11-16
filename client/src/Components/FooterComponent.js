@@ -8,7 +8,7 @@ function Footer(props){
             
             <div className="row justify-content-center">             
                 <div className="col-auto">
-                    <p>© Copyright @2020 BrimNet</p>
+                    <p>© Copyright @2020 BrimNet | Privacy Policy | Terms Of Use | Sales And Refunds | Site Map</p>
                 </div>
             </div>
         </div>

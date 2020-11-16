@@ -58,11 +58,6 @@
           "internalType": "uint256",
           "name": "_gst",
           "type": "uint256"
-        },
-        {
-          "internalType": "string",
-          "name": "_model",
-          "type": "string"
         }
       ],
       "name": "createItems",
@@ -111,6 +106,25 @@
     {
       "inputs": [
         {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "name": "getbal",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "string",
           "name": "_custname",
           "type": "string"
@@ -128,6 +142,11 @@
     },
     {
       "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "totamt",
+          "type": "uint256"
+        },
         {
           "internalType": "uint256",
           "name": "_shipid",
@@ -154,16 +173,22 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "uint256",
           "name": "ship_id",
           "type": "uint256"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "enum ProLine.State",
           "name": "shstate",
           "type": "uint8"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "times",
+          "type": "uint256"
         }
       ],
       "name": "processchange",
@@ -173,16 +198,22 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "uint256",
           "name": "ship_id",
           "type": "uint256"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "enum ProLine.Status",
           "name": "pay",
           "type": "uint8"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "times",
+          "type": "uint256"
         }
       ],
       "name": "processpay",
@@ -252,26 +283,7 @@
       ],
       "name": "withdrawmoney",
       "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_cust",
-          "type": "address"
-        }
-      ],
-      "name": "calcdist",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
+      "stateMutability": "payable",
       "type": "function"
     },
     {
@@ -341,17 +353,11 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_shipid",
-          "type": "uint256"
-        }
-      ],
-      "name": "getmanu",
+      "inputs": [],
+      "name": "govt",
       "outputs": [
         {
-          "internalType": "address",
+          "internalType": "address payable",
           "name": "",
           "type": "address"
         }
@@ -393,6 +399,11 @@
           "type": "uint256"
         },
         {
+          "internalType": "address",
+          "name": "manadr",
+          "type": "address"
+        },
+        {
           "internalType": "string",
           "name": "description",
           "type": "string"
@@ -406,11 +417,6 @@
           "internalType": "uint256",
           "name": "gst",
           "type": "uint256"
-        },
-        {
-          "internalType": "string",
-          "name": "model",
-          "type": "string"
         }
       ],
       "stateMutability": "view",

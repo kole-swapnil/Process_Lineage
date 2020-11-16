@@ -39,16 +39,16 @@ class Header extends Component{
                             <Nav navbar className="m-auto">
                             
                             <NavItem>
-                                <NavLink className="nav-link pl-5 pr-5" to="/home">Home</NavLink>
+                                <NavLink className="nav-link" style={{width:200,justifyContent:'space-around'}} to="/home">Home</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="nav-link pl-5 pr-5" to="/items">Items</NavLink>
+                                <NavLink className="nav-link" style={{width:200,justifyContent:'space-around'}} to="/items">Items</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="nav-link pl-5 pr-5" to="/shipment">Shipments</NavLink>
+                                <NavLink className="nav-link" style={{width:200,justifyContent:'space-around'}} to="/shipment">Shipments</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="nav-link pl-5 pr-5" to="/register">Register</NavLink>
+                                <NavLink className="nav-link" style={{width:200,justifyContent:'space-around'}} to="/register">Register</NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink className="nav-link pl-5 pr-5" to="/login">Login</NavLink>
