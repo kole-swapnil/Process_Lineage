@@ -20,6 +20,7 @@ Mount = async () => {
     // console.log("gfsd",instance);
     // console.log("gd",accounts);
      //   addingManufacturer("Kole",751002);
+     getshipevents(instance);
 }
 
 
@@ -44,7 +45,7 @@ updatingCustomer = async(name,pinc) => {
 }
 
 creatingItems = async(itemtype,desc,price,gst,model) => {
-    const res = await instance.methods.createItems(itemtype,desc,price,gst,model).send({from: accounts[1],gas : 1000000});
+    const res = await instance.methods.createItems(itemtype,desc,price,gst,model).send({from: accounts[0],gas : 1000000});
     console.log(res);
 }
 creatingShipment = async(itemid,qty,shipstate,totalamt,payment,manadr) => {
@@ -71,4 +72,20 @@ converb = async (x) => {
 }
 
 conver('1000');
-converb('1000000000000000000');
+converb('1000000000000000000'); 
+        
+
+getshipevents = async(instance) => {
+    const req = await instance.getPastEvents('processchange', {
+        filter: { ship_id: 1 },
+        fromBlock: 0,    
+    });
+    console.log(req);
+}
+getpayevents = async(instance) => {
+    const req = await instance.getPastEvents('processpay', {
+        filter: { ship_id: 1 },
+        fromBlock: 0,
+    });
+    console.log(req);
+}

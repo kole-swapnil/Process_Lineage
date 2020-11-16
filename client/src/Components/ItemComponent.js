@@ -150,7 +150,7 @@ class AllItemComponent extends Component{
                 this.setState({ dish : alldocs});
 
                 
-                customer = await this.props.contract?.methods.Customers(this.props.accounts[0]).call();
+                customer = await this.props.contract?.methods.Customers(this.props.accounts).call();
                 // for(var i=1;i<=cus;i++){
                 //     var cuscall = await this.props.contract?.methods.Customers(i).call();
                 //     customer.push(cuscall);

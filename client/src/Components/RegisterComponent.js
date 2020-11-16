@@ -27,10 +27,6 @@ class RegisterComp extends Component{
         console.log("Current State" + JSON.stringify(this.state));
         event.preventDefault();
         
-      
-        
- 
-        
     }
 
     func(){
@@ -55,12 +51,6 @@ class RegisterComp extends Component{
                             <Label htmlFor="name" md={2}>Manufacturer Name</Label>
                             <Col md={10}>
                                 <Input type="text" id="name" name="name" placeholder="Name" value={this.state.name} onChange={this.handleInputChange}/>
-                            </Col>
-                        </FormGroup>
-                        <FormGroup row>
-                            <Label htmlFor="phonenumber" md={2}>Phone Number</Label>
-                            <Col md={10}>
-                                <Input type="tel" id="phonenumber" name="phonenumber" placeholder="Phone Number" value={this.state.phonenumber} onChange={this.handleInputChange}/>
                             </Col>
                         </FormGroup>
                         <FormGroup row>
