@@ -17,7 +17,7 @@ import RegisterComp from './RegisterComponent';
 class Main extends Component {
   constructor(props) {
     super(props);
-    this.state = { storageValue: 0, web3: null, accounts: null, contract: null ,res : null,registered : 0};
+    this.state = { storageValue: 0, web3: null, accounts: null,balance:0, contract: null ,res : null,registered : 0};
 
   }
   componentDidMount = async () => {
@@ -27,7 +27,7 @@ class Main extends Component {
 
       // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
-
+      const balance = await web3.eth.getBalance(accounts[0])
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = BNContract.networks[networkId];
@@ -39,18 +39,21 @@ class Main extends Component {
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
       console.log(instance)
-      this.setState({ web3, accounts, contract: instance });
+      this.setState({ web3, accounts, contract: instance,balance });
       var res = await this.state.contract.methods.manufacturercount().call();
          
       for(var i=1;i<=res;i++){
           var rex = await this.state.contract?.methods.Manu_ids(i).call();
-          if(true){
+          if(rex == accounts[0]){
             this.setState({registered : 1});
             console.log(1);
             break;
           }
+          
+
    
       }
+      
       
       var res1 = await this.props.contract?.methods.customercount().call();
       
@@ -61,7 +64,9 @@ class Main extends Component {
             break;
           }
           
+          
       }
+      
      
       
     } catch (error) {
@@ -85,7 +90,7 @@ class Main extends Component {
     this.checks(this.state.accounts);
     return (
       <div className="App">
-        <Header />
+        <Header contract={this.state.contract} accounts={this.state.accounts} balance={this.state.balance} web3={this.state.web3}/>
         <Switch>
             <Route exact path="/home" component={() => <Home/>}/>
             <Route path='/items' component={() => <AllItemComponent contract={this.state.contract} accounts={this.state.accounts}/>}/>

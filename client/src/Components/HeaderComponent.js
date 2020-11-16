@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem } from 'reactstrap';
 import { BrowserRouter, NavLink } from 'react-router-dom';
- 
+import Web3 from "web3";
 import '../App.css'
+var util;
+var util1;
 
 class Header extends Component{
     constructor(props){
@@ -10,14 +12,21 @@ class Header extends Component{
 
         this.state = { isNavOpen : false }
         this.togglenav = this.togglenav.bind(this);
+
     }
 
     togglenav(){
         this.setState({isNavOpen : !this.state.isNavOpen});
     }
+    conver = async (x) => {
 
+        util =  (Web3.utils.toWei(x, 'milli'));
+    }
+    converb = async (x) => {
+        util1 = (Web3.utils.fromWei(x, 'milli'));
+    }
     render(){
-      
+        this.converb(this.props.balance.toString());
         return(
             <React.Fragment>
                 <Navbar dark expand="md">
@@ -49,7 +58,7 @@ class Header extends Component{
                             
                         </Collapse>
                     </div>
-        
+                    <h6>Balance : {util1}</h6>
                 </Navbar>
             
             </React.Fragment>

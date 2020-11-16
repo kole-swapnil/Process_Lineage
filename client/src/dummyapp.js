@@ -62,3 +62,13 @@ updateShipstatus = async(shipid,paystatus) => {
     console.log(res);
 }
 
+conver = async (x) => {
+    console.log(Web3.utils.toWei(x, 'milli'));
+}
+
+converb = async (x) => {
+    console.log(Web3.utils.fromWei(x, 'milli'));
+}
+
+conver('1');
+converb('1000000000000000');
