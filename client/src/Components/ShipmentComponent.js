@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 //import moment from 'moment';
-import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, Col, FormFeedback ,Card, CardImg,CardImgOverlay, CardTitle, CardBody, CardText} from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, Col, FormFeedback ,
+    Card, CardImg,CardImgOverlay, CardTitle, CardBody, CardText , Modal, ModalHeader, ModalBody} from 'reactstrap';
 import { BrowserRouter, NavLink } from 'react-router-dom';
 import StepProgressBar from 'react-step-progress';
 
 import 'react-step-progress/dist/index.css';
 
-const step1Content = <h1 style={{width: 1000, height: 200}}>Step 1 </h1>;
-const step2Content = <h1 style={{width: 1000, height: 200}}>Step 2 </h1>;
-const step3Content = <h1 style={{width: 1000, height: 200}}>Step 3 </h1>;
-const step4Content = <h1 style={{width: 1000, height: 200}}>Step 4 </h1>;
+const step1Content = <h1 style={{width: 1000, height: 200 , marginLeft: "300px"}}>Step 1 </h1>;
+const step2Content = <h1 style={{width: 1000, height: 200, marginLeft: "300px"}}>Step 2 </h1>;
+const step3Content = <h1 style={{width: 1000, height: 200, marginLeft: "300px"}}>Step 3 </h1>;
+const step4Content = <h1 style={{width: 1000, height: 200, marginLeft: "300px"}}>Step 4 </h1>;
 
 function step2Validator() {
   // return a boolean
@@ -96,23 +97,29 @@ function Allpatrender({dish}){
         <CardText><small>Payment Status :{val1}</small></CardText>
         
         <Col md={{size:10, offset:1}}>
-            <Button type="submit" color="primary" >
+            {/* <Button color="primary" onClick={this.toggleModal}>
                 Shipment
-            </Button>
+            </Button> */}
         </Col>
-
         </CardBody>
       </Card>
     )
-    }
+}
 
 class Shipment extends Component{
     constructor(props){
         super(props);
-        this.state = { docCount : 0, dish: [] }
+        this.state = { docCount : 0, dish: [] , isModalOpen: false};
+        this.toggleModal = this.toggleModal.bind(this);
+    }  
         //this.com = this.com.bind(this);
-    }
     
+    toggleModal() {
+        this.setState({
+            isModalOpen: !this.state.isModalOpen
+        });
+    }
+
     async componentDidMount(){
         var res = await this.props.contract?.methods.shipmentcount().call();
            console.log(res);    
@@ -146,36 +153,41 @@ class Shipment extends Component{
             <br/>
             <div className="row">
                 {Menu}
-                <StepProgressBar
-                startingStep={0}
-                onSubmit={onFormSubmit}
-                steps={[
-                    {
-                    label: 'Step 1',
-                    name: 'step 1',
-                    content: step1Content
-                    },
-                    {
-                    label: 'Step 2',
-                    name: 'step 2',
-                    content: step2Content,
-                    validator: step2Validator
-                    },
-                    {
-                    label: 'Step 3',
-                    name: 'step 3',
-                    content: step3Content,
-                    validator: step3Validator
-                    },
-                    {
-                        label: 'Step 4',
-                        name: 'step 4',
-                        content: step4Content,
-                        validator: step4Validator
-                        }
-                ]}
-                />
             </div>
+            <Button color="primary" onClick={this.toggleModal}>
+                Shipment
+            </Button>
+            <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} className="modal-lg">
+                <ModalHeader toggle={this.toggleModal}>Shipment Status</ModalHeader>
+                <ModalBody>
+                    <StepProgressBar startingStep={0} onSubmit={onFormSubmit} steps={[
+                        {
+                        label: 'Step 1',
+                        name: 'step 1',
+                        content: step1Content
+                        },
+                        {
+                        label: 'Step 2',
+                        name: 'step 2',
+                        content: step2Content,
+                        validator: step2Validator
+                        },
+                        {
+                        label: 'Step 3',
+                        name: 'step 3',
+                        content: step3Content,
+                        validator: step3Validator
+                        },
+                        {
+                            label: 'Step 4',
+                            name: 'step 4',
+                            content: step4Content,
+                            validator: step4Validator
+                            }
+                    ]}
+                    />
+                </ModalBody>
+            </Modal>
             <br/>
             <br/>
             <br/>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 //import moment from 'moment';
-import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, Col, FormFeedback ,Card, CardImg,CardImgOverlay, CardTitle, CardBody, CardText} from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, Col, FormFeedback ,
+    Card, CardImg,CardImgOverlay, CardTitle, CardBody, CardText , Modal, ModalHeader, ModalBody} from 'reactstrap';
 import { BrowserRouter, NavLink } from 'react-router-dom';
 
 import { render } from 'react-dom';
@@ -84,8 +85,15 @@ function category(i) {
 class AllItemComponent extends Component{
     constructor(props){
         super(props);
-        this.state = { docCount : 0, dish: [] , cust: [] , manuf: [] }
+        this.state = { docCount : 0, dish: [] , cust: [] , manuf: [] , isModalOpen: false }
+        this.toggleModal = this.toggleModal.bind(this);
         //this.com = this.com.bind(this);
+    }
+    
+    toggleModal() {
+        this.setState({
+            isModalOpen: !this.state.isModalOpen
+        });
     }
     
     async componentDidMount(){
@@ -143,6 +151,77 @@ class AllItemComponent extends Component{
         return(
         <div className="container">
             <h2>All Items</h2>
+            <Button color="success" onClick={this.toggleModal}>
+                Add Item
+            </Button>
+            <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} className="modal-xl">
+                <ModalHeader toggle={this.toggleModal}>
+                    <h3>Add Item</h3>
+                </ModalHeader>
+                <ModalBody>
+                    <Form>
+                        <div className="row pl-5 pr-5">
+                            <div className="col-6">
+                                <FormGroup>
+                                    <Label htmlFor="id" className="ml-3">Item ID</Label>
+                                    <Input type="text" id="id" name="id"
+                                        innerRef={(input) => this.id = input} />
+                                </FormGroup>
+                            </div>
+                            <div className="col-6">
+                                <FormGroup>
+                                    <Label htmlFor="type" className="ml-3">Item Type</Label>
+                                    <Input type="text" id="type" name="type"
+                                        innerRef={(input) => this.type = input}  />
+                                </FormGroup>
+                            </div>
+                        </div>
+                        <div className="row pl-5 pr-5">
+                            <div className="col-6">
+                                <FormGroup>
+                                    <Label htmlFor="price" className="ml-3">Item Price</Label>
+                                    <Input type="text" id="price" name="price"
+                                        innerRef={(input) => this.price = input}  />
+                                </FormGroup>
+                            </div>
+                            <div className="col-6">
+                                <FormGroup>
+                                    <Label htmlFor="gst" className="ml-3">Item GST</Label>
+                                    <Input type="text" id="gst" name="gst"
+                                        innerRef={(input) => this.gst = input}  />
+                                </FormGroup>    
+                            </div>
+                        </div>
+                        
+                        <div className="row pl-5 pr-5">
+                            <div className="col-12">
+                                <FormGroup>
+                                    <Label htmlFor="model" className="ml-3">Item Model</Label>
+                                    <Input type="text" id="model" name="model"
+                                        innerRef={(input) => this.model = input}  />
+                                </FormGroup>
+                            </div>
+                        </div>
+                        
+                        <div className="row pl-5 pr-5">
+                            <div className="col-12">
+                                <FormGroup>
+                                    <Label htmlFor="desc" className="ml-3">Item Description</Label>
+                                    <Input type="text" id="desc" name="desc"
+                                        innerRef={(input) => this.desc = input}  />
+                                </FormGroup>
+                            </div>
+                        </div>
+                        <br/>
+                        <div className="row pl-5">
+                            <div className="col-6">    
+                                <Button type="submit" color="primary">Add Item</Button>
+                            </div>
+                        </div>
+                        <br/>
+                    </Form>
+                </ModalBody>
+            </Modal>
             <br/>
             <br/>
             <div className="row">
