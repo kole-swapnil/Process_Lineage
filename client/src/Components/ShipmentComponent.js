@@ -3,9 +3,10 @@ import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, Col, FormFeedback ,Card, CardImg,CardImgOverlay, CardTitle, CardBody, CardText} from 'reactstrap';
 import { BrowserRouter, NavLink } from 'react-router-dom';
 import StepProgressBar from 'react-step-progress';
-
+import Web3 from "web3";
 import 'react-step-progress/dist/index.css';
-
+var util;
+var util1;
 const step1Content = <h1 style={{width: 1000, height: 200}}>Step 1 </h1>;
 const step2Content = <h1 style={{width: 1000, height: 200}}>Step 2 </h1>;
 const step3Content = <h1 style={{width: 1000, height: 200}}>Step 3 </h1>;
@@ -26,7 +27,13 @@ function step4Validator() {
 function onFormSubmit() {
   
 }
+let conver = async (x) => {
 
+    util =  (Web3.utils.toWei(x, 'milli'));
+}
+let converb = async (x) => {
+    util1 = (Web3.utils.fromWei(x, 'milli'));
+}
 let value;
 let value1;
 function shipstate(s) {
@@ -81,6 +88,7 @@ function Allpatrender({dish}){
     // var date = new Date(xy*1000);
     // var time = day.format('dddd MMMM Do YYYY, h:mm:ss a');
     // var yz = xy != 0?"bg-success text-white":""; 
+    converb(dish.totalamt.toString());
     var val = shipstate(parseInt(dish.shipstate));
     var val1 = status(parseInt(dish.payment));
    
@@ -92,7 +100,7 @@ function Allpatrender({dish}){
         <CardText><small>Item Cat : {dish.itemcat}</small></CardText>
         <CardText><small>Item qty : {dish.qty}</small></CardText>
         <CardText><small>Shipment Status : {val}</small></CardText>
-        <CardText><small>Totalamt : {dish.totalamt}</small></CardText>
+        <CardText><small>Totalamt : {util1}</small></CardText>
         <CardText><small>Payment Status :{val1}</small></CardText>
         
         <Col md={{size:10, offset:1}}>
