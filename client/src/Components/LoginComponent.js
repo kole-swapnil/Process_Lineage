@@ -7,9 +7,13 @@ import '../App.css'
 class Login extends Component{
     constructor(props){
         super(props);
+<<<<<<< HEAD
         this.handleSubmitMan = this.handleSubmitMan.bind(this);
         this.handleSubmitCust = this.handleSubmitCust.bind(this);
         this.handleSubmitGovt = this.handleSubmitGovt.bind(this);
+=======
+        this.state = { registered : 0};
+>>>>>>> 87e4e04a476767287084ccb2f5b738a9ebd9d735
     }
 
     async handleSubmitMan(event){
@@ -86,7 +90,7 @@ class Login extends Component{
                             </div>
                         </div>
                         <div className="col-4">
-                            <h6 className="pl-5"> Goverment Official SignIn</h6>
+                            <h6 className="pl-5"> Goverment SignIn</h6>
                             <div className="part pt-5">
                                 <i class="fa fa-id-card fa-4x" aria-hidden="true"></i>
                                 <br/><br/>

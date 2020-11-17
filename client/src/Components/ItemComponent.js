@@ -5,6 +5,7 @@ import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, Col,
 import { BrowserRouter, NavLink } from 'react-router-dom';
 import Web3 from "web3";
 import { render } from 'react-dom';
+
 var util;
 var util1;
 var vx;
@@ -47,38 +48,59 @@ let buyitem = async(typeitem) => {
     }
 }
 
-// Create Item
-
-
-
-function Allpatrender({dish}){
+class Allpatrender extends Component{
     // var day = moment.unix(dish.dateofComp); 
     // var xy = dish.dateofComp;
     // var date = new Date(xy*1000);
     // var time = day.format('dddd MMMM Do YYYY, h:mm:ss a');
-    // var yz = xy != 0?"bg-success text-white":""; 
-    converb(dish.price.toString());
-    var cl = dish.itemtype == 0? "fa fa-laptop fa-5x" :((dish.itemtype ==1)?"fa fa-mobile fa-5x" :"fa fa-desktop fa-5x" );
-    return(
-        <Card >
-        <i className={cl}></i>
-        <CardBody>
-        <CardTitle>Item ID : {dish.itemid}</CardTitle>
-        <CardText><small>Item Type : {category(parseInt(dish.itemtype))}</small></CardText>
-        <CardText><small>Item Price : {util1}</small></CardText>
-        <CardText><small>GST : {dish.gst}</small></CardText>
-        <CardText><small>Description : {dish.description}</small></CardText>
+    // var yz = xy != 0?"bg-success text-white":"";
+    constructor(props){
+        super(props);
+        this.state = { docCount : 0, dish: [] , isModalOpen: false};
+        this.toggleModal = this.toggleModal.bind(this);
+        this.converb = this.converb.bind(this);
+    }  
+    toggleModal() {
+        this.setState({
+            isModalOpen: !this.state.isModalOpen
+        });
+    }
+    converb = async (x) => {
+        util1 = (Web3.utils.fromWei(x, 'milli'));
+    }
 
-        <Col md={{size:10, offset:1}}>
-            <Button type="submit" color="primary" >
-                Buy Item
-            </Button>
-        </Col>
-        </CardBody>
-        
-      </Card>
-      
-    )
+    render() {
+        this.converb(this.props.dish.price.toString());
+        var cl = this.props.dish.itemtype == 0? "fa fa-laptop fa-5x" :((this.props.dish.itemtype ==1)?"fa fa-mobile fa-5x" :"fa fa-desktop fa-5x" );
+        return(
+           
+            <Card >
+            <i className={cl}></i>
+            <CardBody>
+            <CardTitle>Item ID : {this.props.dish.itemid}</CardTitle>
+            <CardText><small>Item Type : {category(parseInt(this.props.dish.itemtype))}</small></CardText>
+            <CardText><small>Item Price : {util1}</small></CardText>
+            <CardText><small>GST : {this.props.dish.gst}</small></CardText>
+            <CardText><small>Description : {this.props.dish.description}</small></CardText>
+
+            <Col md={{size:10, offset:1}}>
+                <Button type="submit" color="primary" onClick={this.toggleModal}>
+                    Buy Item
+                </Button>
+
+                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} className="modal-xl">
+                <ModalHeader toggle={this.toggleModal}>Shipment Status</ModalHeader>
+                <ModalBody>
+                    <p>lorem</p>
+                </ModalBody>
+                
+            </Modal>
+            </Col>
+            </CardBody>
+            
+        </Card>
+        )
+    }
 }
 
 
@@ -86,10 +108,10 @@ function category(i) {
 
         switch(i) {
             case 0:
-                vx = 'laptop';
+                vx = 'Laptop';
                 break;
             case 1:
-                vx = 'mobile';
+                vx = 'Mobile';
                 break;
             case 2:
                 vx = 'Desktop';
@@ -132,14 +154,14 @@ var itemdesc;
 class AllItemComponent extends Component{
     constructor(props){
         super(props);
-        this.state = { docCount : 0, dish: [] , cust: [] , manuf: [] , isModalOpen: false }
-        this.toggleModal = this.toggleModal.bind(this);
+        this.state = { docCount : 0, dish: [] , cust: [] , manuf: [] , isModalOpen1: false }
+        this.toggleModal1 = this.toggleModal1.bind(this);
         //this.com = this.com.bind(this);
     }
  
-    toggleModal() {
+    toggleModal1() {
         this.setState({
-            isModalOpen: !this.state.isModalOpen
+            isModalOpen1: !this.state.isModalOpen1
         });
     }
     createItem = async(itemtype,itemdesc,itemprice,itemgst) => {
@@ -152,7 +174,9 @@ class AllItemComponent extends Component{
         
         itemgst = this.gst.value;
         itemdesc = this.desc.value;
-        console.log(itemtype, itemprice);
+        console.log(itemtype);
+        this.createItem(itemtype,itemdesc,itemprice,itemgst);
+        this.toggleModal1();
     }
     
     
@@ -195,13 +219,13 @@ class AllItemComponent extends Component{
         return(
         <div className="container">
             <h2>All Items</h2>
-            <Button color="success" onClick={this.toggleModal}>
+            <Button color="success" onClick={this.toggleModal1}>
                 Add Item
             </Button>
             
-            <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} className="modal-xl">
-                <ModalHeader toggle={this.toggleModal}>
-                    <h3>Add Item</h3>
+            <Modal isOpen={this.state.isModalOpen1} toggle={this.toggleModal1} className="modal-xl">
+                <ModalHeader toggle={this.toggleModal1}>
+                    <h3>Add Items</h3>
                 </ModalHeader>
                 <ModalBody>
                     <Form>
@@ -209,7 +233,12 @@ class AllItemComponent extends Component{
                             <div className="col-6">
                                 <FormGroup>
                                     <Label htmlFor="type" className="ml-3">Item Type</Label>
-                                    <Input type="text" id="type" name="type" innerRef={(input) => this.type = input}/>
+                                    <Input type="select" id="type" name="type" innerRef={(input) => this.type = input}>
+                                        <option>Select Item Type</option>
+                                        <option>Mobile</option>
+                                        <option>Labtop</option>
+                                        <option>Desktop</option>
+                                    </Input>
                                 </FormGroup>
                             </div>
                             <div className="col-6">
