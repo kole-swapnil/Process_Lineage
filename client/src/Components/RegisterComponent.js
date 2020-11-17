@@ -10,9 +10,14 @@ var ele;
 class RegisterComp extends Component{
     constructor(props){
         super(props);
-        this.state={name : '', age : 0, speciality : ''};
+        this.state={name : '', pincode : 0};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.updatingManufacturer = this.updatingManufacturer.bind(this);
+        this.addingCustomer = this.addingCustomer.bind(this);
+        this.updatingCustomer = this.updatingCustomer.bind(this);
+        this.addingManufacturer = this.addingManufacturer.bind(this);
+
     }
     handleInputChange(event){
         const target = event.target;
@@ -22,21 +27,62 @@ class RegisterComp extends Component{
             [name] : value
         })
     }
-    
+    updatingManufacturer = async(name,pinc) => {
+        const res = await this.props.contract.methods.updateManufacturer(name,pinc).send({from: this.props.accounts,gas : 1000000});
+        console.log(res);
+    }
+    addingCustomer = async(name,pinc) => {
+        const res = await this.props.contract.methods.addCustomer(name,pinc).send({from: this.props.accounts,gas : 1000000});
+        console.log(res);
+    }
+    updatingCustomer = async(name,pinc) => {
+        const res = await this.props.contract.methods.modifyCustomer(name,pinc).send({from: this.props.accounts,gas : 1000000});
+        console.log(res);
+    }
+    addingManufacturer = async(name,pinc) => {
+        const res = await this.props.contract.methods.addManufacturer(name,pinc).send({from: this.props.accounts,gas : 1000000});
+        console.log(res);
+    }
     async handleSubmit(event){
         console.log("Current State" + JSON.stringify(this.state));
         event.preventDefault();
         
-      
-        
- 
-        
+    console.log(reg);
+    if(reg == 1){
+        this.updatingManufacturer(this.state.name,this.state.pincode);
+    }
+    else if(reg == 2){
+        this.updatingCustomer(this.state.name,this.state.pincode);
+    }
+    else if(reg == 3){
+        this.addingManufacturer(this.state.name,this.state.pincode);
+    }
+    else if(reg == 4){
+        this.addingCustomer(this.state.name,this.state.pincode);
+    } 
+    
     }
 
     func(){
     reg = this.props.registered;
     console.log(reg);
-    ele = reg == 0?"REGISTER":"UPDATE";
+    switch(reg) {
+        case 3:
+            ele = 'Register Manufacturer';
+            break;
+        case 1:
+            ele = 'Update Manufacturer';
+            break;
+        case 4:
+            ele = 'Register Customer';
+            break;
+        case 2:
+            ele = 'Update Customer';
+            break;
+        default : 
+            ele = "Register";
+    }
+    
     }
 
     render(){
@@ -58,12 +104,6 @@ class RegisterComp extends Component{
                             </Col>
                         </FormGroup>
                         <FormGroup row>
-                            <Label htmlFor="phonenumber" md={2}>Phone Number</Label>
-                            <Col md={10}>
-                                <Input type="tel" id="phonenumber" name="phonenumber" placeholder="Phone Number" value={this.state.phonenumber} onChange={this.handleInputChange}/>
-                            </Col>
-                        </FormGroup>
-                        <FormGroup row>
                             <Label htmlFor="pincode" md={2}>Pincode</Label>
                             <Col md={10}>
                                 <Input type="tel" id="pincode" name="pincode" placeholder="Pincode" value={this.state.pincode} onChange={this.handleInputChange} />    
@@ -72,7 +112,7 @@ class RegisterComp extends Component{
                         <FormGroup row>
                             <Col md={{size:10, offset:2}}>
                                 <Button type="submit" color="primary" >
-                                    Add Manufacturer
+                                    {ele}
                                 </Button>
                             </Col>
                             

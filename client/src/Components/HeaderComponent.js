@@ -58,7 +58,7 @@ class Header extends Component{
                             
                         </Collapse>
                     </div>
-                    <h6>Balance : {util1}</h6>
+                    <h6 style={{ color: "white"}}>Balance : {util1}</h6>
                 </Navbar>
             
             </React.Fragment>

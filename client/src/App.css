@@ -76,3 +76,7 @@ address{
 StepProgressBar{
   color: #9575CD;
 }
+
+.pri{
+  display: none;
+}
