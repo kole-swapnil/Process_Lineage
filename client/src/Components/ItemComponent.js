@@ -57,6 +57,7 @@ function subtract(a, b){
 
 var quantity;
 var total;
+var finalid;
 
 class Allpatrender extends Component{
     // var day = moment.unix(dish.dateofComp); 
@@ -98,14 +99,14 @@ class Allpatrender extends Component{
         console.log(response3);
         var nearadd = await calDist(customer,response3,cntres3);
         console.log(nearadd);
-        var finalid;
-        // for(var k = 0; k<cntres2;k++){
-        //     if(nearadd == response2.manadr){
+        
+        //  for(var k = 0; k<cntres2;k++){
+        //     if(nearadd == response.manadr){
         //         finalid = response2.itemid;
         //     }
-        // }
+        //  }
         
-        return nearadd;
+        return(nearadd);
     }  
     toggleModal() {
         this.setState({
@@ -135,13 +136,14 @@ class Allpatrender extends Component{
     }
     creatingShipment = async(event) => {
         event.preventDefault();
-        var itemid =  this.props.dish?.itemid;
+        var itemcat =  this.props.dish?.itemtype;
         var qty = this.state.qty;
         var totalamt = conver((util1*qty).toString());
         var manadr = await this.buyitem(parseInt(this.props.dish.itemtype));
-        console.log(manadr);
-        const res = await this.props.contract?.methods.createShipment(itemid,qty,0,totalamt,0,manadr).send({from: this.props.accounts,gas : 1000000});
+        const res = await this.props.contract?.methods.createShipment(itemcat,qty,0,totalamt,0,manadr).send({from: this.props.accounts,gas : 1000000});
         console.log(res);
+        this.toggleModal();
+
     }
     
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import moment from 'moment';
+import moment from 'moment';
 import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, Col, FormFeedback ,
     Card, CardImg,CardImgOverlay, CardTitle, CardBody, CardText , Modal, ModalHeader, ModalBody} from 'reactstrap';
 import { BrowserRouter, NavLink } from 'react-router-dom';
@@ -82,8 +82,6 @@ var x = 'hello';
     }
 
     var z;
-    
-
     var a;
     var b;
 // Class 
@@ -91,12 +89,57 @@ var x = 'hello';
     class Allpatrender extends Component{
         constructor(props){
             super(props);
-            this.state = { docCount : 0, dish: [] , isModalOpen: false};
+            this.state = { docCount : 0, dish: [] , isModalOpen: false,ships:[], payfor:[] };
             this.toggleModal = this.toggleModal.bind(this);
             this.converb = this.converb.bind(this);
             this.dopayment = this.dopayment.bind(this);
+            this.getshipevents = this.getshipevents.bind(this);
+            this.getpayevents = this.getpayevents.bind(this);
 
-        }  
+        } 
+        getshipevents = async() => {
+            this.toggleModal();
+            this.getpayevents();
+            const timefor = [];
+            const req = await this.props.contract.getPastEvents('processchange', {
+                filter: { ship_id: this.props.dish.shid },
+                fromBlock: 0,    
+            });
+            req.forEach(async (ele) => {
+                
+                const ship_id = (ele.returnValues.ship_id);
+                const shstate = (ele.returnValues.shstate);
+                const times = (ele.returnValues.times);
+                //console.log("item : ",ship_id,shstate,times);
+                var day = moment.unix(times); 
+                var time = day.format('D-MMM-YY, hh:mm:ss a');
+                timefor.push(time.toString());
+                
+            });
+            await this.setState({ships : timefor});
+            console.log(this.state.ships)
+            
+        } 
+        getpayevents = async() => {
+            const pays =[];
+            const req1 = await this.props.contract.getPastEvents('processpay', {
+                filter: { ship_id: this.props.dish.shid },
+                fromBlock: 0,
+            });
+            req1.forEach(async (ele) => {
+                
+                 const ship_id = (ele.returnValues.ship_id);
+                 const paystate = (ele.returnValues.pay);
+                 const times = (ele.returnValues.times);
+                console.log("item : ",ship_id,paystate,times);
+                var day = moment.unix(times); 
+                 var time = day.format('D-MMM-YY, hh:mm:ss a');
+                pays.push(time.toString());
+                
+            });
+            await this.setState({payfor : pays});
+                console.log(this.state.ships)
+        }
         toggleModal() {
             this.setState({
                 isModalOpen: !this.state.isModalOpen
@@ -105,16 +148,13 @@ var x = 'hello';
         converb = async (x) => {
             util1 = (Web3.utils.fromWei(x, 'milli'));
         }
-        // var day = moment.unix(dish.dateofComp); 
-        // var xy = dish.dateofComp;
-        // var date = new Date(xy*1000);
-        // var time = day.format('dddd MMMM Do YYYY, h:mm:ss a');
+        
         // var yz = xy != 0?"bg-success text-white":""; 
        
             
            
         dopayment = async() => {
-                const res = await this.props.contract.methods.payitem(this.props.dish.totalamt.toString(),4).send({from: this.props.accounts,value:this.props.dish.totalamt.toString(),gas : 1000000});
+                const res = await this.props.contract.methods.payitem(this.props.dish.totalamt.toString(),this.props.dish.shid).send({from: this.props.accounts,value:this.props.dish.totalamt.toString(),gas : 1000000});
                 console.log(res);
         }
         
@@ -126,7 +166,7 @@ var x = 'hello';
             <Card >
             <i className="fa fa-envelope fa-5x"></i>
             <CardBody>
-            <CardTitle>Shipment ID : {this.props.dish.itemcat}</CardTitle>
+            <CardTitle>Shipment ID : {this.props.dish.shid}</CardTitle>
             <CardText><small>Item Cat : {this.props.dish.itemcat}</small></CardText>
             <CardText><small>Item qty : {this.props.dish.qty}</small></CardText>
             <CardText><small>Shipment Status : {shipstate(parseInt(this.props.dish.shipstate))}</small></CardText>
@@ -134,7 +174,7 @@ var x = 'hello';
             <CardText><small>Payment Status : {status(parseInt(this.props.dish.payment))}</small></CardText>
             
             <Col sm={{size:12}}>
-                <Button color="primary" onClick={this.toggleModal}>
+                <Button color="primary" onClick={this.getshipevents}>
                     Shipment
                 </Button>
                 <Button className="ml-3" color="primary" onClick={this.dopayment}>
@@ -147,25 +187,25 @@ var x = 'hello';
                     <StepProgressBar startingStep={a++} primaryBtnClass={"pri"} secondaryBtnClass={"pri"} onSubmit={onFormSubmit} steps={[
                         {
                             label: 'Added',
-                            subtitle: x,
+                            subtitle: this.state.ships[0],
                             name: 'step 0',
                             content: step0Content
                          },
                         {
                             label: 'Pending',
-                            subtitle: x,
+                            subtitle: this.state.ships[1],
                             name: 'step 1',
                             content: step1Content
                         },
                         {
                             label: 'Confirmed',
-                            subtitle: x,
+                            subtitle: this.state.ships[2],
                             name: 'step 2',
                             content: step2Content
                         },
                         {
                             label: 'Manufactured',
-                            subtitle: x,
+                            subtitle: this.state.ships[3],
                             name: 'step 3',
                             content: step3Content
                         },
@@ -188,19 +228,19 @@ var x = 'hello';
                     <StepProgressBar startingStep={b++} primaryBtnClass={"pri"} secondaryBtnClass={"pri"}  onSubmit={onFormSubmit1} steps={[
                         {
                         label: 'NotPaid',
-                        subtitle: x,
+                        subtitle: this.state.payfor[0],
                         name: 'step 0',
                         content: step0Contents
                          },
                         {
                         label: 'InSc',
-                        subtitle: x,
+                        subtitle: this.state.payfor[1],
                         name: 'step 1',
                         content: step1Contents
                         },
                         {
                         label: 'Received',
-                        subtitle: x,
+                        subtitle: this.state.payfor[2],
                         name: 'step 2',
                         content: step2Contents
                         }

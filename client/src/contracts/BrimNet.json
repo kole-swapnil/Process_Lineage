@@ -106,25 +106,6 @@
     {
       "inputs": [
         {
-          "internalType": "address",
-          "name": "addr",
-          "type": "address"
-        }
-      ],
-      "name": "getbal",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "string",
           "name": "_custname",
           "type": "string"
@@ -353,6 +334,25 @@
       "type": "function"
     },
     {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "name": "getbal",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "govt",
       "outputs": [
@@ -511,6 +511,11 @@
       ],
       "name": "Shipments",
       "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "shid",
+          "type": "uint256"
+        },
         {
           "internalType": "uint256",
           "name": "itemcat",
@@ -1098,6 +1103,12 @@
     "version": "0.6.12+commit.27d51765.Emscripten.clang"
   },
   "networks": {
+    "3": {
+      "events": {},
+      "links": {},
+      "address": "0x8AAc4E8106515dC6365f57B03331C62014F6ECb1",
+      "transactionHash": "0xb689a956d4fdd21d4e68da1e6213f32c3285f06fb5c41a88f9952f0200c18406"
+    },
     "5777": {
       "events": {},
       "links": {},

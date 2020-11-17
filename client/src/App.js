@@ -1,16 +1,16 @@
 
 import React, { Component } from "react";
 import Main from './Components/MainComponents';
-import {BrowserRouter} from 'react-router-dom';
+import {HashRouter,BrowserRouter} from 'react-router-dom';
 class App extends Component {
 
   render() {
     return (
-      <BrowserRouter>
+      <HashRouter basename="/">
       <div className="App">
         <Main />
       </div>
-      </BrowserRouter>
+      </HashRouter>
     );
   }
 }
