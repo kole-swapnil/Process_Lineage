@@ -175,8 +175,8 @@ class Allpatrender extends Component{
                                 <p> <Input type="text" id="qty" name="qty" onChange={this.handleInputChange}></Input></p>
                             </div>
                             <p className="m-auto p-2">TotalAmt : {util1 * (this.state.qty)}</p>
-        <p className="m-auto p-2"><Button type="submit" onClick={this.creatingShipment} >Confirm</Button> </p>
                             <p className="m-auto p-2">Description : {this.props.dish.description}</p>
+                            <p className="m-auto p-2"><Button type="submit" onClick={this.creatingShipment} >Confirm</Button> </p>
                         </Card>
                 </Modal>
             </Col>

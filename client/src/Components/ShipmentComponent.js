@@ -14,10 +14,8 @@ var x = 'hello';
     const step1Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Pending</h3>;
     const step2Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Confirmed </h3>;
     const step3Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Manufactured </h3>;
-    const step4Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Packaged </h3>;
-    const step5Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>OutForDelivery </h3>;
-    const step6Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Delievered </h3>;
-    const step7Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Cancel </h3>;
+    const step4Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>OutForDelivery </h3>;
+    const step5Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Delievered </h3>;
 
     function onFormSubmit() {
     
@@ -47,28 +45,22 @@ var x = 'hello';
 
         switch(s) {
             case 0:
-                value = 'added';
+                value = 'Added';
                 break;
             case 1:
-                value = 'pending';
+                value = 'Pending';
                 break;
             case 2:
-                value = 'confirmed';
+                value = 'Cnfirmed';
                 break;
             case 3:
-                value = 'manufactured';
+                value = 'Manufactured';
                 break;
             case 4:
-                value = 'packaged';
+                value = 'Outfordel';
                 break;
             case 5:
-                value = 'outfordel';
-                break;
-            case 6:
-                value = 'delievered';
-                break;
-            case 7:
-                value = 'cancel';
+                value = 'Delievered';
                 break;
         }
         return value;
@@ -77,13 +69,13 @@ var x = 'hello';
         
         switch(s) {
             case 0:
-                value1 = 'notpaid';
+                value1 = 'NotPaid';
                 break;
             case 1:
-                value1 = 'inSc';
+                value1 = 'InSc';
                 break;
             case 2:
-                value1 = 'received';
+                value1 = 'Received';
                 break;
         }  
         return value1; 
@@ -139,7 +131,7 @@ var x = 'hello';
             <CardText><small>Item qty : {this.props.dish.qty}</small></CardText>
             <CardText><small>Shipment Status : {shipstate(parseInt(this.props.dish.shipstate))}</small></CardText>
             <CardText><small>Totalamt : {util1}</small></CardText>
-            <CardText><small>Payment Status :{status(parseInt(this.props.dish.payment))}</small></CardText>
+            <CardText><small>Payment Status : {status(parseInt(this.props.dish.payment))}</small></CardText>
             
             <Col sm={{size:12}}>
                 <Button color="primary" onClick={this.toggleModal}>
@@ -178,28 +170,16 @@ var x = 'hello';
                             content: step3Content
                         },
                         {
-                            label: 'Packaged',
+                            label: 'OutForDelivery',
                             subtitle: x,
                             name: 'step 4',
                             content: step4Content
                         },
                         {
-                            label: 'OutForDelivery',
+                            label: 'Delievered',
                             subtitle: x,
                             name: 'step 5',
                             content: step5Content
-                        },
-                        {
-                            label: 'Delievered',
-                            subtitle: x,
-                            name: 'step 6',
-                            content: step6Content
-                        },
-                        {
-                            label: 'Cancel',
-                            subtitle: x,
-                            name: 'step 7',
-                            content: step7Content
                         }
                     ]}
                     />

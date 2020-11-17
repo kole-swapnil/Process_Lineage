@@ -35,7 +35,7 @@ class Login extends Component{
                 <div className="container">
                     <div className="row justify-content-center pt-3">             
                         <div className="col-4">
-                            <h6 className="pl-5"> User SignIn</h6>
+                            <h6 className="m-auto"> Customer SignUp</h6>
                             <div className="part pt-5">
                                 <i class="fa fa-user-circle-o fa-4x" aria-hidden="true"></i>
                                 <br/><br/>
@@ -55,12 +55,12 @@ class Login extends Component{
                                     <input type="text" placeholder="Enter Address..." style={{ width: "250px"}}/>
                                 </div>
                                 
-                                <button class="btn btn-sm btn-primary text-uppercase pl-3 pr-3" type="submit" onClick={this.handleSubmitMan} >Sign in</button>
+                                <button class="btn btn-sm btn-primary text-uppercase pl-3 pr-3" type="submit" onClick={this.handleSubmitCust} >Sign in</button>
                                 
                             </div>
                         </div>
                         <div className="col-4">
-                            <h6 className="pl-5"> Manufacturer SignIn</h6>
+                            <h6 className="m-auto"> Manufacturer SignUp</h6>
                             <div className="part pt-5">
                                 <i class="fa fa-users fa-4x" aria-hidden="true"></i>
 
@@ -81,12 +81,12 @@ class Login extends Component{
                                     <input type="text" placeholder="Enter Address..." style={{ width: "250px"}}/>
                                 </div>
                                 
-                                <button class="btn btn-sm btn-primary text-uppercase pl-3 pr-3" type="submit" onClick={this.handleSubmitCust}>Sign in</button>
+                                <button class="btn btn-sm btn-primary text-uppercase pl-3 pr-3" type="submit" onClick={this.handleSubmitMan}>Sign in</button>
                                 
                             </div>
                         </div>
                         <div className="col-4">
-                            <h6 className="pl-5"> Goverment SignIn</h6>
+                            <h6 className="m-auto"> Goverment SignUp</h6>
                             <div className="part pt-5">
                                 <i class="fa fa-id-card fa-4x" aria-hidden="true"></i>
                                 <br/><br/>

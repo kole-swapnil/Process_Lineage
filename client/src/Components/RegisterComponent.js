@@ -10,7 +10,7 @@ var ele;
 class RegisterComp extends Component{
     constructor(props){
         super(props);
-        this.state={name : '', pincode : 0};
+        this.state={name : '', pincode : null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.updatingManufacturer = this.updatingManufacturer.bind(this);
@@ -98,7 +98,7 @@ class RegisterComp extends Component{
                 
             <Form onSubmit={this.handleSubmit}>
                         <FormGroup row>
-                            <Label htmlFor="name" md={2}>Manufacturer Name</Label>
+                            <Label htmlFor="name" md={2}>Name</Label>
                             <Col md={10}>
                                 <Input type="text" id="name" name="name" placeholder="Name" value={this.state.name} onChange={this.handleInputChange}/>
                             </Col>
