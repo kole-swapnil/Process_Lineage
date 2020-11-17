@@ -89,7 +89,14 @@ var x = 'hello';
         return value1; 
     }
 
-    var val ;
+    var z;
+    function payment() {
+        z = 1;
+        alert(z);
+    }
+
+    var a;
+    var b;
 // Class 
     var alldocs = [];
     class Allpatrender extends Component{
@@ -112,9 +119,11 @@ var x = 'hello';
         // var date = new Date(xy*1000);
         // var time = day.format('dddd MMMM Do YYYY, h:mm:ss a');
         // var yz = xy != 0?"bg-success text-white":""; 
-        
+       
     render(){
         this.converb(this.props.dish.totalamt.toString());
+        a = this.props.dish.shipstate;
+        b = this.props.dish.payment;
         return(
             <Card >
             <i className="fa fa-envelope fa-5x"></i>
@@ -126,14 +135,18 @@ var x = 'hello';
             <CardText><small>Totalamt : {util1}</small></CardText>
             <CardText><small>Payment Status :{status(parseInt(this.props.dish.payment))}</small></CardText>
             
-            <Col md={{size:10, offset:1}}>
+            <Col sm={{size:12}}>
                 <Button color="primary" onClick={this.toggleModal}>
                     Shipment
                 </Button>
+                <Button className="ml-3" color="primary" onClick={payment}>
+                    Pay
+                </Button>
+                
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} className="modal-xl">
-                <ModalHeader toggle={this.toggleModal}>Shipment Status</ModalHeader>
+                <ModalHeader toggle={this.toggleModal} className="pl-5">Shipment Status</ModalHeader>
                 <ModalBody>
-                    <StepProgressBar startingStep={1} primaryBtnClass={"pri"} secondaryBtnClass={"pri"} onSubmit={onFormSubmit} steps={[
+                    <StepProgressBar startingStep={a++} primaryBtnClass={"pri"} secondaryBtnClass={"pri"} onSubmit={onFormSubmit} steps={[
                         {
                             label: 'Added',
                             subtitle: x,
@@ -184,9 +197,9 @@ var x = 'hello';
                         }
                     ]}
                     />
-                    <h5>Payment Status</h5>
+                    <h5 className=" ml-5 ">Payment Status</h5>
                     <hr/>
-                    <StepProgressBar startingStep={2} primaryBtnClass={"pri"} secondaryBtnClass={"pri"}  onSubmit={onFormSubmit1} steps={[
+                    <StepProgressBar startingStep={b++} primaryBtnClass={"pri"} secondaryBtnClass={"pri"}  onSubmit={onFormSubmit1} steps={[
                         {
                         label: 'NotPaid',
                         subtitle: x,
@@ -211,6 +224,7 @@ var x = 'hello';
                 
             </Modal>
             </Col>
+            
             </CardBody>
         </Card>
         )

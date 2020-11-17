@@ -48,6 +48,9 @@ let buyitem = async(typeitem) => {
     }
 }
 
+var quantity;
+var total;
+
 class Allpatrender extends Component{
     // var day = moment.unix(dish.dateofComp); 
     // var xy = dish.dateofComp;
@@ -68,6 +71,12 @@ class Allpatrender extends Component{
     converb = async (x) => {
         util1 = (Web3.utils.fromWei(x, 'milli'));
     }
+    totalvalue = () => {
+        quantity = this.qty.value;
+        total = util1 * quantity;
+        alert(total);
+    }
+    
 
     render() {
         this.converb(this.props.dish.price.toString());
@@ -88,13 +97,20 @@ class Allpatrender extends Component{
                     Buy Item
                 </Button>
 
-                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} className="modal-xl">
-                <ModalHeader toggle={this.toggleModal}>Shipment Status</ModalHeader>
-                <ModalBody>
-                    <p>lorem</p>
-                </ModalBody>
-                
-            </Modal>
+                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} className="modal-md">
+                    <ModalHeader toggle={this.toggleModal} className="pl-5">Item</ModalHeader>
+                        <Card className="pb-5">
+                            <p className="m-auto p-4"><i className={cl}></i></p>
+                            <p className="m-auto p-2">Item Type : {category(parseInt(this.props.dish.itemtype))}</p>
+                            <p className="m-auto p-2">Item Price : {util1}</p>
+                            <div className="row m-auto pt-2">
+                                <p>Item Quantity : </p>
+                                <p> <Input type="text" id="qty" name="qty" innerRef={(input) => this.qty = input}></Input></p>
+                            </div>
+                            <p className="m-auto p-2"><Button onClick={this.totalvalue}>Total Value</Button> {this.props.total}</p>
+                            <p className="m-auto p-2">Description : {this.props.dish.description}</p>
+                        </Card>
+                </Modal>
             </Col>
             </CardBody>
             
