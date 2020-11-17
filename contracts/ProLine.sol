@@ -49,6 +49,7 @@ contract ProLine{
     }
     
     struct Shipment{
+        uint shid;
         uint itemcat;
         uint qty;
         State shipstate;
@@ -108,6 +109,7 @@ contract ProLine{
     
     function createShipment(uint _itemid,uint _qty,State _shipstate,uint _totalamt,Status _payment,address payable _manadr)public{
         shipmentcount++;
+        Shipments[shipmentcount].shid = shipmentcount;
         Shipments[shipmentcount].itemcat =  _itemid;
         Shipments[shipmentcount].qty =  _qty;
         Shipments[shipmentcount].shipstate = _shipstate;
@@ -120,6 +122,7 @@ contract ProLine{
         
         }
     function updateShstate(uint _shipid,State _shipstate)public{
+       require(Shipments[_shipid].shipstate != State.Cancelled,"Cancelled");
         Shipments[_shipid].shipstate = _shipstate;
         emit processchange(_shipid,_shipstate,now);
     }
@@ -133,26 +136,36 @@ contract ProLine{
         require(msg.value == totamt,"less money");
         Shipments[_shipid].payment = Status.inSc;
         emit processpay(_shipid,Status.inSc,now);
+        Shipments[_shipid].shipstate = State.Pending;
+        emit processchange(_shipid,State.Pending,now);
 
         }
         
     function withdrawmoney(uint _shipid)public payable{
         Shipment memory y = Shipments[_shipid];
-        require(y.shipstate == State.Delivered);
-        require(y.payment == Status.inSc);
         Item memory x = Items[y.itemcat];
         uint totalpay = x.price*(y.qty);
+        if(y.shipstate == State.Cancelled){
+            address payable cus = payable(y.custadr);
+            cus.transfer(totalpay);
+        }
+        else{
+        require(y.shipstate == State.Delivered);
+        require(y.payment == Status.inSc);
         uint govtmoney = (totalpay*x.gst)/100;
         uint manumoney = totalpay - govtmoney;
         govt.transfer(govtmoney);
         address payable mann = payable(y.manadr);
         mann.transfer(manumoney);
-        y.payment = Status.received;
-         emit processpay(_shipid,Status.received,now);
+        Shipments[_shipid].payment = Status.received;
+        emit processpay(_shipid,Status.received,now);
         
+        }    
+            
     }
+  
 
-    function getbal(address addr)public returns(uint){
+    function getbal(address addr)public view returns(uint){
         return (addr).balance;
     }
     
