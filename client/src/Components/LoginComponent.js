@@ -7,9 +7,26 @@ import '../App.css'
 class Login extends Component{
     constructor(props){
         super(props);
+        this.handleSubmitMan = this.handleSubmitMan.bind(this);
+        this.handleSubmitCust = this.handleSubmitCust.bind(this);
+        this.handleSubmitGovt = this.handleSubmitGovt.bind(this);
     }
 
-   
+    async handleSubmitMan(event){
+       event.preventDefault();
+        this.props.reghandler(3);
+        
+    }
+    async handleSubmitCust(event){
+        event.preventDefault();
+        this.props.reghandler(4);
+        
+    }
+    async handleSubmitGovt(event){
+        event.preventDefault();
+        this.props.reghandler(5);
+        
+    }
     render(){
       
         return(
@@ -38,7 +55,7 @@ class Login extends Component{
                                     <input type="text" placeholder="Enter Address..." style={{ width: "250px"}}/>
                                 </div>
                                 
-                                <button class="btn btn-sm btn-primary text-uppercase pl-3 pr-3" type="submit">Sign in</button>
+                                <button class="btn btn-sm btn-primary text-uppercase pl-3 pr-3" type="submit" onClick={this.handleSubmitMan} >Sign in</button>
                                 
                             </div>
                         </div>
@@ -64,7 +81,7 @@ class Login extends Component{
                                     <input type="text" placeholder="Enter Address..." style={{ width: "250px"}}/>
                                 </div>
                                 
-                                <button class="btn btn-sm btn-primary text-uppercase pl-3 pr-3" type="submit">Sign in</button>
+                                <button class="btn btn-sm btn-primary text-uppercase pl-3 pr-3" type="submit" onClick={this.handleSubmitCust}>Sign in</button>
                                 
                             </div>
                         </div>

@@ -89,3 +89,8 @@ getpayevents = async(instance) => {
     });
     console.log(req);
 }
+
+dopayment = async(totalamt,shipid,totalamt) => {
+    const res = await instance.methods.payitem(totalamt,shipid).send({from: accounts,value:totalamt,gas : 1000000});
+    console.log(res);
+}

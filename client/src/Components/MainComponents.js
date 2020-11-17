@@ -80,11 +80,11 @@ class Main extends Component {
 
   async checks(address){
    
-               
-
-
-                
-  }
+                 }
+  
+  reghandler = (vt) => {
+      this.setState({registered : vt });
+    }
 
   render() {
     this.checks(this.state.accounts);
@@ -96,7 +96,7 @@ class Main extends Component {
             <Route path='/items' component={() => <AllItemComponent contract={this.state.contract} accounts={this.state.accounts}/>}/>
             <Route path="/shipment" component={() => <Shipment contract={this.state.contract} accounts={this.state.accounts}/>}/>
             <Route path="/register" component={() => <RegisterComp contract={this.state.contract} accounts={this.state.accounts} registered = {this.state.registered}/>}/>
-            <Route path="/login" component={() => <Login/>}/>
+            <Route path="/login" component={() => <Login reghandler = {this.reghandler}/>}/>
             <Redirect to="/home"/>
         </Switch>
         <Footer/>
