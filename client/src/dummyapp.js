@@ -20,7 +20,7 @@ Mount = async () => {
     // console.log("gfsd",instance);
     // console.log("gd",accounts);
      //   addingManufacturer("Kole",751002);
-     getshipevents(instance);
+     getpayevents(instance);
 }
 
 
@@ -80,15 +80,31 @@ getshipevents = async(instance) => {
         filter: { ship_id: 1 },
         fromBlock: 0,    
     });
-    console.log(req);
+    req.forEach(async (ele) => {
+        
+        const ship_id = (ele.returnValues.ship_id);
+        const shstate = (ele.returnValues.shstate);
+        const times = (ele.returnValues.times);
+        console.log("item : ",ship_id,shstate,times);
+    });
+    
 }
 getpayevents = async(instance) => {
-    const req = await instance.getPastEvents('processpay', {
-        filter: { ship_id: 1 },
+    const req1 = await instance.getPastEvents('processpay', {
+        
         fromBlock: 0,
     });
-    console.log(req);
+    req1.forEach(async (ele) => {
+        
+         const ship_id = (ele.returnValues.ship_id);
+         const paystate = (ele.returnValues.pay);
+         const times = (ele.returnValues.times);
+        console.log("item : ",ship_id,paystate,times);
+    });
 }
+    
+    
+// }
 
 //  dopayment = async(totalamt,shipid,totalamt) => {
 //      const res = await instance.methods.payitem(totalamt,shipid).send({from: accounts,value:totalamt,gas : 1000000});

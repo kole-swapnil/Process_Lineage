@@ -106,25 +106,6 @@
     {
       "inputs": [
         {
-          "internalType": "address",
-          "name": "addr",
-          "type": "address"
-        }
-      ],
-      "name": "getbal",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "string",
           "name": "_custname",
           "type": "string"
@@ -353,6 +334,25 @@
       "type": "function"
     },
     {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "name": "getbal",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "govt",
       "outputs": [
@@ -511,6 +511,11 @@
       ],
       "name": "Shipments",
       "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "shid",
+          "type": "uint256"
+        },
         {
           "internalType": "uint256",
           "name": "itemcat",
@@ -1098,11 +1103,17 @@
     "version": "0.6.12+commit.27d51765.Emscripten.clang"
   },
   "networks": {
+    "3": {
+      "events": {},
+      "links": {},
+      "address": "0x8AAc4E8106515dC6365f57B03331C62014F6ECb1",
+      "transactionHash": "0xb689a956d4fdd21d4e68da1e6213f32c3285f06fb5c41a88f9952f0200c18406"
+    },
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x3EFA4Ba184d04df6Db6E9E9e0cb6C3493caC6498",
-      "transactionHash": "0xb2d7de29cd3eb862e729ef23e9ee1e84485f8c9497a886472123842b79305312"
+      "address": "0x46A44F805435852dECDFD8619753A419b4cE73E3",
+      "transactionHash": "0xaae8ff33a17392da4deb604f59ef2fa0d738a12d504b4a2864378fd16d49fe10"
     }
   },
   "schemaVersion": "3.2.4",

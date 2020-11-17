@@ -9,6 +9,7 @@
     "core-js": "3",
     "jquery": "^3.5.1",
     "jquery-steps": "^1.1.0",
+    "moment": "^2.29.1",
     "react": "16.11.0",
     "react-alice-carousel": "^2.0.2",
     "react-dom": "16.11.0",
