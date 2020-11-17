@@ -287,4 +287,3 @@ class Shipment extends Component{
 
 
 export default Shipment;
-

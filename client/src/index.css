@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #000000;
 }
 
 code {
@@ -12,5 +13,13 @@ code {
     monospace;
 }
 container {
-  background-color: #971010;
+  background-color: #000000;
 }
+
+h6 {
+  color:white;
+  padding-bottom:5px;
+  padding-top: 5px;
+
+}
+ 
