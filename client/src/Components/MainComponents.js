@@ -41,7 +41,7 @@ class Main extends Component {
       console.log(instance)
       this.setState({ web3, accounts : accounts[0] , contract: instance,balance });
       var res = await this.state.contract.methods.manufacturercount().call();
-         
+        
       for(var i=1;i<=res;i++){
           var rex = await this.state.contract?.methods.Manu_ids(i).call();
           console.log(rex);
@@ -50,17 +50,17 @@ class Main extends Component {
             console.log(1);
             break;
           }
-          
-
    
       }
       
-      
-      var res1 = await this.props.contract?.methods.customercount().call();
-      
+      var res1 = await this.state.contract.methods.customercount().call();
+      console.log(this.state.accounts);
+      console.log(res1);
       for(var i=1;i<=res1;i++){
-          var rex1 = await this.props.contract?.methods.cust_ids(i).call();
-          if(rex1 == accounts){
+          var rex1 = await this.state.contract?.methods.cust_ids(i).call();
+            console.log(rex1);
+          if(rex1 ==  this.state.accounts){
+          
             this.setState({registered : 2});
             console.log(2);
             break;

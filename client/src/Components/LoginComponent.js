@@ -106,7 +106,7 @@ class Login extends Component{
                                     <input type="text" placeholder="Enter Address..." style={{ width: "250px"}}/>
                                 </div>
                                 
-                                <button class="btn btn-sm btn-primary text-uppercase pl-3 pr-3" type="submit">Sign in</button>
+                                <button class="btn btn-sm btn-primary text-uppercase pl-3 pr-3" type="submit" onClick={this.handleSubmitGovt}>Sign in</button>
                                 
                             </div>
                         </div>

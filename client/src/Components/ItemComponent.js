@@ -24,27 +24,34 @@ let converb =(x) => {
     return util1;
 }
 
-let buyitem = async(typeitem) => {
-    var res = await this.props.contract?.methods.itemcount().call();
-    var response2;
-    var response3;
-    var rex2;
-    for(var i=1;i<=res;i++){
-        var rex = await this.props.contract?.methods.Items(i).call();
-        if(rex.itemtype == typeitem){
-        response2.push(rex);
+
+async function calDist(c,manu,cnt) {
+    
+    var pin = c.custpincode;
+    var min = 999999;
+    var x; // res
+    var y; // y
+    var add ;
+    for (var i = 0; i < cnt; i++){
+        y =  manu[i].manupincode;
+         
+        x = subtract(pin,y);
+        if(min>x){
+            min = x;
+            y = manu[i];
+            add = manu[i].manuadd;
         }
     }
-    console.log(response2);
-    for(var j = 0;j<response2.length;j++){
-        rex2 = await this.props.contract?.methods.Manufacturers(response2[i].manadr).call();
+
+    return add;
+}
+
+function subtract(a, b){
+    if (a > b){
+        return a-b;
     }
-    var nearadd = calDist(customer,rex2);
-    var finalid;
-    for(var k = 0; k<response2.length;k++){
-        if(nearadd == response2.manadr){
-            finalid = response2.itemid;
-        }
+    else{
+        return b-a;
     }
 }
 
@@ -59,22 +66,82 @@ class Allpatrender extends Component{
     // var yz = xy != 0?"bg-success text-white":"";
     constructor(props){
         super(props);
-        this.state = { docCount : 0, dish: [] , isModalOpen: false};
+        this.state = { docCount : 0, dish: [] , isModalOpen: false,qty: 0};
         this.toggleModal = this.toggleModal.bind(this);
         this.converb = this.converb.bind(this);
+        this.conver = this.conver.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.creatingShipment = this.creatingShipment.bind(this);
+        this.buyitem = this.buyitem.bind(this);
+    }
+    buyitem = async(typeitem) => {
+        var res = await this.props.contract.methods.itemcount().call();
+        var response2 = [];
+        var response3= [];
+        var cntres2 = 0 ;
+        var cntres3 = 0;
+        var rex2;
+        for(var i=1;i<=res;i++){
+            var rex = await this.props.contract.methods.Items(i).call();
+            if(rex.itemtype == typeitem){
+            response2.push(rex);
+            cntres2++;
+            }
+        }
+        
+        console.log(response2);
+        for(var j = 0;j<cntres2;j++){
+            rex2 = await this.props.contract?.methods.Manufacturers(response2[j].manadr).call();
+            response3.push(rex2);
+            cntres3++;
+        }
+        console.log(response3);
+        var nearadd = await calDist(customer,response3,cntres3);
+        console.log(nearadd);
+        var finalid;
+        // for(var k = 0; k<cntres2;k++){
+        //     if(nearadd == response2.manadr){
+        //         finalid = response2.itemid;
+        //     }
+        // }
+        
+        return nearadd;
     }  
     toggleModal() {
         this.setState({
             isModalOpen: !this.state.isModalOpen
         });
     }
+        handleInputChange(event){
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+        this.setState({
+            [name] : value
+        })
+    }
     converb = async (x) => {
         util1 = (Web3.utils.fromWei(x, 'milli'));
+    }
+    conver =  (x) => {
+
+        util =  (Web3.utils.toWei(x, 'milli'));
+        return util;
     }
     totalvalue = () => {
         quantity = this.qty.value;
         total = util1 * quantity;
         alert(total);
+    }
+    creatingShipment = async(event) => {
+        event.preventDefault();
+        var itemid =  this.props.dish?.itemid;
+        var qty = this.state.qty;
+        var totalamt = conver((util1*qty).toString());
+        var manadr = await this.buyitem(parseInt(this.props.dish.itemtype));
+        console.log(manadr);
+        const res = await this.props.contract?.methods.createShipment(itemid,qty,0,totalamt,0,manadr).send({from: this.props.accounts,gas : 1000000});
+        console.log(res);
     }
     
 
@@ -105,9 +172,10 @@ class Allpatrender extends Component{
                             <p className="m-auto p-2">Item Price : {util1}</p>
                             <div className="row m-auto pt-2">
                                 <p>Item Quantity : </p>
-                                <p> <Input type="text" id="qty" name="qty" innerRef={(input) => this.qty = input}></Input></p>
+                                <p> <Input type="text" id="qty" name="qty" onChange={this.handleInputChange}></Input></p>
                             </div>
-                            <p className="m-auto p-2"><Button onClick={this.totalvalue}>Total Value</Button> {this.props.total}</p>
+                            <p className="m-auto p-2">TotalAmt : {util1 * (this.state.qty)}</p>
+        <p className="m-auto p-2"><Button type="submit" onClick={this.creatingShipment} >Confirm</Button> </p>
                             <p className="m-auto p-2">Description : {this.props.dish.description}</p>
                         </Card>
                 </Modal>
@@ -136,30 +204,22 @@ function category(i) {
         return vx;
 }
 
-function calDist(c,manu) {
-    var pin = c.custpincode;
-    var min = 999999;
-    var x; // res
-    var y; // y
-    var add ;
-    for (var i = 0; i < manu.length; i++){
-        y = manu[i].manupincode;
-        x = subtract(pin,y);
-        if(min>x){
-            min = x;
-            y = manu[i];
-        }
-    }
-    return y;
-}
+function categoryrev(i) {
 
-function subtract(a, b){
-    if (a > b){
-        return a-b;
-    }
-    else{
-        return b-a;
-    }
+    
+        if(i == "Laptop")
+        {
+            return 0;
+        }
+        else if(i == "Mobile")
+        {
+            return 1;
+        }
+        else if(i == "Desktop")
+        {
+            return 2;
+        }
+        
 }
 var itemtype;
 var itemprice;
@@ -174,7 +234,7 @@ class AllItemComponent extends Component{
         this.toggleModal1 = this.toggleModal1.bind(this);
         //this.com = this.com.bind(this);
     }
- 
+    
     toggleModal1() {
         this.setState({
             isModalOpen1: !this.state.isModalOpen1
@@ -185,7 +245,8 @@ class AllItemComponent extends Component{
         console.log(res);
     }
     creatingItems = () => {
-        itemtype = this.type.value;
+        itemtype = categoryrev(this.type.value);
+        console.log(itemtype);
         itemprice = (conver(this.price.value));
         
         itemgst = this.gst.value;
@@ -227,7 +288,7 @@ class AllItemComponent extends Component{
         const Menu = this.state.dish.map((x) => {
             return (
                 <div key={x} className="col-4 col-md-3">
-                    < Allpatrender dish={x}/>
+                    < Allpatrender dish={x} contract={this.props.contract} accounts={this.props.accounts}/>
                 </div>
             );
         })
@@ -252,7 +313,7 @@ class AllItemComponent extends Component{
                                     <Input type="select" id="type" name="type" innerRef={(input) => this.type = input}>
                                         <option>Select Item Type</option>
                                         <option>Mobile</option>
-                                        <option>Labtop</option>
+                                        <option>Laptop</option>
                                         <option>Desktop</option>
                                     </Input>
                                 </FormGroup>

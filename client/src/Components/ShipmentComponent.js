@@ -90,10 +90,7 @@ var x = 'hello';
     }
 
     var z;
-    function payment() {
-        z = 1;
-        alert(z);
-    }
+    
 
     var a;
     var b;
@@ -105,6 +102,8 @@ var x = 'hello';
             this.state = { docCount : 0, dish: [] , isModalOpen: false};
             this.toggleModal = this.toggleModal.bind(this);
             this.converb = this.converb.bind(this);
+            this.dopayment = this.dopayment.bind(this);
+
         }  
         toggleModal() {
             this.setState({
@@ -120,6 +119,13 @@ var x = 'hello';
         // var time = day.format('dddd MMMM Do YYYY, h:mm:ss a');
         // var yz = xy != 0?"bg-success text-white":""; 
        
+            
+           
+        dopayment = async() => {
+                const res = await this.props.contract.methods.payitem(this.props.dish.totalamt.toString(),4).send({from: this.props.accounts,value:this.props.dish.totalamt.toString(),gas : 1000000});
+                console.log(res);
+        }
+        
     render(){
         this.converb(this.props.dish.totalamt.toString());
         a = this.props.dish.shipstate;
@@ -139,7 +145,7 @@ var x = 'hello';
                 <Button color="primary" onClick={this.toggleModal}>
                     Shipment
                 </Button>
-                <Button className="ml-3" color="primary" onClick={payment}>
+                <Button className="ml-3" color="primary" onClick={this.dopayment}>
                     Pay
                 </Button>
                 
@@ -258,7 +264,7 @@ class Shipment extends Component{
         const Menu = this.state.dish.map((x) => {
             return (
                 <div key={x} className="col-4 col-md-3">
-                    < Allpatrender dish={x}/>
+                    < Allpatrender dish={x} contract={this.props.contract} accounts={this.props.accounts}/>
                 </div>
             );
         })
