@@ -7,13 +7,9 @@ import '../App.css'
 class Login extends Component{
     constructor(props){
         super(props);
-<<<<<<< HEAD
         this.handleSubmitMan = this.handleSubmitMan.bind(this);
         this.handleSubmitCust = this.handleSubmitCust.bind(this);
         this.handleSubmitGovt = this.handleSubmitGovt.bind(this);
-=======
-        this.state = { registered : 0};
->>>>>>> 87e4e04a476767287084ccb2f5b738a9ebd9d735
     }
 
     async handleSubmitMan(event){
