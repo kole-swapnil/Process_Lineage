@@ -59,6 +59,7 @@ class RegisterComp extends Component{
     }
     else if(reg == 4){
         this.addingCustomer(this.state.name,this.state.pincode);
+        
     } 
     
     }

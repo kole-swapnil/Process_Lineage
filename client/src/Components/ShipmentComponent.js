@@ -10,20 +10,20 @@ import 'react-step-progress/dist/index.css';
 var x = 'hello';
 
 // Step Progress 
-    const step0Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Added </h3> ;
-    const step1Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Pending</h3>;
-    const step2Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Confirmed </h3>;
-    const step3Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Manufactured </h3>;
-    const step4Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>OutForDelivery </h3>;
-    const step5Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Delievered </h3>;
-
+    const step0Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Added</h3>
+    const step1Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Pending</h3>
+    const step2Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Confirmed</h3>
+    const step3Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Manufactured</h3>
+    const step4Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>OutForDelivery</h3>
+    const step5Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Delievered</h3>
+    
     function onFormSubmit() {
     
     }
 
-    const step0Contents = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>NotPaid </h3>;
-    const step1Contents = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>InSc</h3>;
-    const step2Contents = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Received </h3>;
+    const step0Contents = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>NotPaid </h3>;
+    const step1Contents = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>InSc</h3>;
+    const step2Contents = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Received </h3>;
 
     function onFormSubmit1() {
     
@@ -51,7 +51,7 @@ var x = 'hello';
                 value = 'Pending';
                 break;
             case 2:
-                value = 'Cnfirmed';
+                value = 'Confirmed';
                 break;
             case 3:
                 value = 'Manufactured';
@@ -81,7 +81,6 @@ var x = 'hello';
         return value1; 
     }
 
-    var z;
     var a;
     var b;
 // Class 
@@ -89,14 +88,28 @@ var x = 'hello';
     class Allpatrender extends Component{
         constructor(props){
             super(props);
-            this.state = { docCount : 0, dish: [] , isModalOpen: false,ships:[], payfor:[] };
+            this.state = { docCount : 0, dish: [] , isModalOpen: false,isModalOpen1: false,ships:[], payfor:[] };
             this.toggleModal = this.toggleModal.bind(this);
+            this.toggleModal1 = this.toggleModal1.bind(this);
             this.converb = this.converb.bind(this);
             this.dopayment = this.dopayment.bind(this);
             this.getshipevents = this.getshipevents.bind(this);
             this.getpayevents = this.getpayevents.bind(this);
-
+            this.processc = this.processc.bind(this);
         } 
+        toggleModal() {
+            this.setState({
+                isModalOpen: !this.state.isModalOpen
+            });
+        }
+        toggleModal1() {
+            this.setState({
+                isModalOpen1: !this.state.isModalOpen1
+            });
+        }
+        processc(){
+            this.toggleModal1();
+        }
         getshipevents = async() => {
             this.toggleModal();
             this.getpayevents();
@@ -140,19 +153,11 @@ var x = 'hello';
             await this.setState({payfor : pays});
                 console.log(this.state.ships)
         }
-        toggleModal() {
-            this.setState({
-                isModalOpen: !this.state.isModalOpen
-            });
-        }
+        
         converb = async (x) => {
             util1 = (Web3.utils.fromWei(x, 'milli'));
         }
         
-        // var yz = xy != 0?"bg-success text-white":""; 
-       
-            
-           
         dopayment = async() => {
                 const res = await this.props.contract.methods.payitem(this.props.dish.totalamt.toString(),this.props.dish.shid).send({from: this.props.accounts,value:this.props.dish.totalamt.toString(),gas : 1000000});
                 console.log(res);
@@ -162,29 +167,33 @@ var x = 'hello';
         this.converb(this.props.dish.totalamt.toString());
         a = this.props.dish.shipstate;
         b = this.props.dish.payment;
+        var char = this.props.registered == 2 ? "visible" : "invisible";
         return(
             <Card >
             <i className="fa fa-envelope fa-5x"></i>
             <CardBody>
             <CardTitle>Shipment ID : {this.props.dish.shid}</CardTitle>
-            <CardText><small>Item Cat : {this.props.dish.itemcat}</small></CardText>
-            <CardText><small>Item qty : {this.props.dish.qty}</small></CardText>
+            <CardText><small>Item Category : {this.props.dish.itemcat}</small></CardText>
+            <CardText><small>Item Quantity : {this.props.dish.qty}</small></CardText>
             <CardText><small>Shipment Status : {shipstate(parseInt(this.props.dish.shipstate))}</small></CardText>
-            <CardText><small>Totalamt : {util1}</small></CardText>
+            <CardText><small>Total Amount : {util1}</small></CardText>
             <CardText><small>Payment Status : {status(parseInt(this.props.dish.payment))}</small></CardText>
             
             <Col sm={{size:12}}>
                 <Button color="primary" onClick={this.getshipevents}>
                     Shipment
                 </Button>
-                <Button className="ml-3" color="primary" onClick={this.dopayment}>
+                <Button className={char} color="primary" onClick={this.dopayment}>
                     Pay
+                </Button>
+                <Button className="mt-2" color="primary" onClick={this.processc}>
+                    Process
                 </Button>
                 
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} className="modal-xl">
                 <ModalHeader toggle={this.toggleModal} className="pl-5">Shipment Status</ModalHeader>
                 <ModalBody>
-                    <StepProgressBar startingStep={a++} primaryBtnClass={"pri"} secondaryBtnClass={"pri"} onSubmit={onFormSubmit} steps={[
+                    <StepProgressBar startingStep={a++} progressClass={"prog"} primaryBtnClass={"pri"} secondaryBtnClass={"pri"} onSubmit={onFormSubmit} steps={[
                         {
                             label: 'Added',
                             subtitle: this.state.ships[0],
@@ -211,18 +220,19 @@ var x = 'hello';
                         },
                         {
                             label: 'OutForDelivery',
-                            subtitle: x,
+                            subtitle: this.state.ships[4],
                             name: 'step 4',
                             content: step4Content
                         },
                         {
                             label: 'Delievered',
-                            subtitle: x,
+                            subtitle: this.state.ships[5],
                             name: 'step 5',
                             content: step5Content
                         }
                     ]}
                     />
+                    <Button className="m-auto" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Next</Button>
                     <h5 className=" ml-5 ">Payment Status</h5>
                     <hr/>
                     <StepProgressBar startingStep={b++} primaryBtnClass={"pri"} secondaryBtnClass={"pri"}  onSubmit={onFormSubmit1} steps={[
@@ -249,12 +259,20 @@ var x = 'hello';
                 </ModalBody>
                 
             </Modal>
+            <Modal isOpen={this.state.isModalOpen1} toggle={this.toggleModal1} className="modal-xl">
+                <ModalHeader toggle={this.toggleModal1} className="pl-5">Process Cycle</ModalHeader>
+                <ModalBody>
+                    <p>Process Cycle</p>
+                </ModalBody>
+                
+            </Modal>
             </Col>
             
             </CardBody>
         </Card>
         )
             }
+            
     }
 
 class Shipment extends Component{

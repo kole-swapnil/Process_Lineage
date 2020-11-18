@@ -14,9 +14,9 @@ class Home extends Component{
    
     render(){
       
-        return(
-            <React.Fragment>
-                 <div className="container">
+      return(
+        <React.Fragment>
+          <div className="container">
                 <div className="inner header">
                     <h6>SignIn to grab exciting offers and in-time deliveries</h6>
                 <Container>
@@ -39,14 +39,11 @@ class Home extends Component{
                   <CardImg top width="80%" src="http://static4.businessinsider.com/image/598a08ec76084a2b198b513a-1190-625/this-eye-catching-new-phone-out-of-china-is-a-great-example-of-where-the-future-of-smartphones-is-headed.jpg"/>
                 </Card>
                 </Container>
-                    </div></div>
-
-
-                </React.Fragment>
-
-               
-        )
-
+                </div>
+          </div>
+        </React.Fragment>
+        );
+      
     }
 
 }

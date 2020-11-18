@@ -27,7 +27,9 @@ class Header extends Component{
     }
     render(){
         this.converb(this.props.balance.toString());
-        return(
+
+        if (this.props.registered == 1 || this.props.registered == 2) {
+            return(
             <React.Fragment>
                 <Navbar dark expand="md">
                     <div className="container justify-center">
@@ -50,8 +52,62 @@ class Header extends Component{
                             <NavItem>
                                 <NavLink className="nav-link" style={{width:200,justifyContent:'space-around'}} to="/register">Register</NavLink>
                             </NavItem>
+                            
+                            </Nav>
+                            
+                        </Collapse>
+                    </div>
+                    <h6 style={{ color: "white"}}>Balance : {util1}</h6>
+                </Navbar>
+            
+            </React.Fragment>
+            );
+        }
+        else if (this.props.registered == 3 || this.props.registered == 4) {
+            return(
+            <React.Fragment>
+                <Navbar dark expand="md">
+                    <div className="container justify-center">
+                    
+                        <NavbarToggler onClick={this.togglenav}/>
+                        <NavbarBrand className="mr-auto" >BrimNet</NavbarBrand>
+                        <Collapse isOpen = {this.state.isNavOpen} navbar>
+                        
+                            <Nav navbar className="m-auto">
+                            
                             <NavItem>
-                                <NavLink className="nav-link pl-5 pr-5" to="/login">Login</NavLink>
+                                <NavLink className="nav-link" style={{width:200,justifyContent:'space-around'}} to="/home">Home</NavLink>
+                            </NavItem>
+                            
+                            <NavItem>
+                                <NavLink className="nav-link" style={{width:200,justifyContent:'space-around'}} to="/register">Register</NavLink>
+                            </NavItem>
+                            
+                            </Nav>
+                            
+                        </Collapse>
+                    </div>
+                    <h6 style={{ color: "white"}}>Balance : {util1}</h6>
+                </Navbar>
+            </React.Fragment>
+            );
+        }
+        return(
+            <React.Fragment>
+                <Navbar dark expand="md">
+                    <div className="container justify-center">
+                    
+                        <NavbarToggler onClick={this.togglenav}/>
+                        <NavbarBrand className="mr-auto" >BrimNet</NavbarBrand>
+                        <Collapse isOpen = {this.state.isNavOpen} navbar>
+                        
+                            <Nav navbar className="m-auto">
+                            
+                            <NavItem>
+                                <NavLink className="nav-link" style={{width:200,justifyContent:'space-around'}} to="/home">Home</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink className="nav-link pl-5 pr-5" to="/signup">SignUp</NavLink>
                             </NavItem>
                             
                             </Nav>
