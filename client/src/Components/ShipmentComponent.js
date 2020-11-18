@@ -88,7 +88,7 @@ var x = 'hello';
     class Allpatrender extends Component{
         constructor(props){
             super(props);
-            this.state = { docCount : 0, dish: [] , isModalOpen: false,isModalOpen1: false,ships:[], payfor:[] };
+            this.state = { docCount : 0, dish: [] , isModalOpen: false,isModalOpen1: false,ships:[], payfor:[] ,next : 0};
             this.toggleModal = this.toggleModal.bind(this);
             this.toggleModal1 = this.toggleModal1.bind(this);
             this.converb = this.converb.bind(this);
@@ -164,7 +164,11 @@ var x = 'hello';
                 console.log(res);
         }
         updateShipstate = async() => {
-            const res = await this.props.contract.methods.updateShstate(this.props.dish.shipid,++this.props.dish.shipstate).send({from: this.props.accounts,gas : 1000000});
+            var c = parseInt(this.props.dish.shipstate);
+            c++;
+           
+            
+            const res = await this.props.contract.methods.updateShstate(this.props.dish.shid,c).send({from: this.props.accounts,gas : 1000000});
             console.log(res);
         }        
         
@@ -174,6 +178,7 @@ var x = 'hello';
         b = this.props.dish.payment;
         var cha = this.props.registered == 2 ? "visible" : "invisible";
         var ch = this.props.registered == 1? "m-auto visible" : "m-auto invisible";
+        
         return(
             <Card >
             <i className="fa fa-envelope fa-5x"></i>
@@ -293,7 +298,15 @@ class Shipment extends Component{
                 var response= [];
                 for(var i=1;i<=res;i++){
                     var rex = await this.props.contract?.methods.Shipments(i).call();
-                    response.push(rex);
+                    if(rex.manadr == this.props.accounts){
+                        response.push(rex);
+                    }
+                    else if(rex.custadr == this.props.accounts){
+                        response.push(rex);
+                    }
+                    else if(this.props.registered == 5){
+                        response.push(rex);
+                    }
                 }
                 alldocs = [];
                 alldocs = response;

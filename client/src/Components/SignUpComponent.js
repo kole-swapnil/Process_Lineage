@@ -25,7 +25,10 @@ class SignUp extends Component{
     }
     async handleSubmitGovt(event){
         event.preventDefault();
-        this.props.reghandler(5);
+         if(this.props.accounts == '0x8c009421d817D9AB4b39Ad93c2dF05A3253F5f4a'){
+         this.props.reghandler(5);
+         console.log(this.props.registered);
+         }
     }
     render(){
         return(
@@ -91,7 +94,7 @@ class SignUp extends Component{
                                 <i class="fa fa-id-card fa-4x" aria-hidden="true"></i>
                                 <br/><br/>
                                 
-                                <button class="btn btn-lg btn-primary text-uppercase mt-5 pl-3 pr-3" type="submit" onClick={this.handleSubmitGovt}><Link to="/register" style={{textDecoration: 'none' , color: 'white'}}>Sign IN</Link></button>
+                                <button class="btn btn-lg btn-primary text-uppercase mt-5 pl-3 pr-3" type="submit" onClick={this.handleSubmitGovt}><Link to="/home" style={{textDecoration: 'none' , color: 'white'}}>Sign In</Link></button>
                                
                             </div>
                         </div>

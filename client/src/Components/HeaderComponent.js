@@ -27,7 +27,7 @@ class Header extends Component{
     }
     render(){
         this.converb(this.props.balance.toString());
-
+        console.log(this.props.registered);
         if (this.props.registered == 1 || this.props.registered == 2) {
             return(
             <React.Fragment>
@@ -89,6 +89,41 @@ class Header extends Component{
                     </div>
                     <h6 style={{ color: "white"}}>Balance : {util1}</h6>
                 </Navbar>
+            </React.Fragment>
+            );
+        }
+        else if (this.props.registered == 5) {
+            return(
+                <React.Fragment>
+                <Navbar dark expand="md">
+                    <div className="container justify-center">
+                    
+                        <NavbarToggler onClick={this.togglenav}/>
+                        <NavbarBrand className="mr-auto" >BrimNet</NavbarBrand>
+                        <Collapse isOpen = {this.state.isNavOpen} navbar>
+                        
+                            <Nav navbar className="m-auto">
+                            
+                            <NavItem>
+                                <NavLink className="nav-link" style={{width:200,justifyContent:'space-around'}} to="/home">Home</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink className="nav-link" style={{width:200,justifyContent:'space-around'}} to="/items">Items</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink className="nav-link" style={{width:200,justifyContent:'space-around'}} to="/shipment">Shipments</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink className="nav-link" style={{width:200,justifyContent:'space-around'}} to="/allmem">All Members</NavLink>
+                            </NavItem>
+                            
+                            </Nav>
+                            
+                        </Collapse>
+                    </div>
+                    <h6 style={{ color: "white"}}>Balance : {util1}</h6>
+                </Navbar>
+            
             </React.Fragment>
             );
         }
