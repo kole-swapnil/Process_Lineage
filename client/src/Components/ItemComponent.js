@@ -113,7 +113,7 @@ class Allpatrender extends Component{
             isModalOpen: !this.state.isModalOpen
         });
     }
-        handleInputChange(event){
+    handleInputChange(event){
         const target = event.target;
         const value = target.value;
         const name = target.name;
@@ -129,6 +129,7 @@ class Allpatrender extends Component{
         util =  (Web3.utils.toWei(x, 'milli'));
         return util;
     }
+
     totalvalue = () => {
         quantity = this.qty.value;
         total = util1 * quantity;
@@ -148,6 +149,8 @@ class Allpatrender extends Component{
     
 
     render() {
+        
+        var but = this.props.registered == 2? "visible" : "invisible";
         this.converb(this.props.dish.price.toString());
         var cl = this.props.dish.itemtype == 0? "fa fa-laptop fa-5x" :((this.props.dish.itemtype ==1)?"fa fa-mobile fa-5x" :"fa fa-desktop fa-5x" );
         return(
@@ -162,7 +165,7 @@ class Allpatrender extends Component{
             <CardText><small>Description : {this.props.dish.description}</small></CardText>
 
             <Col md={{size:10, offset:1}}>
-                <Button type="submit" color="primary" onClick={this.toggleModal}>
+                <Button className={but} type="submit" color="primary" onClick={this.toggleModal}>
                     Buy Item
                 </Button>
 
@@ -177,8 +180,8 @@ class Allpatrender extends Component{
                                 <p> <Input type="text" id="qty" name="qty" onChange={this.handleInputChange}></Input></p>
                             </div>
                             <p className="m-auto p-2">TotalAmt : {util1 * (this.state.qty)}</p>
-        <p className="m-auto p-2"><Button type="submit" onClick={this.creatingShipment} >Confirm</Button> </p>
                             <p className="m-auto p-2">Description : {this.props.dish.description}</p>
+                            <p className="m-auto p-2"><Button type="submit" onClick={this.creatingShipment} >Confirm</Button> </p>
                         </Card>
                 </Modal>
             </Col>
@@ -232,10 +235,11 @@ var itemdesc;
 class AllItemComponent extends Component{
     constructor(props){
         super(props);
-        this.state = { docCount : 0, dish: [] , cust: [] , manuf: [] , isModalOpen1: false }
+        this.state = { docCount : 0, dish: [] , cust: [] , manuf: [] , isModalOpen1: false  }
         this.toggleModal1 = this.toggleModal1.bind(this);
         //this.com = this.com.bind(this);
     }
+    
     
     toggleModal1() {
         this.setState({
@@ -290,15 +294,17 @@ class AllItemComponent extends Component{
         const Menu = this.state.dish.map((x) => {
             return (
                 <div key={x} className="col-4 col-md-3">
-                    < Allpatrender dish={x} contract={this.props.contract} accounts={this.props.accounts}/>
+                    < Allpatrender dish={x} contract={this.props.contract} accounts={this.props.accounts} registered = {this.props.registered}/>
                 </div>
             );
         })
-    
+        
+        var ch = this.props.registered == 1? "visible" : "invisible";
+        
         return(
         <div className="container">
             <h2>All Items</h2>
-            <Button color="success" onClick={this.toggleModal1}>
+            <Button color="success" className={ch} onClick={this.toggleModal1}>
                 Add Item
             </Button>
             

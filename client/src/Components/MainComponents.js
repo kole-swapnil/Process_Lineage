@@ -4,10 +4,10 @@ import getWeb3 from "../getWeb3";
 import "../App.css";
 import Header from "./HeaderComponent";
 import Home from './HomeComponent';
-import Login from "./LoginComponent";
+import SignUp from "./SignUpComponent";
 import  AllItemComponent  from "./ItemComponent";
 import Shipment from "./ShipmentComponent";
-import { Switch, Route, Redirect, Link } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Footer from './FooterComponent';
 import RegisterComp from './RegisterComponent';
 import AllMemComponent from './AllmemberComponent';
@@ -19,8 +19,8 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = { storageValue: 0, web3: null, accounts: null,balance:0, contract: null ,res : null,registered : 0};
+ }
 
-  }
   componentDidMount = async () => {
     try {
       // Get network provider and web3 instance.
@@ -91,14 +91,14 @@ class Main extends Component {
     this.checks(this.state.accounts);
     return (
       <div className="App">
-        <Header contract={this.state.contract} accounts={this.state.accounts} balance={this.state.balance} web3={this.state.web3}/>
+        <Header contract={this.state.contract} accounts={this.state.accounts} registered = {this.state.registered} balance={this.state.balance} web3={this.state.web3}/>
         <Switch>
-            <Route exact path="/home" component={() => <Home/>}/>
-            <Route exact path='/items' component={() => <AllItemComponent contract={this.state.contract} accounts={this.state.accounts}/>}/>
-            <Route exact path="/shipment" component={() => <Shipment contract={this.state.contract} accounts={this.state.accounts}/>}/>
-            <Route exact path="/register" component={() => <RegisterComp contract={this.state.contract} accounts={this.state.accounts} registered = {this.state.registered}/>}/>
+            <Route exact path="/home" component={() => <Home contract={this.state.contract} accounts={this.state.accounts} registered = {this.state.registered}/>}/>
+            <Route exact path="/signup" component={() => <SignUp reghandler = {this.reghandler}/>}/> 
+            <Route exact path='/items' component={() => <AllItemComponent contract={this.state.contract} accounts={this.state.accounts} registered = {this.state.registered}/>}/>
+            <Route exact path="/shipment" component={() => <Shipment contract={this.state.contract} accounts={this.state.accounts} registered = {this.state.registered}/>}/>
+            <Route exact path="/register" component={() => <RegisterComp contract={this.state.contract} accounts={this.state.accounts} registered = {this.state.registered}/>}/> 
             <Route exact path="/allmem" component={() => <AllMemComponent contract={this.state.contract} accounts={this.state.accounts} registered = {this.state.registered}/>}/>
-            <Route exact path="/login" component={() => <Login reghandler = {this.reghandler}/>}/>
             <Redirect to="/home"/>
         </Switch>
         <Footer/>

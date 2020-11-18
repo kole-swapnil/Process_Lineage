@@ -10,22 +10,20 @@ import 'react-step-progress/dist/index.css';
 var x = 'hello';
 
 // Step Progress 
-    const step0Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Added </h3> ;
-    const step1Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Pending</h3>;
-    const step2Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Confirmed </h3>;
-    const step3Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Manufactured </h3>;
-    const step4Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Packaged </h3>;
-    const step5Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>OutForDelivery </h3>;
-    const step6Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Delievered </h3>;
-    const step7Content = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Cancel </h3>;
-
+    const step0Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Added</h3>
+    const step1Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Pending</h3>
+    const step2Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Confirmed</h3>
+    const step3Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Manufactured</h3>
+    const step4Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>OutForDelivery</h3>
+    const step5Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Delievered</h3>
+    
     function onFormSubmit() {
     
     }
 
-    const step0Contents = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>NotPaid </h3>;
-    const step1Contents = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>InSc</h3>;
-    const step2Contents = <h3 className="mt-4 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Received </h3>;
+    const step0Contents = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>NotPaid </h3>;
+    const step1Contents = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>InSc</h3>;
+    const step2Contents = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Received </h3>;
 
     function onFormSubmit1() {
     
@@ -47,25 +45,22 @@ var x = 'hello';
 
         switch(s) {
             case 0:
-                value = 'added';
+                value = 'Added';
                 break;
             case 1:
-                value = 'pending';
+                value = 'Pending';
                 break;
             case 2:
-                value = 'confirmed';
+                value = 'Confirmed';
                 break;
             case 3:
-                value = 'manufactured';
+                value = 'Manufactured';
                 break;
             case 4:
-                value = 'outfordel';
+                value = 'Outfordel';
                 break;
             case 5:
-                value = 'delievered';
-                break;
-            case 6:
-                value = 'cancelled';
+                value = 'Delievered';
                 break;
         }
         return value;
@@ -74,19 +69,18 @@ var x = 'hello';
         
         switch(s) {
             case 0:
-                value1 = 'notpaid';
+                value1 = 'NotPaid';
                 break;
             case 1:
-                value1 = 'inSc';
+                value1 = 'InSc';
                 break;
             case 2:
-                value1 = 'received';
+                value1 = 'Received';
                 break;
         }  
         return value1; 
     }
 
-    var z;
     var a;
     var b;
 // Class 
@@ -94,14 +88,29 @@ var x = 'hello';
     class Allpatrender extends Component{
         constructor(props){
             super(props);
-            this.state = { docCount : 0, dish: [] , isModalOpen: false,ships:[], payfor:[] };
+            this.state = { docCount : 0, dish: [] , isModalOpen: false,isModalOpen1: false,ships:[], payfor:[] };
             this.toggleModal = this.toggleModal.bind(this);
+            this.toggleModal1 = this.toggleModal1.bind(this);
             this.converb = this.converb.bind(this);
             this.dopayment = this.dopayment.bind(this);
             this.getshipevents = this.getshipevents.bind(this);
             this.getpayevents = this.getpayevents.bind(this);
-
+            this.processc = this.processc.bind(this);
+            this.updateShipstate = this.updateShipstate.bind(this);
         } 
+        toggleModal() {
+            this.setState({
+                isModalOpen: !this.state.isModalOpen
+            });
+        }
+        toggleModal1() {
+            this.setState({
+                isModalOpen1: !this.state.isModalOpen1
+            });
+        }
+        processc(){
+            this.toggleModal1();
+        }
         getshipevents = async() => {
             this.toggleModal();
             this.getpayevents();
@@ -145,51 +154,52 @@ var x = 'hello';
             await this.setState({payfor : pays});
                 console.log(this.state.ships)
         }
-        toggleModal() {
-            this.setState({
-                isModalOpen: !this.state.isModalOpen
-            });
-        }
+        
         converb = async (x) => {
             util1 = (Web3.utils.fromWei(x, 'milli'));
         }
         
-        // var yz = xy != 0?"bg-success text-white":""; 
-       
-            
-           
         dopayment = async() => {
                 const res = await this.props.contract.methods.payitem(this.props.dish.totalamt.toString(),this.props.dish.shid).send({from: this.props.accounts,value:this.props.dish.totalamt.toString(),gas : 1000000});
                 console.log(res);
         }
+        updateShipstate = async() => {
+            const res = await this.props.contract.methods.updateShstate(this.props.dish.shipid,++this.props.dish.shipstate).send({from: this.props.accounts,gas : 1000000});
+            console.log(res);
+        }        
         
     render(){
         this.converb(this.props.dish.totalamt.toString());
         a = this.props.dish.shipstate;
         b = this.props.dish.payment;
+        var cha = this.props.registered == 2 ? "visible" : "invisible";
+        var ch = this.props.registered == 1? "m-auto visible" : "m-auto invisible";
         return(
             <Card >
             <i className="fa fa-envelope fa-5x"></i>
             <CardBody>
             <CardTitle>Shipment ID : {this.props.dish.shid}</CardTitle>
-            <CardText><small>Item Cat : {this.props.dish.itemcat}</small></CardText>
-            <CardText><small>Item qty : {this.props.dish.qty}</small></CardText>
+            <CardText><small>Item Category : {this.props.dish.itemcat}</small></CardText>
+            <CardText><small>Item Quantity : {this.props.dish.qty}</small></CardText>
             <CardText><small>Shipment Status : {shipstate(parseInt(this.props.dish.shipstate))}</small></CardText>
-            <CardText><small>Totalamt : {util1}</small></CardText>
-            <CardText><small>Payment Status :{status(parseInt(this.props.dish.payment))}</small></CardText>
+            <CardText><small>Total Amount : {util1}</small></CardText>
+            <CardText><small>Payment Status : {status(parseInt(this.props.dish.payment))}</small></CardText>
             
             <Col sm={{size:12}}>
                 <Button color="primary" onClick={this.getshipevents}>
                     Shipment
                 </Button>
-                <Button className="ml-3" color="primary" onClick={this.dopayment}>
+                <Button className={cha} color="primary" onClick={this.dopayment} style={{margin: "10px"}}>
                     Pay
+                </Button>
+                <Button className="mt-2" color="primary" onClick={this.processc}>
+                    Process
                 </Button>
                 
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} className="modal-xl">
                 <ModalHeader toggle={this.toggleModal} className="pl-5">Shipment Status</ModalHeader>
                 <ModalBody>
-                    <StepProgressBar startingStep={a++} primaryBtnClass={"pri"} secondaryBtnClass={"pri"} onSubmit={onFormSubmit} steps={[
+                    <StepProgressBar startingStep={a++} progressClass={"prog"} primaryBtnClass={"pri"} secondaryBtnClass={"pri"} onSubmit={onFormSubmit} steps={[
                         {
                             label: 'Added',
                             subtitle: this.state.ships[0],
@@ -225,15 +235,10 @@ var x = 'hello';
                             subtitle: this.state.ships[5],
                             name: 'step 5',
                             content: step5Content
-                        },
-                        {
-                            label: 'Cancelled',
-                            subtitle: this.state.ships[6],
-                            name: 'step 6',
-                            content: step6Content
                         }
                     ]}
                     />
+                    <Button className={ch} onClick = {this.updateShipstate} style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Next</Button>
                     <h5 className=" ml-5 ">Payment Status</h5>
                     <hr/>
                     <StepProgressBar startingStep={b++} primaryBtnClass={"pri"} secondaryBtnClass={"pri"}  onSubmit={onFormSubmit1} steps={[
@@ -260,12 +265,20 @@ var x = 'hello';
                 </ModalBody>
                 
             </Modal>
+            <Modal isOpen={this.state.isModalOpen1} toggle={this.toggleModal1} className="modal-xl">
+                <ModalHeader toggle={this.toggleModal1} className="pl-5">Process Cycle</ModalHeader>
+                <ModalBody>
+                    <p>Process Cycle</p>
+                </ModalBody>
+                
+            </Modal>
             </Col>
             
             </CardBody>
         </Card>
         )
             }
+            
     }
 
 class Shipment extends Component{
@@ -295,7 +308,7 @@ class Shipment extends Component{
         const Menu = this.state.dish.map((x) => {
             return (
                 <div key={x} className="col-4 col-md-3">
-                    < Allpatrender dish={x} contract={this.props.contract} accounts={this.props.accounts}/>
+                    < Allpatrender dish={x} contract={this.props.contract} accounts={this.props.accounts} registered = {this.props.registered}/>
                 </div>
             );
         })
