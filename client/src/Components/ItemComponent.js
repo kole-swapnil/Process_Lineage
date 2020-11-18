@@ -149,8 +149,9 @@ class Allpatrender extends Component{
     
 
     render() {
+        
+        var but = this.props.registered == 2? "visible" : "invisible";
         this.converb(this.props.dish.price.toString());
-        var char = this.props.registered == 1? "visible" : "invisible";
         var cl = this.props.dish.itemtype == 0? "fa fa-laptop fa-5x" :((this.props.dish.itemtype ==1)?"fa fa-mobile fa-5x" :"fa fa-desktop fa-5x" );
         return(
            
@@ -164,7 +165,7 @@ class Allpatrender extends Component{
             <CardText><small>Description : {this.props.dish.description}</small></CardText>
 
             <Col md={{size:10, offset:1}}>
-                <Button className={char} type="submit" color="primary" onClick={this.toggleModal}>
+                <Button className={but} type="submit" color="primary" onClick={this.toggleModal}>
                     Buy Item
                 </Button>
 
@@ -293,7 +294,7 @@ class AllItemComponent extends Component{
         const Menu = this.state.dish.map((x) => {
             return (
                 <div key={x} className="col-4 col-md-3">
-                    < Allpatrender dish={x} contract={this.props.contract} accounts={this.props.accounts}/>
+                    < Allpatrender dish={x} contract={this.props.contract} accounts={this.props.accounts} registered = {this.props.registered}/>
                 </div>
             );
         })

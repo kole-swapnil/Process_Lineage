@@ -91,7 +91,7 @@ class SignUp extends Component{
                                 <i class="fa fa-id-card fa-4x" aria-hidden="true"></i>
                                 <br/><br/>
                                 
-                                <button class="btn btn-lg btn-primary text-uppercase mt-5 pl-3 pr-3" type="submit" onClick={this.handleSubmitGovt}><Link to="/register" style={{textDecoration: 'none' , color: 'white'}}>Sign Up</Link></button>
+                                <button class="btn btn-lg btn-primary text-uppercase mt-5 pl-3 pr-3" type="submit" onClick={this.handleSubmitGovt}><Link to="/register" style={{textDecoration: 'none' , color: 'white'}}>Sign IN</Link></button>
                                
                             </div>
                         </div>

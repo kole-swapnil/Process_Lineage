@@ -167,7 +167,8 @@ var x = 'hello';
         this.converb(this.props.dish.totalamt.toString());
         a = this.props.dish.shipstate;
         b = this.props.dish.payment;
-        var char = this.props.registered == 2 ? "visible" : "invisible";
+        var cha = this.props.registered == 2 ? "visible" : "invisible";
+        var ch = this.props.registered == 1? "m-auto visible" : "m-auto invisible";
         return(
             <Card >
             <i className="fa fa-envelope fa-5x"></i>
@@ -183,7 +184,7 @@ var x = 'hello';
                 <Button color="primary" onClick={this.getshipevents}>
                     Shipment
                 </Button>
-                <Button className={char} color="primary" onClick={this.dopayment}>
+                <Button className={cha} color="primary" onClick={this.dopayment} style={{margin: "10px"}}>
                     Pay
                 </Button>
                 <Button className="mt-2" color="primary" onClick={this.processc}>
@@ -232,7 +233,7 @@ var x = 'hello';
                         }
                     ]}
                     />
-                    <Button className="m-auto" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Next</Button>
+                    <Button className={ch} style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Next</Button>
                     <h5 className=" ml-5 ">Payment Status</h5>
                     <hr/>
                     <StepProgressBar startingStep={b++} primaryBtnClass={"pri"} secondaryBtnClass={"pri"}  onSubmit={onFormSubmit1} steps={[
@@ -302,7 +303,7 @@ class Shipment extends Component{
         const Menu = this.state.dish.map((x) => {
             return (
                 <div key={x} className="col-4 col-md-3">
-                    < Allpatrender dish={x} contract={this.props.contract} accounts={this.props.accounts}/>
+                    < Allpatrender dish={x} contract={this.props.contract} accounts={this.props.accounts} registered = {this.props.registered}/>
                 </div>
             );
         })
