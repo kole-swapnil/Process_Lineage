@@ -51,6 +51,9 @@ class Header extends Component{
                                 <NavLink className="nav-link" style={{width:200,justifyContent:'space-around'}} to="/register">Register</NavLink>
                             </NavItem>
                             <NavItem>
+                                <NavLink className="nav-link" style={{width:200,justifyContent:'space-around'}} to="/allmem">All Members</NavLink>
+                            </NavItem>
+                            <NavItem>
                                 <NavLink className="nav-link pl-5 pr-5" to="/login">Login</NavLink>
                             </NavItem>
                             

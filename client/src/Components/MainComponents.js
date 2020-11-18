@@ -10,6 +10,7 @@ import Shipment from "./ShipmentComponent";
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import Footer from './FooterComponent';
 import RegisterComp from './RegisterComponent';
+import AllMemComponent from './AllmemberComponent';
 
 
 //import HDWalletProvider from "@truffle/hdwallet-provider";
@@ -96,6 +97,7 @@ class Main extends Component {
             <Route exact path='/items' component={() => <AllItemComponent contract={this.state.contract} accounts={this.state.accounts}/>}/>
             <Route exact path="/shipment" component={() => <Shipment contract={this.state.contract} accounts={this.state.accounts}/>}/>
             <Route exact path="/register" component={() => <RegisterComp contract={this.state.contract} accounts={this.state.accounts} registered = {this.state.registered}/>}/>
+            <Route exact path="/allmem" component={() => <AllMemComponent contract={this.state.contract} accounts={this.state.accounts} registered = {this.state.registered}/>}/>
             <Route exact path="/login" component={() => <Login reghandler = {this.reghandler}/>}/>
             <Redirect to="/home"/>
         </Switch>
