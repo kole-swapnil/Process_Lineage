@@ -16,6 +16,7 @@ var x = 'hello';
     const step3Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Manufactured</h3>
     const step4Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>OutForDelivery</h3>
     const step5Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Delievered</h3>
+    const step6Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Cancelled</h3>
     
     function onFormSubmit() {
     
@@ -88,7 +89,7 @@ var x = 'hello';
     class Allpatrender extends Component{
         constructor(props){
             super(props);
-            this.state = { docCount : 0, dish: [] , isModalOpen: false,isModalOpen1: false,ships:[], payfor:[] ,next : 0};
+            this.state = { docCount : 0, dish: [] , isModalOpen: false,isModalOpen1: false,ships:[],shiptime: [], payfor:[] , paytime: [],next : 0};
             this.toggleModal = this.toggleModal.bind(this);
             this.toggleModal1 = this.toggleModal1.bind(this);
             this.converb = this.converb.bind(this);
@@ -98,6 +99,7 @@ var x = 'hello';
             this.processc = this.processc.bind(this);
             this.updateShipstate = this.updateShipstate.bind(this);
             this.cancel = this.cancel.bind(this);
+            this.shipstate = this.shipstate.bind(this);
         } 
         toggleModal() {
             this.setState({
@@ -110,8 +112,42 @@ var x = 'hello';
             });
         }
 
-        cancel(){
-            
+        shipstate(s) {
+                value = '';
+            switch(s) {
+                case 0:
+                    value = 'Added';
+                    break;
+                case 1:
+                    value = 'Pending';
+                    break;
+                case 2:
+                    value = 'Confirmed';
+                    break;
+                case 3:
+                    value = 'Manufactured';
+                    break;
+                case 4:
+                    value = 'Outfordel';
+                    break;
+                case 5:
+                    value = 'Delievered';
+                    break;
+                case 6:
+                    value = 'Cancelled';
+                    break;
+                        
+            }
+            return value;
+        }
+        cancel = async() => {
+            const res = await this.props.contract.methods.updateShstate(this.props.dish.shid,6).send({from: this.props.accounts,gas : 1000000});
+            console.log(res);
+            const res3 = await this.props.contract.methods.updateShstatus(this.props.dish.shid,2).send({from: this.props.accounts,gas : 1000000});
+            console.log(res3);
+            const res2 = await this.props.contract.methods.withdrawmoney(this.props.dish.shid).send({from: this.props.accounts,gas : 1000000})
+            console.log(res2);
+            this.toggleModal();
         }
         processc(){
             this.toggleModal1();
@@ -121,6 +157,7 @@ var x = 'hello';
             this.toggleModal();
             this.getpayevents();
             const timefor = [];
+            const timeof = [];
             const req = await this.props.contract.getPastEvents('processchange', {
                 filter: { ship_id: this.props.dish.shid },
                 fromBlock: 0,    
@@ -134,12 +171,13 @@ var x = 'hello';
                 var day = moment.unix(times); 
                 var time = day.format('D-MMM-YY, hh:mm:ss a');
                 timefor.push(time.toString());
+                timeof.push(parseInt(shstate));
                 
             });
-            await this.setState({ships : timefor});
-            console.log(this.state.ships)
-            
-        } 
+            this.setState({ships : timefor,shiptime : timeof});
+            console.log(this.state.ships);
+            console.log(this.state.shiptime);
+        }
         getpayevents = async() => {
             const pays =[];
             const req1 = await this.props.contract.getPastEvents('processpay', {
@@ -157,7 +195,7 @@ var x = 'hello';
                 pays.push(time.toString());
                 
             });
-            await this.setState({payfor : pays});
+            this.setState({payfor : pays});
                 console.log(this.state.ships)
         }
         
@@ -173,9 +211,13 @@ var x = 'hello';
             var c = parseInt(this.props.dish.shipstate);
             c++;
            
-            
             const res = await this.props.contract.methods.updateShstate(this.props.dish.shid,c).send({from: this.props.accounts,gas : 1000000});
             console.log(res);
+            
+            if(c == 5){
+                const res2 = await this.props.contract.methods.withdrawmoney(this.props.dish.shid).send({from: this.props.accounts,gas : 1000000})
+                console.log(res2);
+            }
         }        
         
     render(){
@@ -223,40 +265,46 @@ var x = 'hello';
                 <ModalBody>
                     <StepProgressBar startingStep={a++} progressClass={"prog"} primaryBtnClass={"pri"} secondaryBtnClass={"pri"} onSubmit={onFormSubmit} steps={[
                         {
-                            label: 'Added',
+                            label: this.shipstate(this.state.shiptime[0]),
                             subtitle: this.state.ships[0],
                             name: 'step 0',
                             content: step0Content
                          },
                         {
-                            label: 'Pending',
+                            label: this.shipstate(this.state.shiptime[1]),
                             subtitle: this.state.ships[1],
                             name: 'step 1',
                             content: step1Content
                         },
                         {
-                            label: 'Confirmed',
+                            label: this.shipstate(this.state.shiptime[2]),
                             subtitle: this.state.ships[2],
                             name: 'step 2',
                             content: step2Content
                         },
                         {
-                            label: 'Manufactured',
+                            label: this.shipstate(this.state.shiptime[3]),
                             subtitle: this.state.ships[3],
                             name: 'step 3',
                             content: step3Content
                         },
                         {
-                            label: 'OutForDelivery',
+                            label: this.shipstate(this.state.shiptime[4]),
                             subtitle: this.state.ships[4],
                             name: 'step 4',
                             content: step4Content
                         },
                         {
-                            label: 'Delievered',
+                            label: this.shipstate(this.state.shiptime[5]),
                             subtitle: this.state.ships[5],
                             name: 'step 5',
                             content: step5Content
+                        },
+                        {
+                            label: this.shipstate(this.state.shiptime[6]),
+                            subtitle: this.state.ships[6],
+                            name: 'step 6',
+                            content: step6Content
                         }
                     ]}
                     />
@@ -274,7 +322,7 @@ var x = 'hello';
                         content: step0Contents
                          },
                         {
-                        label: 'InSc',
+                        label: 'InSmartContract',
                         subtitle: this.state.payfor[1],
                         name: 'step 1',
                         content: step1Contents
