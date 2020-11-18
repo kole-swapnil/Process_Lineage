@@ -97,6 +97,7 @@ var x = 'hello';
             this.getpayevents = this.getpayevents.bind(this);
             this.processc = this.processc.bind(this);
             this.updateShipstate = this.updateShipstate.bind(this);
+            this.cancel = this.cancel.bind(this);
         } 
         toggleModal() {
             this.setState({
@@ -108,9 +109,14 @@ var x = 'hello';
                 isModalOpen1: !this.state.isModalOpen1
             });
         }
+
+        cancel(){
+            
+        }
         processc(){
             this.toggleModal1();
         }
+
         getshipevents = async() => {
             this.toggleModal();
             this.getpayevents();
@@ -177,8 +183,19 @@ var x = 'hello';
         a = this.props.dish.shipstate;
         b = this.props.dish.payment;
         var cha = this.props.registered == 2 ? "visible" : "invisible";
-        var ch = this.props.registered == 1? "m-auto visible" : "m-auto invisible";
+        var ch = this.props.registered == 1? "visible" : "invisible";
+        var xy;
         
+        if((value == 'Added' || value == 'Pending') && this.props.registered == 2) {
+            xy = "visible";
+        }
+        else if((value !== 'Added' || value !== 'Pending') && this.props.registered == 1) {
+            xy = "visible";
+        }
+        else {
+            xy = "invisible";
+        }
+
         return(
             <Card >
             <i className="fa fa-envelope fa-5x"></i>
@@ -194,11 +211,11 @@ var x = 'hello';
                 <Button color="primary" onClick={this.getshipevents}>
                     Shipment
                 </Button>
-                <Button className={cha} color="primary" onClick={this.dopayment} style={{margin: "10px"}}>
-                    Pay
-                </Button>
-                <Button className="mt-2" color="primary" onClick={this.processc}>
+                <Button color="primary" onClick={this.processc}  style={{margin: "5px"}}>
                     Process
+                </Button>
+                <Button className={cha} color="primary" onClick={this.dopayment}>
+                    Pay
                 </Button>
                 
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} className="modal-xl">
@@ -243,7 +260,10 @@ var x = 'hello';
                         }
                     ]}
                     />
-                    <Button className={ch} onClick = {this.updateShipstate} style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Next</Button>
+                    <div style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>
+                        <Button color="info" className={ch} onClick = {this.updateShipstate}>Next</Button>
+                        <Button color="danger" onClick = {this.cancel} className={xy}>Cancel</Button>
+                    </div>
                     <h5 className=" ml-5 ">Payment Status</h5>
                     <hr/>
                     <StepProgressBar startingStep={b++} primaryBtnClass={"pri"} secondaryBtnClass={"pri"}  onSubmit={onFormSubmit1} steps={[

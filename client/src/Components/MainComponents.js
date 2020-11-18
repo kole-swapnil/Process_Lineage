@@ -41,7 +41,7 @@ class Main extends Component {
       // example of interacting with the contract's methods.
       console.log(instance)
       this.setState({ web3, accounts : accounts[0] , contract: instance,balance });
-      if(accounts[0] == '0x8c009421d817D9AB4b39Ad93c2dF05A3253F5f4a'){
+      if(accounts[0] == '0xC0EC435ad729B545d645bA3A83C74872D585e282'){
         this.setState({registered : 5});
         console.log(this.state.registered);
         }

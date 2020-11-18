@@ -25,7 +25,7 @@ class SignUp extends Component{
     }
     async handleSubmitGovt(event){
         event.preventDefault();
-         if(this.props.accounts == '0x8c009421d817D9AB4b39Ad93c2dF05A3253F5f4a'){
+         if(this.props.accounts == '0xC0EC435ad729B545d645bA3A83C74872D585e282'){
          this.props.reghandler(5);
          console.log(this.props.registered);
          }
