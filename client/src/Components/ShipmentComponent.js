@@ -171,7 +171,7 @@ var x = 'hello';
                 var day = moment.unix(times); 
                 var time = day.format('D-MMM-YY, hh:mm:ss a');
                 timefor.push(time.toString());
-                timeof.push(parseInt(shstate));
+                timeof.push(shstate);
                 
             });
             this.setState({ships : timefor,shiptime : timeof});
@@ -197,6 +197,10 @@ var x = 'hello';
             });
             this.setState({payfor : pays});
                 console.log(this.state.ships)
+        }
+        getshipState = async (x) => {
+            const res = await this.props.contract.methods.getshipstate(this.props.dish.shid).call();
+            console.log("dsf",res);
         }
         
         converb = async (x) => {
@@ -226,17 +230,18 @@ var x = 'hello';
         b = this.props.dish.payment;
         var cha = this.props.registered == 2 ? "visible" : "invisible";
         var ch = this.props.registered == 1? "visible" : "invisible";
-        var xy;
+        var xy = this.props.dish.states.length;
         
-        if((value == 'Added' || value == 'Pending') && this.props.registered == 2) {
-            xy = "visible";
-        }
-        else if((value !== 'Added' || value !== 'Pending') && this.props.registered == 1) {
-            xy = "visible";
-        }
-        else {
-            xy = "invisible";
-        }
+        
+        // if((value == 'Added' || value == 'Pending') && this.props.registered == 2) {
+        //     xy = "visible";
+        // }
+        // else if((value !== 'Added' || value !== 'Pending') && this.props.registered == 1) {
+        //     xy = "visible";
+        // }
+        // else {
+        //     xy = "invisible";
+        // }
 
         return(
             <Card >
@@ -245,7 +250,7 @@ var x = 'hello';
             <CardTitle>Shipment ID : {this.props.dish.shid}</CardTitle>
             <CardText><small>Item Category : {this.props.dish.itemcat}</small></CardText>
             <CardText><small>Item Quantity : {this.props.dish.qty}</small></CardText>
-            <CardText><small>Shipment Status : {shipstate(parseInt(this.props.dish.shipstate))}</small></CardText>
+            <CardText><small>Shipment Status : {this.props.dish.states[--xy]}</small></CardText>
             <CardText><small>Total Amount : {util1}</small></CardText>
             <CardText><small>Payment Status : {status(parseInt(this.props.dish.payment))}</small></CardText>
             
@@ -357,10 +362,11 @@ var x = 'hello';
 class Shipment extends Component{
     constructor(props){
         super(props);
-        this.state = { docCount : 0, dish: [] , isModalOpen: false};
+        this.state = { docCount : 0, dish: [] , isModalOpen: false,shipstates : []};
     }  
     
     async componentDidMount(){
+        let res5 = [];
         var res = await this.props.contract?.methods.shipmentcount().call();
            console.log(res);    
                 var response= [];
@@ -370,17 +376,27 @@ class Shipment extends Component{
                         response.push(rex);
                     }
                     else if(rex.custadr == this.props.accounts){
+                        res5 = await this.props.contract.methods.getshipstate(i).call()
+                        rex.states = res5;
                         response.push(rex);
+                    
+                      
                     }
                     else if(this.props.registered == 5){
+                        res5 = await this.props.contract.methods.getshipstate(i).call()
+                        rex.states = res5;
                         response.push(rex);
                     }
                 }
+         
                 alldocs = [];
                 alldocs = response;
                 console.log(response);
+                
+            
                 this.setState({ dish : alldocs});
-         
+                
+                
     }
 
     

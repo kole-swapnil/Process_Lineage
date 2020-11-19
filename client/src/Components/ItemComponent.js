@@ -139,9 +139,10 @@ class Allpatrender extends Component{
         event.preventDefault();
         var itemcat =  this.props.dish?.itemtype;
         var qty = this.state.qty;
+        var str = "Added";
         var totalamt = conver((util1*qty).toString());
         var manadr = await this.buyitem(parseInt(this.props.dish.itemtype));
-        const res = await this.props.contract?.methods.createShipment(itemcat,qty,0,totalamt,0,manadr).send({from: this.props.accounts,gas : 1000000});
+        const res = await this.props.contract?.methods.createShipment(itemcat,qty,str,totalamt,0,manadr).send({from: this.props.accounts,gas : 1000000});
         console.log(res);
         this.toggleModal();
 
