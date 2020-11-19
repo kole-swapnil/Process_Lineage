@@ -8,14 +8,14 @@ contract ProLine{
     constructor(address payable _govt)public{
         govt = _govt;
     }
-    enum State { Added,Pending,Confirmed,Manufactured,Outfordel,Delivered,Cancelled }
+   
     enum Status {Notpaid, inSc, received}
     uint public manufacturercount = 0;
     uint public customercount = 0;
     uint public itemcount = 0;
     uint public shipmentcount = 0;
     
-    event processchange(uint indexed ship_id,State indexed shstate,uint times);
+    event processchange(uint indexed ship_id,string indexed shstate,uint times);
     event processpay(uint indexed ship_id,Status indexed pay,uint times);
     
     struct Manufacturer{
@@ -52,7 +52,7 @@ contract ProLine{
         uint shid;
         uint itemcat;
         uint qty;
-        State shipstate;
+        string[] shipstate;
         uint totalamt;
         Status payment;
         address custadr;
@@ -107,12 +107,12 @@ contract ProLine{
  
     }
     
-    function createShipment(uint _itemid,uint _qty,State _shipstate,uint _totalamt,Status _payment,address payable _manadr)public{
+    function createShipment(uint _itemid,uint _qty,string memory _shipstate,uint _totalamt,Status _payment,address payable _manadr)public{
         shipmentcount++;
         Shipments[shipmentcount].shid = shipmentcount;
         Shipments[shipmentcount].itemcat =  _itemid;
         Shipments[shipmentcount].qty =  _qty;
-        Shipments[shipmentcount].shipstate = _shipstate;
+        Shipments[shipmentcount].shipstate.push(_shipstate);
         Shipments[shipmentcount].payment=  _payment;
         Shipments[shipmentcount].totalamt =  _totalamt;
         Shipments[shipmentcount].custadr =  msg.sender;
@@ -121,10 +121,16 @@ contract ProLine{
         emit processpay(shipmentcount,_payment,now);
         
         }
-    function updateShstate(uint _shipid,State _shipstate)public{
-       require(Shipments[_shipid].shipstate != State.Cancelled,"Cancelled");
-        Shipments[_shipid].shipstate = _shipstate;
+    function updateShstate(uint _shipid,string memory _shipstate)public{
+       
+       if(compareStrings(_shipstate,"Cancelled")){
+           Shipments[_shipid].shipstate.push(_shipstate);
+       }
+       uint len = Shipments[_shipid].shipstate.length;
+       if(!(compareStrings(Shipments[_shipid].shipstate[(len-1)], "Cancelled"))){
+        Shipments[_shipid].shipstate.push(_shipstate);
         emit processchange(_shipid,_shipstate,now);
+       }
     }
     
     function updateShstatus(uint _shipid,Status _payment)public{
@@ -132,26 +138,24 @@ contract ProLine{
         emit processpay(_shipid,_payment,now);
     }
     
-    function payitem(uint totamt,uint _shipid)public payable {
-        require(msg.value == totamt,"less money");
+    function payitem(uint totamt,uint _shipid,string memory _shipstate)public payable {
+        //require(msg.value == totamt,"less money");
         Shipments[_shipid].payment = Status.inSc;
         emit processpay(_shipid,Status.inSc,now);
-        Shipments[_shipid].shipstate = State.Pending;
-        emit processchange(_shipid,State.Pending,now);
+        Shipments[_shipid].shipstate.push(_shipstate);
+        emit processchange(_shipid,_shipstate,now);
 
         }
         
-    function withdrawmoney(uint _shipid)public payable{
+    function withdrawmoney(uint _shipid,uint z)public payable{
         Shipment memory y = Shipments[_shipid];
         Item memory x = Items[y.itemcat];
         uint totalpay = x.price*(y.qty);
-        if(y.shipstate == State.Cancelled){
+        if(z == 2){
             address payable cus = payable(y.custadr);
             cus.transfer(totalpay);
         }
-        else{
-        require(y.shipstate == State.Delivered);
-        require(y.payment == Status.inSc);
+        else if(z == 1){
         uint govtmoney = (totalpay*x.gst)/100;
         uint manumoney = totalpay - govtmoney;
         govt.transfer(govtmoney);
@@ -163,10 +167,17 @@ contract ProLine{
         }    
             
     }
-  
+     function compareStrings(string memory a, string memory b) public pure returns (bool) {
+    return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
+}
 
     function getbal(address addr)public view returns(uint){
         return (addr).balance;
+    }
+    
+    
+     function getshipstate(uint _shipid)public view returns (string[] memory){
+        return Shipments[_shipid].shipstate;
     }
     
 }
