@@ -214,6 +214,8 @@ var x = 'hello';
         var cha = this.props.registered == 2 ? "ml-2 visible" : "invisible";
         var ch = this.props.registered == 1? "visible" : "invisible";
         var xy = this.props.dish.states.length;
+
+        console.log(this.props.dish.states);
         
         var arr =[];
         var res3 ;
@@ -222,9 +224,9 @@ var x = 'hello';
         const Abc = this.props.dish.states.map((x) => {
             
             res3 = {
-                label: this.state.shiptime[cnt],
-                subtitle: this.state.ships[tine] ,
-                content: <p></p>
+                label: this.props.dish.states[cnt],
+                subtitle: this.state.ships[cnt] ,
+                content: <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>{this.props.dish.states[cnt]} </h3>
                 }
                 arr.push(res3)
                 cnt++;
