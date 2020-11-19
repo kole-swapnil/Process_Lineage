@@ -10,14 +10,6 @@ import 'react-step-progress/dist/index.css';
 var x = 'hello';
 
 // Step Progress 
-    const step0Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Added</h3>
-    const step1Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Pending</h3>
-    const step2Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Confirmed</h3>
-    const step3Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Manufactured</h3>
-    const step4Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>OutForDelivery</h3>
-    const step5Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Delievered</h3>
-    const step6Content = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Cancelled</h3>
-    
     function onFormSubmit() {
     
     }
@@ -89,26 +81,20 @@ var x = 'hello';
     class Allpatrender extends Component{
         constructor(props){
             super(props);
-            this.state = { docCount : 0, dish: [] , isModalOpen: false,isModalOpen1: false,ships:[],shiptime: [], payfor:[] , paytime: [],next : 0};
+            this.state = { docCount : 0, dish: [] , isModalOpen: false,ships:[],shiptime: [], payfor:[] , paytime: [],next : 0};
             this.toggleModal = this.toggleModal.bind(this);
-            this.toggleModal1 = this.toggleModal1.bind(this);
             this.converb = this.converb.bind(this);
             this.dopayment = this.dopayment.bind(this);
             this.getshipevents = this.getshipevents.bind(this);
             this.getpayevents = this.getpayevents.bind(this);
-            this.processc = this.processc.bind(this);
             this.updateShipstate = this.updateShipstate.bind(this);
             this.cancel = this.cancel.bind(this);
             this.shipstate = this.shipstate.bind(this);
         } 
+
         toggleModal() {
             this.setState({
                 isModalOpen: !this.state.isModalOpen
-            });
-        }
-        toggleModal1() {
-            this.setState({
-                isModalOpen1: !this.state.isModalOpen1
             });
         }
 
@@ -149,9 +135,6 @@ var x = 'hello';
             console.log(res2);
             this.toggleModal();
         }
-        processc(){
-            this.toggleModal1();
-        }
 
         getshipevents = async() => {
             this.toggleModal();
@@ -167,7 +150,7 @@ var x = 'hello';
                 const ship_id = (ele.returnValues.ship_id);
                 const shstate = (ele.returnValues.shstate);
                 const times = (ele.returnValues.times);
-                //console.log("item : ",ship_id,shstate,times);
+                console.log("item : ",ship_id,shstate,times);
                 var day = moment.unix(times); 
                 var time = day.format('D-MMM-YY, hh:mm:ss a');
                 timefor.push(time.toString());
@@ -189,7 +172,7 @@ var x = 'hello';
                  const ship_id = (ele.returnValues.ship_id);
                  const paystate = (ele.returnValues.pay);
                  const times = (ele.returnValues.times);
-                console.log("item : ",ship_id,paystate,times);
+                // console.log("item : ",ship_id,paystate,times);
                 var day = moment.unix(times); 
                  var time = day.format('D-MMM-YY, hh:mm:ss a');
                 pays.push(time.toString());
@@ -208,7 +191,7 @@ var x = 'hello';
         }
         
         dopayment = async() => {
-                const res = await this.props.contract.methods.payitem(this.props.dish.totalamt.toString(),this.props.dish.shid).send({from: this.props.accounts,value:this.props.dish.totalamt.toString(),gas : 1000000});
+                const res = await this.props.contract.methods.payitem(this.props.dish.totalamt.toString(),this.props.dish.shid,"InSmartContract").send({from: this.props.accounts,value:this.props.dish.totalamt.toString(),gas : 1000000});
                 console.log(res);
         }
         updateShipstate = async() => {
@@ -222,15 +205,32 @@ var x = 'hello';
                 const res2 = await this.props.contract.methods.withdrawmoney(this.props.dish.shid).send({from: this.props.accounts,gas : 1000000})
                 console.log(res2);
             }
-        }        
+        }
         
     render(){
         this.converb(this.props.dish.totalamt.toString());
-        a = this.props.dish.shipstate;
+        a = this.props.dish.states.length;
         b = this.props.dish.payment;
-        var cha = this.props.registered == 2 ? "visible" : "invisible";
+        var cha = this.props.registered == 2 ? "ml-2 visible" : "invisible";
         var ch = this.props.registered == 1? "visible" : "invisible";
         var xy = this.props.dish.states.length;
+        
+        var arr =[];
+        var res3 ;
+        var cnt = 0;
+        var tine = 0;
+        const Abc = this.props.dish.states.map((x) => {
+            
+            res3 = {
+                label: this.state.shiptime[cnt],
+                subtitle: this.state.ships[tine] ,
+                content: <p></p>
+                }
+                arr.push(res3)
+                cnt++;
+                tine++;
+        })
+        console.log(arr);
         
         
         // if((value == 'Added' || value == 'Pending') && this.props.registered == 2) {
@@ -242,6 +242,8 @@ var x = 'hello';
         // else {
         //     xy = "invisible";
         // }
+
+
 
         return(
             <Card >
@@ -258,9 +260,6 @@ var x = 'hello';
                 <Button color="primary" onClick={this.getshipevents}>
                     Shipment
                 </Button>
-                <Button color="primary" onClick={this.processc}  style={{margin: "5px"}}>
-                    Process
-                </Button>
                 <Button className={cha} color="primary" onClick={this.dopayment}>
                     Pay
                 </Button>
@@ -268,51 +267,10 @@ var x = 'hello';
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} className="modal-xl">
                 <ModalHeader toggle={this.toggleModal} className="pl-5">Shipment Status</ModalHeader>
                 <ModalBody>
-                    <StepProgressBar startingStep={a++} progressClass={"prog"} primaryBtnClass={"pri"} secondaryBtnClass={"pri"} onSubmit={onFormSubmit} steps={[
-                        {
-                            label: this.shipstate(this.state.shiptime[0]),
-                            subtitle: this.state.ships[0],
-                            name: 'step 0',
-                            content: step0Content
-                         },
-                        {
-                            label: this.shipstate(this.state.shiptime[1]),
-                            subtitle: this.state.ships[1],
-                            name: 'step 1',
-                            content: step1Content
-                        },
-                        {
-                            label: this.shipstate(this.state.shiptime[2]),
-                            subtitle: this.state.ships[2],
-                            name: 'step 2',
-                            content: step2Content
-                        },
-                        {
-                            label: this.shipstate(this.state.shiptime[3]),
-                            subtitle: this.state.ships[3],
-                            name: 'step 3',
-                            content: step3Content
-                        },
-                        {
-                            label: this.shipstate(this.state.shiptime[4]),
-                            subtitle: this.state.ships[4],
-                            name: 'step 4',
-                            content: step4Content
-                        },
-                        {
-                            label: this.shipstate(this.state.shiptime[5]),
-                            subtitle: this.state.ships[5],
-                            name: 'step 5',
-                            content: step5Content
-                        },
-                        {
-                            label: this.shipstate(this.state.shiptime[6]),
-                            subtitle: this.state.ships[6],
-                            name: 'step 6',
-                            content: step6Content
-                        }
-                    ]}
-                    />
+                    
+                <StepProgressBar startingStep={b++} primaryBtnClass={"pri"} secondaryBtnClass={"pri"}  
+                onSubmit={onFormSubmit1} steps={arr}/>
+                        
                     <div style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>
                         <Button color="info" className={ch} onClick = {this.updateShipstate}>Next</Button>
                         <Button color="danger" onClick = {this.cancel} className={xy}>Cancel</Button>
@@ -340,13 +298,6 @@ var x = 'hello';
                         }
                     ]}
                     />
-                </ModalBody>
-                
-            </Modal>
-            <Modal isOpen={this.state.isModalOpen1} toggle={this.toggleModal1} className="modal-xl">
-                <ModalHeader toggle={this.toggleModal1} className="pl-5">Process Cycle</ModalHeader>
-                <ModalBody>
-                    <p>Process Cycle</p>
                 </ModalBody>
                 
             </Modal>

@@ -15,7 +15,7 @@ contract ProLine{
     uint public itemcount = 0;
     uint public shipmentcount = 0;
     
-    event processchange(uint indexed ship_id,string indexed shstate,uint times);
+    event processchange(uint indexed ship_id,string shstate,uint times);
     event processpay(uint indexed ship_id,Status indexed pay,uint times);
     
     struct Manufacturer{
