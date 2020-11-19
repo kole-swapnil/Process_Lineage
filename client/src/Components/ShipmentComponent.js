@@ -209,7 +209,7 @@ var x = 'hello';
         
     render(){
         this.converb(this.props.dish.totalamt.toString());
-        a = this.props.dish.states.length;
+        a = this.props.dish?.states.length;
         b = this.props.dish.payment;
         var cha = this.props.registered == 2 ? "ml-2 visible" : "invisible";
         var ch = this.props.registered == 1? "visible" : "invisible";
@@ -218,21 +218,22 @@ var x = 'hello';
         console.log(this.props.dish.states);
         
         var arr =[];
-        var res3 ;
+        var res7 ;
         var cnt = 0;
         var tine = 0;
         const Abc = this.props.dish.states.map((x) => {
             
-            res3 = {
-                label: this.props.dish.states[cnt],
-                subtitle: this.state.ships[cnt] ,
-                content: <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>{this.props.dish.states[cnt]} </h3>
+            res7 = {
+                label: 'ab',
+                subtitle: 'ab' ,
+                content: <p>pooja</p>
                 }
-                arr.push(res3)
+                arr.push(res7)
                 cnt++;
                 tine++;
+                console.log(arr);
         })
-        console.log(arr);
+        
         
         
         // if((value == 'Added' || value == 'Pending') && this.props.registered == 2) {
@@ -326,6 +327,8 @@ class Shipment extends Component{
                 for(var i=1;i<=res;i++){
                     var rex = await this.props.contract?.methods.Shipments(i).call();
                     if(rex.manadr == this.props.accounts){
+                        res5 = await this.props.contract.methods.getshipstate(i).call()
+                        rex.states = res5;
                         response.push(rex);
                     }
                     else if(rex.custadr == this.props.accounts){
