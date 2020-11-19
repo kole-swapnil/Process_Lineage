@@ -20,7 +20,7 @@ Mount = async () => {
     // console.log("gfsd",instance);
     // console.log("gd",accounts);
      //   addingManufacturer("Kole",751002);
-     getpayevents(instance);
+     getshipevents(instance);
 }
 
 

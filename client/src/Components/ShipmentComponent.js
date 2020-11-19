@@ -81,7 +81,11 @@ var x = 'hello';
     class Allpatrender extends Component{
         constructor(props){
             super(props);
-            this.state = { docCount : 0, dish: [] , isModalOpen: false,ships:[],shiptime: [], payfor:[] , paytime: [],next : 0};
+            this.state = { docCount : 0, dish: [] , isModalOpen: false,ships:[],shiptime: [], payfor:[] , paytime: [],asp : 0,next : [{
+                label: a,
+                subtitle: b,//this.state.shiptime[cnt]  ,
+                content: <p>pooja</p>
+                }]};
             this.toggleModal = this.toggleModal.bind(this);
             this.converb = this.converb.bind(this);
             this.dopayment = this.dopayment.bind(this);
@@ -139,26 +143,48 @@ var x = 'hello';
         getshipevents = async() => {
             this.toggleModal();
             this.getpayevents();
+            var arr =[];
             const timefor = [];
             const timeof = [];
             const req = await this.props.contract.getPastEvents('processchange', {
                 filter: { ship_id: this.props.dish.shid },
                 fromBlock: 0,    
             });
+            var res7 ;
             req.forEach(async (ele) => {
                 
+                
+                var cnt = 0;
+                var tine = 0;
                 const ship_id = (ele.returnValues.ship_id);
                 const shstate = (ele.returnValues.shstate);
                 const times = (ele.returnValues.times);
                 console.log("item : ",ship_id,shstate,times);
                 var day = moment.unix(times); 
                 var time = day.format('D-MMM-YY, hh:mm:ss a');
-                timefor.push(time.toString());
-                timeof.push(shstate);
+                timefor.ship_id = ship_id;
+                timefor.shstate = shstate;
+                timefor.time = time.toString();
+                timeof.push(timefor);
+                res7 = {
+                    label: timefor.shstate,
+                    subtitle: timefor.time,//this.state.shiptime[cnt]  ,
+                    content: <p>pooja</p>
+                    }
+                    arr.push(res7);
                 
             });
-            this.setState({ships : timefor,shiptime : timeof});
-            console.log(this.state.ships);
+            // const Abc = timeof.map((x) => {
+            
+                
+                    
+            //         console.log(arr);
+            // })
+            console.log(arr);
+            var po = arr.length - 1 
+            this.setState({shiptime : timeof,next : arr,asp : po});
+            
+            //  console.log(this.state.ships);
             console.log(this.state.shiptime);
         }
         getpayevents = async() => {
@@ -209,7 +235,7 @@ var x = 'hello';
         
     render(){
         this.converb(this.props.dish.totalamt.toString());
-        a = this.props.dish?.states.length;
+        a = 1;
         b = this.props.dish.payment;
         var cha = this.props.registered == 2 ? "ml-2 visible" : "invisible";
         var ch = this.props.registered == 1? "visible" : "invisible";
@@ -217,22 +243,9 @@ var x = 'hello';
 
         console.log(this.props.dish.states);
         
-        var arr =[];
-        var res7 ;
-        var cnt = 0;
-        var tine = 0;
-        const Abc = this.props.dish.states.map((x) => {
-            
-            res7 = {
-                label: 'ab',
-                subtitle: 'ab' ,
-                content: <p>pooja</p>
-                }
-                arr.push(res7)
-                cnt++;
-                tine++;
-                console.log(arr);
-        })
+      
+      
+       
         
         
         
@@ -271,8 +284,8 @@ var x = 'hello';
                 <ModalHeader toggle={this.toggleModal} className="pl-5">Shipment Status</ModalHeader>
                 <ModalBody>
                     
-                <StepProgressBar startingStep={b++} primaryBtnClass={"pri"} secondaryBtnClass={"pri"}  
-                onSubmit={onFormSubmit1} steps={arr}/>
+                <StepProgressBar startingStep={this.state.asp} primaryBtnClass={"pri"} secondaryBtnClass={"pri"}  
+                onSubmit={onFormSubmit1} steps={this.state.next}/>
                         
                     <div style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>
                         <Button color="info" className={ch} onClick = {this.updateShipstate}>Next</Button>
