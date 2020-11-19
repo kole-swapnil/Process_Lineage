@@ -78,9 +78,9 @@
           "type": "uint256"
         },
         {
-          "internalType": "enum ProLine.State",
+          "internalType": "string",
           "name": "_shipstate",
-          "type": "uint8"
+          "type": "string"
         },
         {
           "internalType": "uint256",
@@ -132,6 +132,11 @@
           "internalType": "uint256",
           "name": "_shipid",
           "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "_shipstate",
+          "type": "string"
         }
       ],
       "name": "payitem",
@@ -161,9 +166,9 @@
         },
         {
           "indexed": true,
-          "internalType": "enum ProLine.State",
+          "internalType": "string",
           "name": "shstate",
-          "type": "uint8"
+          "type": "string"
         },
         {
           "indexed": false,
@@ -226,9 +231,9 @@
           "type": "uint256"
         },
         {
-          "internalType": "enum ProLine.State",
+          "internalType": "string",
           "name": "_shipstate",
-          "type": "uint8"
+          "type": "string"
         }
       ],
       "name": "updateShstate",
@@ -260,11 +265,40 @@
           "internalType": "uint256",
           "name": "_shipid",
           "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "z",
+          "type": "uint256"
         }
       ],
       "name": "withdrawmoney",
       "outputs": [],
       "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "a",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "b",
+          "type": "string"
+        }
+      ],
+      "name": "compareStrings",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "pure",
       "type": "function"
     },
     {
@@ -347,6 +381,25 @@
           "internalType": "uint256",
           "name": "",
           "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_shipid",
+          "type": "uint256"
+        }
+      ],
+      "name": "getshipstate",
+      "outputs": [
+        {
+          "internalType": "string[]",
+          "name": "",
+          "type": "string[]"
         }
       ],
       "stateMutability": "view",
@@ -525,11 +578,6 @@
           "internalType": "uint256",
           "name": "qty",
           "type": "uint256"
-        },
-        {
-          "internalType": "enum ProLine.State",
-          "name": "shipstate",
-          "type": "uint8"
         },
         {
           "internalType": "uint256",
@@ -1112,7 +1160,7 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x46A44F805435852dECDFD8619753A419b4cE73E3",
+      "address": "0xD1B50eed71FA107e80ff88FB11eACFB7ca9FAd3A",
       "transactionHash": "0xb2d7de29cd3eb862e729ef23e9ee1e84485f8c9497a886472123842b79305312"
     }
   },
