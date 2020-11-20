@@ -17,10 +17,10 @@ class Home extends Component{
       return(
         <React.Fragment >
           
-                <div>
-                    <Container >
+                <div className="bg">
+                    <Container>
                     <div className="inner header">
-                        <h6>SignIn to grab exciting offers and in-time deliveries</h6>
+                        <h6 style={{ color: 'white'}}>SignIn to grab exciting offers and in-time deliveries</h6>
                     </div>
                     <Card style={{marginTop: 30, marginBottom:40}}>
                       <CardImg top width="80%" src="https://www.cined.com/content/uploads/2020/05/Dell-XPS-15-17-featured.jpg"/>

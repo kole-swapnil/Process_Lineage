@@ -168,8 +168,10 @@ var x = 'hello';
             this.toggleModal();
         }
 
-        delivered() {
-
+        delivered = async() => {
+            const res2 = await this.props.contract.methods.withdrawmoney(this.props.dish.shid , 1).send({from: this.props.accounts,gas : 1000000})
+            console.log(res2);
+            this.toggleModal();
         }
 
         getshipevents = async() => {
@@ -299,6 +301,7 @@ var x = 'hello';
         var y;
 
         var bak = this.props.dish.states[xy] == "Cancelled" ? "bg-danger whiteButton" : "blackButton";
+        
     
         if(this.props.dish.states.length<3 && this.props.registered == 2) {
             y = "mt-2 visible";

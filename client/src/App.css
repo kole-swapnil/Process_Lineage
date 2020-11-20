@@ -88,3 +88,6 @@ StepProgressBar{
   background-color: red;
   color: white;
 }
+.botton{
+  display: none;
+}
