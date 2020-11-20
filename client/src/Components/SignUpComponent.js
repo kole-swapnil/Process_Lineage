@@ -88,16 +88,6 @@ class SignUp extends Component{
                                 
                             </div>
                         </div>
-                        <div className="col-4">
-                            <h6 className="m-auto"> Goverment SignUp</h6>
-                            <div className="part pt-5">
-                                <i class="fa fa-id-card fa-4x" aria-hidden="true"></i>
-                                <br/><br/>
-                                
-                                <button class="btn btn-lg btn-primary text-uppercase mt-5 pl-3 pr-3" type="submit" onClick={this.handleSubmitGovt}><Link to="/home" style={{textDecoration: 'none' , color: 'white'}}>Sign In</Link></button>
-                               
-                            </div>
-                        </div>
                     </div>
                 </div>
                 
