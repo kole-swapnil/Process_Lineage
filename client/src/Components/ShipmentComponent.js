@@ -100,7 +100,7 @@ var x = 'hello';
     class Allpatrender extends Component{
         constructor(props){
             super(props);
-            this.state = { docCount : 0, dish: [] , isModalOpen: false, isModalOpen1: false, back: true, ships:[],shiptime: [], payfor:[] , paytime: [],asp : 0,next : [{
+            this.state = { docCount : 0, qty: 0 , dish: [] , isModalOpen: false, isModalOpen1: false, back: true, ships:[],shiptime: [], payfor:[] , paytime: [],asp : 0,next : [{
                 label: a,
                 subtitle: b,//this.state.shiptime[cnt]  ,
             content: <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>{a}</h3>
@@ -113,7 +113,9 @@ var x = 'hello';
             this.getpayevents = this.getpayevents.bind(this);
             this.updateShipstate = this.updateShipstate.bind(this);
             this.cancel = this.cancel.bind(this);
+            this.delivered = this.delivered.bind(this);
             this.shipstate = this.shipstate.bind(this);
+            this.handleInputChange = this.handleInputChange.bind(this);
         } 
 
         toggleModal() {
@@ -164,6 +166,10 @@ var x = 'hello';
             const res2 = await this.props.contract.methods.withdrawmoney(this.props.dish.shid , 2).send({from: this.props.accounts,gas : 1000000})
             console.log(res2);
             this.toggleModal();
+        }
+
+        delivered() {
+
         }
 
         getshipevents = async() => {
@@ -259,6 +265,15 @@ var x = 'hello';
                 console.log(res2);
             }
         }
+
+        handleInputChange(event){
+            const target = event.target;
+            const value = target.value;
+            const name = target.name;
+            this.setState({
+                [name] : value
+            })
+        }
         
     render(){
         this.converb(this.props.dish.totalamt.toString());
@@ -268,7 +283,7 @@ var x = 'hello';
         if(this.props.registered == 1){
             ch = "ml-2 visible";
             val = "Next";
-            fun = this.updateShipstate;
+             fun = this.toggleModal1;
         }
         else if(this.props.registered == 2){
             ch = "ml-2 visible";
@@ -313,15 +328,19 @@ var x = 'hello';
                 <Button className={ch} color="primary" onClick={fun}>
                     {val}
                 </Button>
-                <Button color="danger
-                " onClick = {this.cancel} className={y}>
+                <Button color="danger" onClick = {this.cancel} className={y}>
                     Cancel
                 </Button> 
                 
-                <Modal isOpen={this.state.isModalOpen1} toggle={this.toggleModal1} className="modal-xl">
-                    <ModalHeader toggle={this.toggleModal1} className="pl-5">Shipment Status</ModalHeader>
+                <Modal isOpen={this.state.isModalOpen1} toggle={this.toggleModal1} className="modal-md" style={{marginTop: 150}}>
+                    <ModalHeader toggle={this.toggleModal1} className="pl-5">Add your Shipment Status</ModalHeader>
                     <ModalBody>
-                        
+                        <div className="row m-auto p-5">
+                            <p>Shipment Status : </p>
+                            <p> <Input type="text" id="qty" name="qty" onChange={this.handleInputChange}></Input></p>
+                            <Button className="ml-5" color="success" onClick = {this.updateShipstate}>Confirm</Button>
+                            <Button className="ml-2" color="info" onClick = {this.delivered}>Delivered</Button>
+                        </div>
                     </ModalBody>
                 </Modal>
 
