@@ -36,7 +36,7 @@ class Main extends Component {
         BNContract.abi,
         deployedNetwork && deployedNetwork.address,
       );
-      var govt = networkId == 3?"0x4271AC6Bb565D120e2Ac1C3fb855aE5Dad6aE8ff":"0xC0EC435ad729B545d645bA3A83C74872D585e282";
+      var govt = networkId == 3?"0x4271AC6Bb565D120e2Ac1C3fb855aE5Dad6aE8ff":"0x8c009421d817D9AB4b39Ad93c2dF05A3253F5f4a";
       console.log(govt);
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
