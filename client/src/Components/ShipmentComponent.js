@@ -282,10 +282,11 @@ var x = 'hello';
         a = 1;
         b = this.props.dish.payment;
         var ch ;
+
         if(this.props.registered == 1){
             ch = "ml-2 visible";
             val = "Next";
-             fun = this.toggleModal1;
+            fun = this.toggleModal1;
         }
         else if(this.props.registered == 2){
             ch = "ml-2 visible";
@@ -301,15 +302,18 @@ var x = 'hello';
         var y;
 
         var bak = this.props.dish.states[xy] == "Cancelled" ? "bg-danger whiteButton" : "blackButton";
-        
     
         if(this.props.dish.states.length<3 && this.props.registered == 2) {
             y = "mt-2 visible";
         }
+        else if(this.props.registered == 1 && this.props.dish.states[xy] == "Cancelled") {
+            y = "invisible";
+            ch = "invisible";
+        }
         else if(this.props.registered == 1) {
             y = "mt-2 visible";
         }
-        else {
+        else{
             y = "mt-2 invisible";
         }
         
