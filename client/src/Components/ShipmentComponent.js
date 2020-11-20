@@ -100,7 +100,7 @@ var x = 'hello';
     class Allpatrender extends Component{
         constructor(props){
             super(props);
-            this.state = { docCount : 0, qty: 0 , dish: [] , isModalOpen: false, isModalOpen1: false, back: true, ships:[],shiptime: [], payfor:[] , paytime: [],asp : 0,next : [{
+            this.state = { docCount : 0, qty: 0 , dish: [] , isModalOpen: false, isModalOpen1: false, back: true, ships:[],shiptime: [],quan : null, payfor:[] , paytime: [],asp : 0,next : [{
                 label: a,
                 subtitle: b,//this.state.shiptime[cnt]  ,
             content: <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>{a}</h3>
@@ -168,8 +168,10 @@ var x = 'hello';
             this.toggleModal();
         }
 
-        delivered() {
-
+        delivered = async() => {
+            const res2 = await this.props.contract.methods.withdrawmoney(this.props.dish.shid,1).send({from: this.props.accounts,gas : 1000000})
+            console.log(res2);
+            this.toggleModal();
         }
 
         getshipevents = async() => {
@@ -252,18 +254,12 @@ var x = 'hello';
         }
         updateShipstate = async() => {
             this.toggleModal1();
-            var c;
-            for(var i=0;i<this.props.dish.states.length;i++){
-                c = this.props.dish.states[i];
-            }
+            console.log(this.state.quan);
+           
+             const res = await this.props.contract.methods.updateShstate(this.props.dish.shid,this.state.quan).send({from: this.props.accounts,gas : 1000000});
+             console.log(res);
             
-            const res = await this.props.contract.methods.updateShstate(this.props.dish.shid,c).send({from: this.props.accounts,gas : 1000000});
-            console.log(res);
             
-            if(c == 5){
-                const res2 = await this.props.contract.methods.withdrawmoney(this.props.dish.shid).send({from: this.props.accounts,gas : 1000000})
-                console.log(res2);
-            }
         }
 
         handleInputChange(event){
@@ -337,7 +333,7 @@ var x = 'hello';
                     <ModalBody>
                         <div className="row m-auto p-5">
                             <p>Shipment Status : </p>
-                            <p> <Input type="text" id="qty" name="qty" onChange={this.handleInputChange}></Input></p>
+                            <p> <Input type="text" id="quan" name="quan" onChange={this.handleInputChange}></Input></p>
                             <Button className="ml-5" color="success" onClick = {this.updateShipstate}>Confirm</Button>
                             <Button className="ml-2" color="info" onClick = {this.delivered}>Delivered</Button>
                         </div>
