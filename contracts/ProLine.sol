@@ -125,6 +125,7 @@ contract ProLine{
        
        if(compareStrings(_shipstate,"Cancelled")){
            Shipments[_shipid].shipstate.push(_shipstate);
+           emit processchange(_shipid,_shipstate,now);
        }
        uint len = Shipments[_shipid].shipstate.length;
        if(!(compareStrings(Shipments[_shipid].shipstate[(len-1)], "Cancelled"))){
@@ -150,10 +151,13 @@ contract ProLine{
     function withdrawmoney(uint _shipid,uint z)public payable{
         Shipment memory y = Shipments[_shipid];
         Item memory x = Items[y.itemcat];
+        string memory _shipst;
         uint totalpay = x.price*(y.qty);
         if(z == 2){
             address payable cus = payable(y.custadr);
             cus.transfer(totalpay);
+            _shipst = "Cancelled";
+            
         }
         else if(z == 1){
         uint govtmoney = (totalpay*x.gst)/100;
@@ -161,10 +165,12 @@ contract ProLine{
         govt.transfer(govtmoney);
         address payable mann = payable(y.manadr);
         mann.transfer(manumoney);
+        _shipst = "Delivered";
+        }    
+        Shipments[_shipid].shipstate.push(_shipst);
+        emit processchange(_shipid,_shipst,now);
         Shipments[_shipid].payment = Status.received;
         emit processpay(_shipid,Status.received,now);
-        
-        }    
             
     }
      function compareStrings(string memory a, string memory b) public pure returns (bool) {

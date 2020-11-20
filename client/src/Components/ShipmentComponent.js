@@ -15,7 +15,7 @@ var x = 'hello';
     }
 
     const step0Contents = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>NotPaid </h3>;
-    const step1Contents = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>InSc</h3>;
+    const step1Contents = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>InSmartContract</h3>;
     const step2Contents = <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Received </h3>;
 
     function onFormSubmit1() {
@@ -74,19 +74,39 @@ var x = 'hello';
         return value1; 
     }
 
+    var vx;
+    function category(i) {
+
+        switch(i) {
+            case 0:
+                vx = 'Laptop';
+                break;
+            case 1:
+                vx = 'Mobile';
+                break;
+            case 2:
+                vx = 'Desktop';
+                break;
+        }
+        return vx;
+}
+
     var a;
     var b;
+    var val;
+    var fun;
 // Class 
     var alldocs = [];
     class Allpatrender extends Component{
         constructor(props){
             super(props);
-            this.state = { docCount : 0, dish: [] , isModalOpen: false,ships:[],shiptime: [], payfor:[] , paytime: [],asp : 0,next : [{
+            this.state = { docCount : 0, dish: [] , isModalOpen: false, isModalOpen1: false, back: true, ships:[],shiptime: [], payfor:[] , paytime: [],asp : 0,next : [{
                 label: a,
                 subtitle: b,//this.state.shiptime[cnt]  ,
-                content: <p>pooja</p>
+            content: <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>{a}</h3>
                 }]};
             this.toggleModal = this.toggleModal.bind(this);
+            this.toggleModal1 = this.toggleModal1.bind(this);
             this.converb = this.converb.bind(this);
             this.dopayment = this.dopayment.bind(this);
             this.getshipevents = this.getshipevents.bind(this);
@@ -99,6 +119,11 @@ var x = 'hello';
         toggleModal() {
             this.setState({
                 isModalOpen: !this.state.isModalOpen
+            });
+        }
+        toggleModal1() {
+            this.setState({
+                isModalOpen1: !this.state.isModalOpen1
             });
         }
 
@@ -131,11 +156,12 @@ var x = 'hello';
             return value;
         }
         cancel = async() => {
-            const res = await this.props.contract.methods.updateShstate(this.props.dish.shid,6).send({from: this.props.accounts,gas : 1000000});
-            console.log(res);
-            const res3 = await this.props.contract.methods.updateShstatus(this.props.dish.shid,2).send({from: this.props.accounts,gas : 1000000});
-            console.log(res3);
-            const res2 = await this.props.contract.methods.withdrawmoney(this.props.dish.shid).send({from: this.props.accounts,gas : 1000000})
+            
+            // const res = await this.props.contract.methods.updateShstate(this.props.dish.shid,"Cancelled").send({from: this.props.accounts,gas : 1000000});
+            // console.log(res);
+            // const res3 = await this.props.contract.methods.updateShstatus(this.props.dish.shid,2).send({from: this.props.accounts,gas : 1000000});
+            // console.log(res3);
+            const res2 = await this.props.contract.methods.withdrawmoney(this.props.dish.shid , 2).send({from: this.props.accounts,gas : 1000000})
             console.log(res2);
             this.toggleModal();
         }
@@ -153,9 +179,6 @@ var x = 'hello';
             var res7 ;
             req.forEach(async (ele) => {
                 
-                
-                var cnt = 0;
-                var tine = 0;
                 const ship_id = (ele.returnValues.ship_id);
                 const shstate = (ele.returnValues.shstate);
                 const times = (ele.returnValues.times);
@@ -166,10 +189,11 @@ var x = 'hello';
                 timefor.shstate = shstate;
                 timefor.time = time.toString();
                 timeof.push(timefor);
+                
                 res7 = {
                     label: timefor.shstate,
                     subtitle: timefor.time,//this.state.shiptime[cnt]  ,
-                    content: <p>pooja</p>
+                    content: <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>{timefor.shstate}</h3>
                     }
                     arr.push(res7);
                 
@@ -217,13 +241,16 @@ var x = 'hello';
         }
         
         dopayment = async() => {
-                const res = await this.props.contract.methods.payitem(this.props.dish.totalamt.toString(),this.props.dish.shid,"InSmartContract").send({from: this.props.accounts,value:this.props.dish.totalamt.toString(),gas : 1000000});
+                const res = await this.props.contract.methods.payitem(this.props.dish.totalamt.toString(),this.props.dish.shid,"Customer Paid").send({from: this.props.accounts,value:this.props.dish.totalamt.toString(),gas : 1000000});
                 console.log(res);
         }
         updateShipstate = async() => {
-            var c = parseInt(this.props.dish.shipstate);
-            c++;
-           
+            this.toggleModal1();
+            var c;
+            for(var i=0;i<this.props.dish.states.length;i++){
+                c = this.props.dish.states[i];
+            }
+            
             const res = await this.props.contract.methods.updateShstate(this.props.dish.shid,c).send({from: this.props.accounts,gas : 1000000});
             console.log(res);
             
@@ -237,38 +264,45 @@ var x = 'hello';
         this.converb(this.props.dish.totalamt.toString());
         a = 1;
         b = this.props.dish.payment;
-        var cha = this.props.registered == 2 ? "ml-2 visible" : "invisible";
-        var ch = this.props.registered == 1? "visible" : "invisible";
+        var ch ;
+        if(this.props.registered == 1){
+            ch = "ml-2 visible";
+            val = "Next";
+            fun = this.updateShipstate;
+        }
+        else if(this.props.registered == 2){
+            ch = "ml-2 visible";
+            val = "Pay";
+            fun = this.dopayment;
+        }
+        else {
+            ch = "invisible";
+        }
+
         var xy = this.props.dish.states.length;
+        --xy;
+        var y;
 
-        console.log(this.props.dish.states);
+        var bak = this.props.dish.states[xy] == "Cancelled" ? "bg-danger whiteButton" : "blackButton";
+    
+        if(this.props.dish.states.length<3 && this.props.registered == 2) {
+            y = "mt-2 visible";
+        }
+        else if(this.props.registered == 1) {
+            y = "mt-2 visible";
+        }
+        else {
+            y = "mt-2 invisible";
+        }
         
-      
-      
-       
-        
-        
-        
-        // if((value == 'Added' || value == 'Pending') && this.props.registered == 2) {
-        //     xy = "visible";
-        // }
-        // else if((value !== 'Added' || value !== 'Pending') && this.props.registered == 1) {
-        //     xy = "visible";
-        // }
-        // else {
-        //     xy = "invisible";
-        // }
-
-
-
         return(
-            <Card >
+            <Card className={bak}>
             <i className="fa fa-envelope fa-5x"></i>
             <CardBody>
             <CardTitle>Shipment ID : {this.props.dish.shid}</CardTitle>
-            <CardText><small>Item Category : {this.props.dish.itemcat}</small></CardText>
+            <CardText><small>Item Category : {category(parseInt(this.props.dish.itemcat))}</small></CardText>
             <CardText><small>Item Quantity : {this.props.dish.qty}</small></CardText>
-            <CardText><small>Shipment Status : {this.props.dish.states[--xy]}</small></CardText>
+            <CardText><small>Shipment Status : {this.props.dish.states[xy]}</small></CardText>
             <CardText><small>Total Amount : {util1}</small></CardText>
             <CardText><small>Payment Status : {status(parseInt(this.props.dish.payment))}</small></CardText>
             
@@ -276,10 +310,21 @@ var x = 'hello';
                 <Button color="primary" onClick={this.getshipevents}>
                     Shipment
                 </Button>
-                <Button className={cha} color="primary" onClick={this.dopayment}>
-                    Pay
+                <Button className={ch} color="primary" onClick={fun}>
+                    {val}
                 </Button>
+                <Button color="danger
+                " onClick = {this.cancel} className={y}>
+                    Cancel
+                </Button> 
                 
+                <Modal isOpen={this.state.isModalOpen1} toggle={this.toggleModal1} className="modal-xl">
+                    <ModalHeader toggle={this.toggleModal1} className="pl-5">Shipment Status</ModalHeader>
+                    <ModalBody>
+                        
+                    </ModalBody>
+                </Modal>
+
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} className="modal-xl">
                 <ModalHeader toggle={this.toggleModal} className="pl-5">Shipment Status</ModalHeader>
                 <ModalBody>
@@ -287,10 +332,10 @@ var x = 'hello';
                 <StepProgressBar startingStep={this.state.asp} primaryBtnClass={"pri"} secondaryBtnClass={"pri"}  
                 onSubmit={onFormSubmit1} steps={this.state.next}/>
                         
-                    <div style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>
-                        <Button color="info" className={ch} onClick = {this.updateShipstate}>Next</Button>
+                    {/* <div style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>
+                        <Button className={ch} onClick = {this.updateShipstate}>Next</Button>
                         <Button color="danger" onClick = {this.cancel} className={xy}>Cancel</Button>
-                    </div>
+                    </div> */}
                     <h5 className=" ml-5 ">Payment Status</h5>
                     <hr/>
                     <StepProgressBar startingStep={b++} primaryBtnClass={"pri"} secondaryBtnClass={"pri"}  onSubmit={onFormSubmit1} steps={[

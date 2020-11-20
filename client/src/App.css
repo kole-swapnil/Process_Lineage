@@ -80,3 +80,11 @@ StepProgressBar{
 .pri{
   display: none;
 }
+
+.bg{
+  background-color: black;
+}
+.whiteButton{
+  background-color: red;
+  color: white;
+}
