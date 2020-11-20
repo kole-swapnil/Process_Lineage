@@ -114,6 +114,7 @@ var x = 'hello';
             this.updateShipstate = this.updateShipstate.bind(this);
             this.cancel = this.cancel.bind(this);
             this.delivered = this.delivered.bind(this);
+            this.convery = this.convery.bind(this);
             this.shipstate = this.shipstate.bind(this);
             this.handleInputChange = this.handleInputChange.bind(this);
         } 
@@ -247,9 +248,18 @@ var x = 'hello';
         converb = async (x) => {
             util1 = (Web3.utils.fromWei(x, 'milli'));
         }
-        
+        converx = async (x) =>{
+            var util7 = (Web3.utils.fromWei(x, 'milli'));
+            return util7;
+        }
+        convery =  (x) =>{
+            var util8 =  (Web3.utils.toWei(x, 'milli'));
+            return util8;
+        }
         dopayment = async() => {
-                const res = await this.props.contract.methods.payitem(this.props.dish.totalamt.toString(),this.props.dish.shid,"Customer Paid").send({from: this.props.accounts,value:this.props.dish.totalamt.toString(),gas : 1000000});
+          
+         ;
+                const res = await this.props.contract.methods.payitem(this.props.dish.totalamt.toString(),this.props.dish.shid,"Customer Paid").send({from: this.props.accounts,value: this.props.dish.totalamt.toString(),gas : 1000000});
                 console.log(res);
         }
         updateShipstate = async() => {
@@ -295,6 +305,7 @@ var x = 'hello';
         var y;
 
         var bak = this.props.dish.states[xy] == "Cancelled" ? "bg-danger whiteButton" : "blackButton";
+        
     
         if(this.props.dish.states.length<3 && this.props.registered == 2) {
             y = "mt-2 visible";

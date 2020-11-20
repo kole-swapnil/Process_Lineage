@@ -152,16 +152,15 @@ contract ProLine{
         Shipment memory y = Shipments[_shipid];
         Item memory x = Items[y.itemcat];
         string memory _shipst;
-        uint totalpay = x.price*(y.qty);
         if(z == 2){
             address payable cus = payable(y.custadr);
-            cus.transfer(totalpay);
+            cus.transfer(y.totalamt);
             _shipst = "Cancelled";
             
         }
         else if(z == 1){
-        uint govtmoney = (totalpay*x.gst)/100;
-        uint manumoney = totalpay - govtmoney;
+        uint govtmoney = (y.totalamt*x.gst)/100;
+        uint manumoney = y.totalamt - govtmoney;
         govt.transfer(govtmoney);
         address payable mann = payable(y.manadr);
         mann.transfer(manumoney);
