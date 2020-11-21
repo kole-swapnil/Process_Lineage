@@ -8,7 +8,20 @@ import Web3 from "web3";
 import 'react-step-progress/dist/index.css';
 
 var x = 'hello';
+var arr7= [];
+var arr8=[];
 
+function secondsToHms(d) {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+
+    var hDisplay = h > 0 ? h + (h == 1 ? " hr, " : " hrs,") : "";
+    var mDisplay = m > 0 ? m + (m == 1 ? " min, " : " mins,") : "";
+    var sDisplay = s > 0 ? s + (s == 1 ? " sec" : " secs") : "";
+    return hDisplay + mDisplay + sDisplay; 
+}
 // Step Progress 
     function onFormSubmit() {
     
@@ -100,7 +113,8 @@ var x = 'hello';
     class Allpatrender extends Component{
         constructor(props){
             super(props);
-            this.state = { docCount : 0, qty: 0 , dish: [] , isModalOpen: false, isModalOpen1: false, back: true, ships:[],shiptime: [],quan : null, payfor:[] , paytime: [],asp : 0,next : [{
+            this.state = { docCount : 0, qty: 0 , dish: [] , isModalOpen: false, isModalOpen1: false, back: true, ships:[],shiptime: [],
+                quan : null, payfor:[] , paytime: [],asp : 0,progt:0 , next : [{
                 label: a,
                 subtitle: b,//this.state.shiptime[cnt]  ,
             content: <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>{a}</h3>
@@ -186,6 +200,8 @@ var x = 'hello';
                 fromBlock: 0,    
             });
             var res7 ;
+            arr7=[];
+
             req.forEach(async (ele) => {
                 
                 const ship_id = (ele.returnValues.ship_id);
@@ -196,6 +212,7 @@ var x = 'hello';
                 var time = day.format('D-MMM-YY, hh:mm:ss a');
                 timefor.ship_id = ship_id;
                 timefor.shstate = shstate;
+                timefor.timenow = times;
                 timefor.time = time.toString();
                 timeof.push(timefor);
                 
@@ -204,16 +221,18 @@ var x = 'hello';
                     subtitle: timefor.time,//this.state.shiptime[cnt]  ,
                     content: <h3 className="mt-5 pb-0" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>{timefor.shstate}</h3>
                     }
+                arr7.push(timefor.timenow);
                     arr.push(res7);
                 
             });
-            // const Abc = timeof.map((x) => {
+            console.log(arr.length);
+            arr8 =[];
+            for(var i = 1; i< arr7.length; i++){
+                var timedif = secondsToHms((arr7[i]) - (arr7[i-1]));
+                console.log(timedif)
+                arr8.push(timedif);        
+            }
             
-                
-                    
-            //         console.log(arr);
-            // })
-            console.log(arr);
             var po = arr.length - 1 
             this.setState({shiptime : timeof,next : arr,asp : po});
             
@@ -258,7 +277,7 @@ var x = 'hello';
         }
         dopayment = async() => {
           
-         ;
+
                 const res = await this.props.contract.methods.payitem(this.props.dish.totalamt.toString(),this.props.dish.shid,"Customer Paid").send({from: this.props.accounts,value: this.props.dish.totalamt.toString(),gas : 1000000});
                 console.log(res);
         }
@@ -282,6 +301,18 @@ var x = 'hello';
         }
         
     render(){
+        const prog = arr8.map((x) => {
+            return (
+                <div style={{paddingRight:'5%',paddingLeft:'5%',display: 'inline',justifyContent:'center', alignItems:'center'}}>
+                    <b key={x} className="m-auto" style={{ justifyContent:'center', alignItems:'center'}}>
+                        {x} 
+                    </b>
+                    
+                </div>
+                
+            );
+        })
+
         this.converb(this.props.dish.totalamt.toString());
         a = 1;
         b = this.props.dish.payment;
@@ -307,7 +338,11 @@ var x = 'hello';
 
         var bak = this.props.dish.states[xy] == "Cancelled" ? "bg-danger whiteButton" : "blackButton";
     
-        if(this.props.dish.states.length<3 && this.props.registered == 2) {
+        if(this.props.registered == 2 && this.props.dish.states[xy] == "Cancelled") {
+            y = "invisible";
+            ch = "invisible";
+        }
+        else if(this.props.registered == 2 && this.props.dish.states.length<3) {
             y = "mt-2 visible";
         }
         else if(this.props.registered == 1 && this.props.dish.states[xy] == "Cancelled") {
@@ -358,6 +393,10 @@ var x = 'hello';
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} className="modal-xl">
                 <ModalHeader toggle={this.toggleModal} className="pl-5">Shipment Status</ModalHeader>
                 <ModalBody>
+
+                <div style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>
+                    {prog}
+                </div>
                     
                 <StepProgressBar startingStep={this.state.asp} primaryBtnClass={"pri"} secondaryBtnClass={"pri"}  
                 onSubmit={onFormSubmit1} steps={this.state.next}/>
