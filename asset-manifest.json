@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/Process_Lineage/static/css/main.4c84a0ec.chunk.css",
+    "main.js": "/Process_Lineage/static/js/main.bea20197.chunk.js",
+    "main.js.map": "/Process_Lineage/static/js/main.bea20197.chunk.js.map",
+    "runtime-main.js": "/Process_Lineage/static/js/runtime-main.121a51b2.js",
+    "runtime-main.js.map": "/Process_Lineage/static/js/runtime-main.121a51b2.js.map",
+    "static/css/2.5854d024.chunk.css": "/Process_Lineage/static/css/2.5854d024.chunk.css",
+    "static/js/2.9773ef5f.chunk.js": "/Process_Lineage/static/js/2.9773ef5f.chunk.js",
+    "static/js/2.9773ef5f.chunk.js.map": "/Process_Lineage/static/js/2.9773ef5f.chunk.js.map",
+    "index.html": "/Process_Lineage/index.html",
+    "precache-manifest.d2c617f982ac25cf1483a11b8af4c815.js": "/Process_Lineage/precache-manifest.d2c617f982ac25cf1483a11b8af4c815.js",
+    "service-worker.js": "/Process_Lineage/service-worker.js",
+    "static/css/2.5854d024.chunk.css.map": "/Process_Lineage/static/css/2.5854d024.chunk.css.map",
+    "static/css/main.4c84a0ec.chunk.css.map": "/Process_Lineage/static/css/main.4c84a0ec.chunk.css.map",
+    "static/js/2.9773ef5f.chunk.js.LICENSE.txt": "/Process_Lineage/static/js/2.9773ef5f.chunk.js.LICENSE.txt",
+    "static/media/font-awesome.min.css": "/Process_Lineage/static/media/fontawesome-webfont.fee66e71.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.121a51b2.js",
+    "static/css/2.5854d024.chunk.css",
+    "static/js/2.9773ef5f.chunk.js",
+    "static/css/main.4c84a0ec.chunk.css",
+    "static/js/main.bea20197.chunk.js"
+  ]
+}
