@@ -1,4 +1,5 @@
 {
+  "homepage": "https://kole-swapnil.github.io/Process_Lineage",
   "name": "client",
   "version": "0.1.0",
   "private": true,
@@ -7,6 +8,7 @@
     "bootstrap": "^4.5.2",
     "bootstrap-social": "^5.1.1",
     "core-js": "3",
+    "gh-pages": "^3.1.0",
     "jquery": "^3.5.1",
     "jquery-steps": "^1.1.0",
     "moment": "^2.29.1",
@@ -22,6 +24,8 @@
     "web3": "1.2.2"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
