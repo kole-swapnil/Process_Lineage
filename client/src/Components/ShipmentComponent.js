@@ -342,10 +342,18 @@ function secondsToHms(d) {
             y = "invisible";
             ch = "invisible";
         }
+        else if(this.props.registered == 2 && this.props.dish.states[xy] == "Delivered") {
+            y = "invisible";
+            ch = "invisible";
+        }
         else if(this.props.registered == 2 && this.props.dish.states.length<3) {
             y = "mt-2 visible";
         }
         else if(this.props.registered == 1 && this.props.dish.states[xy] == "Cancelled") {
+            y = "invisible";
+            ch = "invisible";
+        }
+        else if(this.props.registered == 1 && this.props.dish.states[xy] == "Delivered") {
             y = "invisible";
             ch = "invisible";
         }
