@@ -1151,16 +1151,16 @@
     "version": "0.6.12+commit.27d51765.Emscripten.clang"
   },
   "networks": {
-    "3": {
+    "5": {
       "events": {},
       "links": {},
-      "address": "0x442CA3e906dF9358baFE2aBB136cb4370D4DfF37",
+      "address": "0xaA79Cd471c541EC19914667ad978F94Cb17A9fF9",
       "transactionHash": "0xb689a956d4fdd21d4e68da1e6213f32c3285f06fb5c41a88f9952f0200c18406"
     },
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x46A44F805435852dECDFD8619753A419b4cE73E3",
+      "address": "0x4550e5481a6bCcbd3766101a1b6e694A85c8a268",
       "transactionHash": "0xb2d7de29cd3eb862e729ef23e9ee1e84485f8c9497a886472123842b79305312"
     }
   },
